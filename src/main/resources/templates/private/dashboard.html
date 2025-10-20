@@ -36,51 +36,14 @@
 
       <main class="content-area">
 
-        <section class="job-list" id="job-list">
-          <article class="job-card active">
+        <section class="job-list" id="job-list" th:each="job : ${tirocini}">
+          <article class="job-card">
             <img class="company-logo"></img>
             <div class="job-info">
-              <span class="status-tag">Pubblicato</span>
-              <h3>Stage visual **UX/UI designer**</h3>
-              <p class="company-name">Booking</p>
-              <p class="job-description">
-                Learn about Tesla's commitment to making clean energy accessible
-                and affordable with a range of electric vehicles and energy
-                generation and storage...
-              </p>
-              <div class="tags-row">
-                <span class="location-tag">UX Designer</span>
-                <span class="location-tag">Php Developer</span>
-                <span class="location-tag">.Net Developer</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="job-card">
-            <div class="company-logo bg-red">T</div>
-            <div class="job-info">
-              <span class="salary">$180/Hr</span>
-              <h3>Senior UI/UX Designer</h3>
-              <p class="company-name">Tesla</p>
-              <p class="job-description">
-                Learn about Tesla's commitment to making clean energy accessible
-                and affordable with a range of electric vehicles and energy
-                generation and storage...
-              </p>
-            </div>
-          </article>
-
-          <article class="job-card">
-            <div class="company-logo bg-gray-light">A</div>
-            <div class="job-info">
-              <span class="salary">$140/Hr</span>
-              <h3>Senior Product Designer</h3>
-              <p class="company-name">Apple</p>
-              <p class="job-description">
-                Apple Inc. is an American multinational technology company
-                headquartered in Cupertino, California, that designs, develops,
-                and sells consumer electronics
-              </p>
+              <span class="salary" th:text="${job.tirocinio.durata}">Durata</span>
+              <h3 th:text="${job.tirocinio.mansione}">Titolo Masione</h3>
+              <p class="company-name" th:text="${job.azienda.nome}">Nome Azienda</p>
+              <p class="job-description" th:text="${job.tirocinio.descrizione}">Descrizione</p>
             </div>
           </article>
         </section>
