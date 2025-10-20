@@ -17,41 +17,39 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //regole di sicurezza
+    // regole di sicurezza
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            
-        	// solo per testing, da togliere in pubblicazione
-            .csrf(csrf -> csrf.disable())
-            
-      
-            .authorizeHttpRequests(auth -> auth
-                // permette accesso a tutti a queste pagine
-                .requestMatchers("/login", "/register", "/css/**", "/js/**", "/static/**", "/image/**").permitAll()
-                
-                // altre richieste richiedono autenticazione
-                .anyRequest().authenticated()
-            )
-            
-            // form di login
-            .formLogin(form -> form
-                // visualizza pagina (get)
-                .loginPage("/login") 
-                // manda i dati a login (post)
-                .loginProcessingUrl("/login") 
-                
-                .defaultSuccessUrl("/loading", true) 
-                
-                .permitAll()
-            )
-            
-            // config logout
-            .logout(logout -> logout
-                // permesso a tutti di logout
-                .permitAll() 
-                .logoutSuccessUrl("/login?logout") 
-            );
+
+                // solo per testing, da togliere in pubblicazione
+                // .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+                        // permette accesso a tutti a queste pagine
+                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/static/**", "/image/**",
+                                "/public/**")
+                        .permitAll()
+
+                        // altre richieste richiedono autenticazione
+                        .anyRequest().authenticated())
+
+                // form di login
+                .formLogin(form -> form
+                        // visualizza pagina (get)
+                        .loginPage("/login")
+                        // manda i dati a login (post)
+                        .loginProcessingUrl("/login")
+
+                        .defaultSuccessUrl("/loading", true)
+
+                        .permitAll())
+
+                // config logout
+                .logout(logout -> logout
+                        // permesso a tutti di logout
+                        .permitAll()
+                        .logoutSuccessUrl("/login?logout"));
 
         return http.build();
     }

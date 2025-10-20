@@ -15,18 +15,21 @@ import dev2426.ITSProjectWork.services.UtentiService;
 
 @Controller
 public class DashboardController {
-	
+
 	@Autowired
 	private AziendaService aServ;
+	@Autowired
 	private UtentiService uServ;
+	@Autowired
 	private CompetenzaService cServ;
+	@Autowired
 	private TirocinioService tServ;
-	
-	@GetMapping("/home")
+
+	@GetMapping("/dashboard")
 	public String showHome(Model model) {
 		List<Tirocinio> listaTir = tServ.getAll();
 		model.addAttribute("tirocini", listaTir);
-		return "dashboard";
+		return "/private/dashboard";
 	}
-	
+
 }
