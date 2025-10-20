@@ -49,7 +49,11 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         // permesso a tutti di logout
                         .permitAll()
-                        .logoutSuccessUrl("/login?logout"));
+                        .logoutSuccessUrl("/login?logout"))
+                        .rememberMe(rememberMe -> rememberMe
+                                .key("chiaveSegretaSicura")
+                                .tokenValiditySeconds(1209600) // 2 settimane
+                        );
 
         return http.build();
     }
