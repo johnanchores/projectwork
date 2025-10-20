@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caricamento - Trova il tuo futuro</title>
+  <link rel="stylesheet" th:href="@{/css/loading.css}" /> 
+</head>
+<body>
+    <div class="loading-container">
+        <img th:src="@{/image/logo2.png}" alt="Trova il tuo futuro" class="loading-image">
+
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-percentage" id="percentage">0%</div>
+    </div>
+
+    <script th:src="@{/js/loading.js}"></script>
+</body>
+</html>

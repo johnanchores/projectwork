@@ -1,0 +1,104 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #009999, #008888, #007777);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            text-align: center;
+            
+            max-width: 90%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .loading-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .loading-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, blue, aqua);
+            border-radius: 10px;
+            animation: loading 3s ease-in-out forwards;
+        }
+
+        .loading-percentage {
+            color: white;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            25% { width: 30%; }
+            50% { width: 60%; }
+            75% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .loading-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .loading-text {
+                font-size: 2rem;
+            }
+            
+            .loading-subtitle {
+                font-size: 1.2rem;
+            }
+        }
