@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ricerca Lavoro - Tirocini</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      
+      <div class="sidebar">
+        <a th:href="@{/}" class="sidebar-icon active"><i class="material-icons">home</i></a>
+        <a th:href="@{/bookmarks}" class="sidebar-icon"><i class="material-icons">bookmark_border</i></a>
+        <a th:href="@{/jobs}" class="sidebar-icon"><i class="material-icons">work_outline</i></a>
+        <a th:href="@{/schedule}" class="sidebar-icon"><i class="material-icons">schedule</i></a>
+        <a th:href="@{/inbox}" class="sidebar-icon"><i class="material-icons">inbox</i></a>
+        <a th:href="@{/settings}" class="sidebar-icon"><i class="material-icons">settings</i></a>
+        <div class="user-profile">
+          <img th:src="@{/image/image.png}" alt="User" class="profile-pic" />
+        </div>
+      </div>
+
+      <main class="content-area">
+        <section class="job-list" id="job-list" th:each="job : ${tirocini}">
+          
+          <article 
+            class="job-card" 
+            th:data-job-id="${job.tirocinio.idTirocinio}" 
+            onclick="loadJobDetails(this)">
+            
+            <img class="company-logo" th:src="@{/image/default-logo.png}"></img>
+            
+            <div class="job-info">
+              <span class="salary" th:text="${job.tirocinio.durata}">Durata</span>
+              <h3 th:text="${job.tirocinio.mansione}">Titolo Mansione</h3>
+              <p class="company-name" th:text="${job.azienda.nome}">Nome Azienda</p>
+              <p class="job-description" th:text="${job.tirocinio.descrizione}">Descrizione Breve</p>
+              
+              <div class="tags-row">
+                <span class="location-tag">UX Designer</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <aside class="job-details-panel">
+        <div class="company-header">
+          <div id="aside-logo" class="company-logo bg-blue large"></div>
+          <h2 id="aside-mansione">Seleziona un Tirocinio</h2>
+          <p id="aside-azienda"></p>
+          <div class="detail-tabs">
+            <button class="tab active">Vacancy</button>
+            <button class="tab">Company</button>
+          </div>
+        </div>
+
+        <div class="details-content" id="aside-descrizione">
+          <p>Seleziona un tirocinio dalla lista per visualizzare i dettagli completi, il documento allegato e le opzioni di candidatura.</p>
+        </div>
+        
+        <div class="document-link" id="aside-document-link">
+          </div>
+
+        <div class="apply-actions">
+          <button class="favorite-btn" id="aside-favorite-btn">
+            <i class="material-icons">favorite_border</i>
+          </button>
+          <button class="apply-btn" id="aside-apply-btn">Candidati</button>
+        </div>
+      </aside>
+    </div>
+
+    <script th:src="@{/js/dashboard.js}"></script>
+  </body>
+</html>
