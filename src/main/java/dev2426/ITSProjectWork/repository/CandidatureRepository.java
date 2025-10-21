@@ -13,27 +13,27 @@ import dev2426.ITSProjectWork.model.Utente;
 
 @Repository
 public interface CandidatureRepository extends JpaRepository<Candidatura, Long> {
-	
+
 	@Query("SELECT new dev2426.ITSProjectWork.model.CandidaturaGUI(" +
-	           "   c.id_candidatura, " +        
-	           "   u.nome, " +                  
-	           "   u.cognome, " +               
-	           "   t.mansione, " +              
-	           "   a.nome, " +                  
-	           "   CASE c.stato " +
-	           "       WHEN 0 THEN 'In attesa' " +
-	           "       WHEN 1 THEN 'Approvata' " +
-	           "       WHEN 2 THEN 'Rifiutata' " +
-	           "       ELSE 'Sconosciuto' " +
-	           "   END) " +
-	           "FROM Candidatura c " +          
-	           "JOIN c.utente u " +              
-	           "JOIN c.tirocinio t " +           
-	           "JOIN t.azienda a")             
-	    List<CandidaturaGUI> findAllAsGUI();
-	
+			"   c.id_candidatura, " +
+			"   u.nome, " +
+			"   u.cognome, " +
+			"   t.mansione, " +
+			"   a.nome, " +
+			"   CASE c.stato " +
+			"       WHEN 0 THEN 'In attesa' " +
+			"       WHEN 1 THEN 'Approvata' " +
+			"       WHEN 2 THEN 'Rifiutata' " +
+			"       ELSE 'Sconosciuto' " +
+			"   END) " +
+			"FROM Candidatura c " +
+			"JOIN c.utente u " +
+			"JOIN c.tirocinio t " +
+			"JOIN t.azienda a")
+	List<CandidaturaGUI> findAllAsGUI();
+
 	List<Candidatura> findByUtente(Utente utente);
-	
-	boolean utenteCandidato(Utente utente, Tirocinio tirocinio);
+
+	public abstract boolean existsByUtenteAndTirocinio(Utente utente, Tirocinio tirocinio);
 
 }

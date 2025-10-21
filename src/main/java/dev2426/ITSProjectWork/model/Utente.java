@@ -10,19 +10,20 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "utente")
 public class Utente {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_utente; 
-    
+    private long id_utente;
+
     private String nome;
     private String cognome;
     private String email;
     private String password;
     @Column(name = "curriculum_path")
     private String curriculumPath;
-    
+
     private String stato;
+    private String ruolo;
 
     public long getIdUtente() {
         return id_utente;
@@ -63,7 +64,7 @@ public class Utente {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getCurriculumPath() {
         return curriculumPath;
     }
@@ -71,7 +72,7 @@ public class Utente {
     public void setCurriculumPath(String curriculumPath) {
         this.curriculumPath = curriculumPath;
     }
-    
+
     public String getStato() {
         return stato;
     }
@@ -80,9 +81,18 @@ public class Utente {
         this.stato = stato;
     }
 
+    public String getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
+    }
+
     // --- Costruttori ---
 
-    public Utente(long idUtente, String nome, String cognome, String email, String password, String curriculumPath) {
+    public Utente(long idUtente, String nome, String cognome, String email, String password, String curriculumPath,
+            String ruolo) {
         super();
         this.id_utente = idUtente;
         this.nome = nome;
@@ -91,9 +101,10 @@ public class Utente {
         this.password = password;
         this.curriculumPath = curriculumPath; // CV Path
         this.stato = "ATTIVO"; // Esempio: imposta uno stato di default
+        this.ruolo = ruolo;
     }
 
     public Utente() {
-        
+
     }
 }
