@@ -1,5 +1,6 @@
 package dev2426.ITSProjectWork.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import dev2426.ITSProjectWork.model.CandidaturaGUI;
 import dev2426.ITSProjectWork.model.Utente;
 import dev2426.ITSProjectWork.model.UtenteGUI;
+import dev2426.ITSProjectWork.services.CandidaturaService;
 import dev2426.ITSProjectWork.services.UtentiService;
 
 @Controller
@@ -20,6 +23,9 @@ public class ProfiloController {
 
 	@Autowired
 	private UtentiService uServ;
+	
+	@Autowired
+    private CandidaturaService candServ;
 
 	@GetMapping("/profilo")
 	public String showProfile(@AuthenticationPrincipal UserDetails dettagli, Model modello) {
@@ -28,6 +34,10 @@ public class ProfiloController {
 
 		if (optionalUtente.isPresent()) {
 			Utente utente = optionalUtente.get();
+			
+			List<CandidaturaGUI> listaCandidature = candServ.getUserCandidatureGui(utente);
+			modello.addAttribute("listaCandidature", listaCandidature);
+			
 			modello.addAttribute("utente", utente);
 
 			UtenteGUI utenteGui = new UtenteGUI();
