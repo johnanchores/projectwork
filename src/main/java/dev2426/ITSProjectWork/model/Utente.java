@@ -18,7 +18,7 @@ public class Utente {
 	private String email;
 	private String password;
 	private byte[] CV;
-	private String stato;
+	private String ruolo;
 
 	public long getIdUtente() {
 		return id_utente;
@@ -68,26 +68,16 @@ public class Utente {
 		CV = cV;
 	}
 
-	public Utente(long idUtente, String nome, String cognome, String email, String password, byte[] cV) {
-		super();
-		this.id_utente = idUtente;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.email = email;
-		this.password = password;
-		CV = cV;
-	}
-
 	public Utente() {
 		
 	}
 
-	public String getStato() {
-		return stato;
+	public String getRuolo() {
+		return ruolo;
 	}
 
-	public void setStato(String stato) {
-		this.stato = stato;
+	public void setRuolo(String ruolo) {
+		this.ruolo = ruolo;
 	}
 
 }
