@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import dev2426.ITSProjectWork.model.Candidatura;
 import dev2426.ITSProjectWork.model.CandidaturaGUI;
+import dev2426.ITSProjectWork.model.Utente;
 
 @Repository
 public interface CandidatureRepository extends JpaRepository<Candidatura, Long> {
@@ -29,5 +30,7 @@ public interface CandidatureRepository extends JpaRepository<Candidatura, Long> 
 	           "JOIN c.tirocinio t " +           
 	           "JOIN t.azienda a")             
 	    List<CandidaturaGUI> findAllAsGUI();
+	
+	List<Candidatura> findByUtente(Utente utente);
 
 }

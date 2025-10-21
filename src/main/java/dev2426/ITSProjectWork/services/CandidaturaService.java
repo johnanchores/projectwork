@@ -1,5 +1,6 @@
 package dev2426.ITSProjectWork.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import dev2426.ITSProjectWork.model.Candidatura;
 import dev2426.ITSProjectWork.model.CandidaturaGUI;
+import dev2426.ITSProjectWork.model.Utente;
 import dev2426.ITSProjectWork.repository.CandidatureRepository;
 
 @Service
@@ -47,6 +49,27 @@ public class CandidaturaService {
 		repo.save(c);
 	}
 	
-	
+	public List<CandidaturaGUI> getUserCandidatureGui(Utente utente) {
+        List<Candidatura> candidature = repo.findByUtente(utente);
+        
+        List<CandidaturaGUI> candidatureGUI = new ArrayList<>();
+
+        for (Candidatura c : candidature) {
+            CandidaturaGUI gui = new CandidaturaGUI();
+            gui.setMansioneTirocinio(c.getTirocinio().getMansione());
+            gui.setNomeAzienda(c.getTirocinio().getAzienda().getNome());
+
+            switch (c.getStato()) {
+                case 0: gui.setStato("In attesa"); break;
+                case 1: gui.setStato("Accettata"); break;
+                case 2: gui.setStato("Rifiutata"); break;
+                default: gui.setStato("Sconosciuto");
+            }
+            
+            candidatureGUI.add(gui);
+        }
+        
+        return candidatureGUI;
+    }
 
 }
