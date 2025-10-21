@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev2426.ITSProjectWork.model.Candidatura;
+import dev2426.ITSProjectWork.model.CandidaturaGUI;
 import dev2426.ITSProjectWork.repository.CandidatureRepository;
 
 @Service
@@ -17,6 +18,10 @@ public class CandidaturaService {
 	
 	public List<Candidatura> getAll(){
 		return repo.findAll();
+	}
+	
+	public List<CandidaturaGUI> getAllCandGUI(){
+		return repo.findAllAsGUI();
 	}
 	
 	public void insert(Candidatura nuova) {

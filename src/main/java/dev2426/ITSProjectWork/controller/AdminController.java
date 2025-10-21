@@ -25,10 +25,8 @@ public class AdminController {
 	
 	@GetMapping("/visualizzaCandidature")
 	public void showCandidature(Model model) {
-		List<Candidatura> listaTutteCandidature = servizioCandidatura.getAll();
-		
-		
-		model.addAttribute("listaCandidature", listaTutteCandidature);
+		List<CandidaturaGUI> listaCandidatureVisual = servizioCandidatura.getAllCandGUI();
+		model.addAttribute("listaCandidature", listaCandidatureVisual);
 		
 	}
 

@@ -7,6 +7,7 @@ public class CandidaturaGUI {
 	private String cognomeUtente;
 	private String mansioneTirocinio;
 	private String nomeAzienda;
+	private String stato;
 	
 	
 	public long getId_candidatura() {
@@ -61,6 +62,16 @@ public class CandidaturaGUI {
 
 	public CandidaturaGUI() {
 		
+	}
+
+
+	public String getStato() {
+		return stato;
+	}
+
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 	
 	
