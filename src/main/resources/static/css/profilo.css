@@ -250,7 +250,7 @@ header h1 span {
     position: relative;
 }
 
-/* FIX: Icona occhio spostata a destra e migliorato l'allineamento */
+/* Icona occhio spostata a SINISTRA */
 .toggle-password {
     background: none;
     border: none;
@@ -258,19 +258,57 @@ header h1 span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: 15px; /* Spostato a destra per convenzione */
-    left: auto; /* Rimosso left per evitare conflitti */
+    left: 15px; /* Icona a sinistra */
+    right: auto; /* Assicura che non sia a destra */
     z-index: 10;
     cursor: pointer;
     font-size: 1.1em;
-    padding: 0; /* Rimosso padding superfluo */
+    padding: 0;
 }
 
 .password-group input {
-    /* FIX: Rimosso padding-left eccessivo, aggiunto padding-right per l'icona a destra */
-    padding-left: 12px; 
-    padding-right: 45px; 
+    /* PADDING-LEFT per fare spazio all'icona a sinistra */
+    padding-left: 45px; 
+    padding-right: 12px; /* Mantenuto un padding normale a destra */
 }
+
+/* NUOVI STILI PER LA RIORGANIZZAZIONE DELLA SEZIONE PASSWORD */
+.form-group-password-divider {
+    grid-column: 1 / -1; 
+    margin: 15px 0;
+}
+
+.form-group-password-divider hr {
+    border: none;
+    border-top: 1px solid var(--color-border); 
+    margin: 0;
+}
+
+.password-section-title {
+    grid-column: 1 / -1; 
+    font-size: 1.4em;
+    margin-top: 0; 
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 15px;
+    color: var(--color-teal-primary);
+    font-weight: 700; /* Aggiunto per coerenza con gli altri titoli */
+}
+
+/* Contenitore per i 3 campi password in una griglia a 2 colonne */
+.password-fields-grid {
+    grid-column: 1 / -1; /* Occupare l'intera larghezza della griglia principale */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Due colonne, come il resto del form */
+    gap: 25px 30px; /* Stessi gap del form principale */
+}
+
+/* Per il terzo campo password (Conferma) farlo espandere su 2 colonne se necessario */
+.password-fields-grid .form-group:nth-child(3) {
+    /* Mette il terzo campo sotto gli altri due, allineato a sinistra */
+    grid-column: 1 / 2; 
+}
+/* FINE NUOVI STILI */
 
 
 /* File Upload Group (CV) */
@@ -363,9 +401,20 @@ header h1 span {
         gap: 20px;
     }
     
-    /* FIX: Assicura che i campi password si allineino correttamente a 1 colonna */
+    /* Assicura che i campi password si allineino correttamente a 1 colonna */
     .password-group input {
-        padding-left: 12px; 
+        padding-left: 45px; 
+    }
+
+    /* La griglia delle password diventa a 1 colonna su schermi stretti */
+    .password-fields-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Rimuove l'override specifico per il 3° campo su mobile */
+    .password-fields-grid .form-group:nth-child(3) {
+        grid-column: auto; 
     }
 }
 
