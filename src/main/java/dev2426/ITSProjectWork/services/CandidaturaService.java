@@ -37,7 +37,6 @@ public class CandidaturaService {
 		
 		c.setIdCandidatura(nuova.getIdCandidatura());
 		c.setIdTirocinio(nuova.getIdTirocinio());
-		c.setOrarioLavoro(nuova.getOrarioLavoro());
 		c.setStato(nuova.getStato());
 		
 		repo.save(c);

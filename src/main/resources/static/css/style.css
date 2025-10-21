@@ -1,14 +1,13 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary-blue: #009999; 
-  --secondary-blue: #028b8b; 
+  --primary-blue: #009999;
+  --secondary-blue: #028b8b;
   --bg-light: #e3fcfc;
   --text-dark: #333;
   --text-medium: #555;
   --border-color: #e0e0e0;
-  --card-hover-bg: #e3fcfc; 
+  --card-hover-bg: #e3fcfc;
   --color-red: #dc3545;
 }
 
@@ -34,11 +33,9 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   width: 100%;
-  height: 95vh; 
+  height: 95vh;
   overflow: hidden;
 }
-
-
 
 .sidebar {
   width: 80px;
@@ -323,11 +320,12 @@ h2 strong {
   border-bottom-color: var(--primary-blue);
 }
 
-.details-content p {
+.details-content {
   font-size: 14px;
   color: var(--text-medium);
   line-height: 1.6;
   margin-bottom: 15px;
+  height: fit-content;
 }
 
 .document-link {
@@ -355,7 +353,7 @@ h2 strong {
   gap: 15px;
   padding-top: 20px;
   border-top: 1px solid var(--border-color);
-  margin-top: auto; 
+  margin-top: auto;
 }
 
 .favorite-btn {
@@ -390,4 +388,162 @@ h2 strong {
 
 .apply-btn:hover {
   background-color: #028b8bc9;
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    height: 70px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+
+  .user-profile {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .content-area {
+    padding: 20px;
+  }
+
+  .job-details-panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .app-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    height: 60px;
+    justify-content: space-around;
+    padding: 5px 0;
+  }
+
+  .sidebar-icon i {
+    font-size: 22px;
+  }
+
+  .content-area {
+    padding: 15px;
+  }
+
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .job-info h3 {
+    font-size: 16px;
+  }
+
+  .job-description {
+    font-size: 13px;
+  }
+
+  .job-details-panel {
+    display: none;
+  }
+
+  .apply-actions {
+    flex-direction: column;
+  }
+
+  .apply-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  .pill {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .job-card {
+    padding: 15px;
+  }
+
+  .job-info h3 {
+    font-size: 15px;
+  }
+
+  .salary {
+    font-size: 16px;
+  }
+}
+
+/* Stile base per l'overlay (Sfondo scuro) */
+/* Stile base per l'overlay */
+.overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow-y: auto;
+  /* 💥 QUESTO È IL PUNTO CHIAVE PER NASCONDERLO ALL'INIZIO 💥 */
+  display: none;
+
+  /* Le proprietà seguenti servono solo quando è visibile */
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+/* Stile per MOSTRARE l'overlay, viene aggiunto dal JavaScript */
+.overlay-modal.show {
+  /* 💥 Usa 'flex' o 'block' per visualizzarlo 💥 */
+  display: flex;
+}
+
+/* Regoliamo la posizione e la dimensione del pannello all'interno dell'overlay */
+.job-details-panel {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  /* Rimuovi la gestione della colonna laterale precedente */
+}
+
+/* Bottone di chiusura all'interno del modale */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 24px;
+  z-index: 1001;
 }
