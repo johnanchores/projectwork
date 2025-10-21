@@ -16,21 +16,6 @@
         <a th:href="@{/}" class="sidebar-icon active"
           ><i class="material-icons">home</i></a
         >
-        <a th:href="@{/bookmarks}" class="sidebar-icon"
-          ><i class="material-icons">bookmark_border</i></a
-        >
-        <a th:href="@{/jobs}" class="sidebar-icon"
-          ><i class="material-icons">work_outline</i></a
-        >
-        <a th:href="@{/schedule}" class="sidebar-icon"
-          ><i class="material-icons">schedule</i></a
-        >
-        <a th:href="@{/inbox}" class="sidebar-icon"
-          ><i class="material-icons">inbox</i></a
-        >
-        <a th:href="@{/settings}" class="sidebar-icon"
-          ><i class="material-icons">settings</i></a
-        >
         <div class="user-profile">
           <img th:src="@{/image/image.png}" alt="User" class="profile-pic" />
         </div>
@@ -55,9 +40,13 @@
                 Descrizione Breve
               </p>
 
-              <div class="tags-row">
-                <span class="location-tag">UX Designer</span>
-              </div>
+              <section class="tags-row">
+                <div th:each="competenza : ${job.competenze}">
+                  <span class="location-tag" th:text="${competenza.nome}"
+                    >UX Designer</span
+                  >
+                </div>
+              </section>
             </div>
           </article>
         </section>

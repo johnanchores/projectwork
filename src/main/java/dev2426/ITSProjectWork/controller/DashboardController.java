@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dev2426.ITSProjectWork.model.Candidatura;
-import dev2426.ITSProjectWork.model.Competenza;
 import dev2426.ITSProjectWork.model.Azienda;
 import dev2426.ITSProjectWork.model.Tirocinio;
 import dev2426.ITSProjectWork.model.TirocinioGUI;
 import dev2426.ITSProjectWork.model.Utente;
 import dev2426.ITSProjectWork.services.AziendaService;
 import dev2426.ITSProjectWork.services.CandidaturaService;
-import dev2426.ITSProjectWork.services.CompetenzaService;
 import dev2426.ITSProjectWork.services.TirocinioService;
 import dev2426.ITSProjectWork.services.UtentiService;
 
@@ -40,9 +38,6 @@ public class DashboardController {
 	@Autowired
 	private TirocinioService tServ;
 
-	@Autowired
-	private CompetenzaService coServ;
-
 	@GetMapping("/dashboard")
 	public String showHome(Model model) {
 		List<Tirocinio> listaTir = tServ.getAll();
@@ -59,11 +54,12 @@ public class DashboardController {
 					tg.setMansione(t.getMansione());
 					tg.setNomeAzienda(a.getNome());
 					tg.setId_tirocinio(t.getIdTirocinio());
+					tg.setCompetenze(t.getCompetenze());
 
 				}
 
 			}
-		
+
 			listaCompleta.add(tg);
 
 		}

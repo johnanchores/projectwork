@@ -8,8 +8,7 @@ public class TirocinioGUI {
 	private String durata;
 	private String nomeAzienda;
 	private String descrizione;
-	private List<Long> competenze;
-	private List<String> nome_competenza;
+	private List<Competenza> competenze;
 	private long id_tirocinio;
 
 	public long getId_tirocinio() {
@@ -46,24 +45,18 @@ public class TirocinioGUI {
 	}
 	
 	public TirocinioGUI() {
-		
+
 	}
-	public List<Long> getCompetenze() {
+	public List<Competenza> getCompetenze() {
 		return competenze;
 	}
-	public void setCompetenze(List<Long> competenze) {
+	
+	public void setCompetenza(Competenza competenza) {
+		this.competenze.add(competenza);
+	}
+	
+	public void setCompetenze(List<Competenza>	competenze) {
 		this.competenze = competenze;
-	}
-	public List<String> getNome_competenza() {
-		return nome_competenza;
-	}
-	
-	public void setNome_competenza(List<String>	nome_competenza) {
-		this.nome_competenza = nome_competenza;
-	}
-	
-	public void addNome_competenza(String nome_competenza) {
-		this.nome_competenza.add(nome_competenza);
 	}
 
 }
