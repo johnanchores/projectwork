@@ -1,161 +1,259 @@
 <!DOCTYPE html>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profilo Utente</title>
-    <link rel="stylesheet" href="../css/profilo.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/profilo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
     <header>
-        <h1>
-            <img th:src="@{/image/logo2}" alt="Logo" height="30px" /> 
-            Profilo di <span th:text="${utente.nome}">Nome Utente</span>
-        </h1>
-        
+      <h1>
+        <img th:src="@{/image/logo2}" alt="Logo" height="30px" />
+        Profilo di <span th:text="${utente.nome}">Nome Utente</span>
+      </h1>
 
-        <div class="header-nav">
-            <a th:href="@{/home}" class="nav-switch-button"><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a>
-            <a th:href="@{/admin}" class="nav-switch-button"><i class="fas fa-lock-open"></i> Vai all'Area Admin</a>
-            <a th:href="@{/home}" class="nav-switch-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+      <div class="header-nav">
+        <a th:href="@{/home}" class="nav-switch-button"
+          ><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a
+        >
+        <a th:href="@{/admin}" class="nav-switch-button"
+          ><i class="fas fa-lock-open"></i> Vai all'Area Admin</a
+        >
+        <a th:href="@{/home}" class="nav-switch-button"
+          ><i class="fas fa-sign-out-alt"></i> Logout</a
+        >
+      </div>
     </header>
 
     <main class="profile-container">
-        <nav class="profile-nav">
-            <button class="nav-button active" onclick="showSection('candidature', event)">Dettagli Candidature</button>
-            <button class="nav-button" onclick="showSection('modifica-profilo', event)">Modifica Profilo</button>
-        </nav>
+      <nav class="profile-nav">
+        <button
+          class="nav-button active"
+          onclick="showSection('candidature', event)"
+        >
+          <i class="fas fa-file-alt"></i> Dettagli Candidature
+        </button>
+        <button
+          class="nav-button"
+          onclick="showSection('modifica-profilo', event)"
+        >
+          <i class="fas fa-user-edit"></i> Modifica Profilo
+        </button>
+      </nav>
 
-        <section id="candidature" class="profile-section active">
-            <h2>Dettagli delle mie candidature</h2>
-            <div class="candidature-list">
-                <div class="candidatura-item">
-                    <h3>Frontend Developer (Esempio)</h3>
-                    </div>
+      <section id="candidature" class="profile-section active">
+        <h2>Dettagli delle mie candidature</h2>
+        <div class="candidature-list">
+          <div class="candidatura-item">
+            <h3>Frontend Developer (Esempio)</h3>
+            <p><strong>Azienda:</strong> TechCorp S.p.A.</p>
+            <p><strong>Data Candidatura:</strong> 15/10/2025</p>
+            <span class="status pending">In revisione</span>
+            <button class="btn-anteprima">
+              <i class="fas fa-eye"></i> Visualizza Dettagli
+            </button>
+          </div>
+          <div class="candidatura-item">
+            <h3>Backend Engineer</h3>
+            <p><strong>Azienda:</strong> DataSolutions s.r.l.</p>
+            <p><strong>Data Candidatura:</strong> 01/09/2025</p>
+            <span class="status accepted">Accettata</span>
+            <button class="btn-anteprima">
+              <i class="fas fa-eye"></i> Visualizza Contratto
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="modifica-profilo" class="profile-section">
+        <h2>Modifica il profilo</h2>
+
+        <form
+          class="profile-form"
+          th:action="@{/profilo}"
+          method="post"
+          th:object="${utenteGUI}"
+          enctype="multipart/form-data"
+        >
+          <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="*{nome}" />
+          </div>
+          <div class="form-group">
+            <label for="cognome">Cognome:</label>
+            <input type="text" id="cognome" th:field="*{cognome}" />
+          </div>
+
+          <div class="form-group file-upload-group">
+            <label for="curriculumFile">Curriculum Vitae (PDF/DOCX):</label>
+            <input
+              type="file"
+              id="curriculumFile"
+              name="curriculumFile"
+              accept=".pdf,.doc,.docx"
+              style="display: none"
+            />
+
+            <button
+              type="button"
+              class="btn-save btn-upload"
+              onclick="document.getElementById('curriculumFile').click()"
+            >
+              <i class="fas fa-file-upload"></i> Carica Curriculum
+            </button>
+            <span id="curriculumFileName" class="file-name-display"
+              >Nessun file selezionato</span
+            >
+          </div>
+
+          <hr
+            style="
+              grid-column: 1 / -1;
+              margin-top: 15px;
+              border-color: rgba(255, 255, 255, 0.1);
+            "
+          />
+
+          <h3 style="color: var(--primary-teal)">
+            Cambia Password (lascia vuoto per non modificare)
+          </h3>
+
+          <div class="form-group">
+            <label for="password">Password Corrente:</label>
+            <div class="password-group">
+              <input
+                type="password"
+                id="password"
+                th:field="*{password}"
+                placeholder="Inserisci la password attuale"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                onclick="toggleVisibility('password', this)"
+              >
+                <i class="fas fa-eye"></i>
+              </button>
             </div>
-        </section>
+          </div>
 
-        <section id="modifica-profilo" class="profile-section">
-            <h2>Modifica il profilo</h2>
+          <div class="form-group">
+            <label for="passwordNuova">Nuova Password:</label>
+            <div class="password-group">
+              <input
+                type="password"
+                id="passwordNuova"
+                th:field="*{passwordNuova}"
+                placeholder="Inserisci la nuova password"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                onclick="toggleVisibility('passwordNuova', this)"
+              >
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
 
-            <form class="profile-form" th:action="@{/profilo}" method="post" th:object="${utenteGUI}" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" th:field="*{nome}">
-                </div>
-                <div class="form-group">
-                    <label for="cognome">Cognome:</label>
-                    <input type="text" id="cognome" th:field="*{cognome}">
-                </div>
-                
-                <div class="form-group file-upload-group">
-                    <label for="curriculumFile">Curriculum Vitae (PDF/DOCX):</label>
-                    <input type="file" id="curriculumFile" name="curriculumFile" accept=".pdf,.doc,.docx" style="display: none;">
-                    
-                    <button type="button" class="btn-save btn-upload" onclick="document.getElementById('curriculumFile').click()">
-                        <i class="fas fa-file-pdf"></i> Carica Curriculum
-                    </button>
-                    <span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
-                </div>
-                <hr style="grid-column: 1 / -1; margin-top: 15px; border-color: var(--color-border);">
-                
-                <h3>Cambia Password (lascia vuoto per non modificare)</h3>
+          <div class="form-group">
+            <label for="confermaPassword">Conferma nuova Password:</label>
+            <div class="password-group">
+              <input
+                type="password"
+                id="confermaPassword"
+                th:field="*{confermaPassword}"
+                placeholder="Reinserisci la nuova password"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                onclick="toggleVisibility('confermaPassword', this)"
+              >
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
 
-                <div class="form-group">
-                    <label for="password">Password Corrente:</label>
-                    <div class="password-group">
-                        <input type="password" id="password" th:field="*{password}" placeholder="Inserisci la password attuale">
-                        <button type="button" class="toggle-password" onclick="toggleVisibility('password', this)"><i class="fas fa-eye"></i></button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="passwordNuova">Nuova Password:</label>
-                    <div class="password-group">
-                        <input type="password" id="passwordNuova" th:field="*{passwordNuova}" placeholder="Inserisci la nuova password">
-                        <button type="button" class="toggle-password" onclick="toggleVisibility('passwordNuova', this)"><i class="fas fa-eye"></i></button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confermaPassword">Conferma nuova Password:</label>
-                    <div class="password-group">
-                        <input type="password" id="confermaPassword" th:field="*{confermaPassword}" placeholder="Reinserisci la nuova password">
-                        <button type="button" class="toggle-password" onclick="toggleVisibility('confermaPassword', this)"><i class="fas fa-eye"></i></button>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-save">Salva modifiche</button>
-                </div>
-            </form>
-        </section>
+          <div class="form-actions">
+            <button type="submit" class="btn-save">
+              <i class="fas fa-check-circle"></i> Salva modifiche
+            </button>
+          </div>
+        </form>
+      </section>
     </main>
 
     <script>
-        // FIX: Added 'event' as a parameter and check to resolve a potential JS error
-        function showSection(sectionId, event) {
-            document.querySelectorAll('.profile-section').forEach(section => {
-                section.classList.remove('active');
-            });
-
-            document.querySelectorAll('.nav-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            document.getElementById(sectionId).classList.add('active');
-
-            // FIX: Use the passed event or fall back to finding the button
-            const targetButton = event ? event.currentTarget : document.querySelector(`.nav-button[onclick*="${sectionId}"]`);
-            if (targetButton) {
-                targetButton.classList.add('active');
-            }
-        }
-
-        function toggleVisibility(inputId, buttonElement) {
-            const passwordInput = document.getElementById(inputId);
-            const icon = buttonElement.querySelector('i');
-
-            if (passwordInput.getAttribute('type') === 'password') {
-                passwordInput.setAttribute('type', 'text');
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.setAttribute('type', 'password');
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            if (!document.querySelector('.profile-nav .nav-button.active')) {
-                document.getElementById('candidature').classList.add('active');
-                document.querySelector('.nav-button[onclick*="candidature"]').classList.add('active');
-            }
-
-            const fileInputMap = {
-                // 'profileImage': 'profileImageName', // Removed as it wasn't in the HTML
-                'curriculumFile': 'curriculumFileName' 
-            };
-        
-             for (const inputId in fileInputMap) {
-                const fileInput = document.getElementById(inputId);
-                const fileNameDisplay = document.getElementById(fileInputMap[inputId]);
-
-                if (fileInput && fileNameDisplay) {
-                    fileInput.addEventListener('change', function() {
-                        if (this.files.length > 0) {
-                            fileNameDisplay.textContent = this.files[0].name;
-                        } else {
-                            fileNameDisplay.textContent = 'Nessun file selezionato';
-                        }
-                    });
-                }
-            }
+      function showSection(sectionId, event) {
+        document.querySelectorAll(".profile-section").forEach((section) => {
+          section.classList.remove("active");
         });
+
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          button.classList.remove("active");
+        });
+
+        document.getElementById(sectionId).classList.add("active");
+
+        const targetButton = event
+          ? event.currentTarget
+          : document.querySelector(`.nav-button[onclick*="${sectionId}"]`);
+        if (targetButton) {
+          targetButton.classList.add("active");
+        }
+      }
+
+      function toggleVisibility(inputId, buttonElement) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = buttonElement.querySelector("i");
+
+        if (passwordInput.getAttribute("type") === "password") {
+          passwordInput.setAttribute("type", "text");
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          passwordInput.setAttribute("type", "password");
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Inizializza la sezione 'candidature' se nessuna è attiva
+        if (!document.querySelector(".profile-nav .nav-button.active")) {
+          document.getElementById("candidature").classList.add("active");
+          document
+            .querySelector('.nav-button[onclick*="candidature"]')
+            .classList.add("active");
+        }
+
+        const fileInputMap = {
+          curriculumFile: "curriculumFileName",
+        };
+
+        for (const inputId in fileInputMap) {
+          const fileInput = document.getElementById(inputId);
+          const fileNameDisplay = document.getElementById(
+            fileInputMap[inputId]
+          );
+
+          if (fileInput && fileNameDisplay) {
+            fileInput.addEventListener("change", function () {
+              if (this.files.length > 0) {
+                fileNameDisplay.textContent = this.files[0].name;
+              } else {
+                fileNameDisplay.textContent = "Nessun file selezionato";
+              }
+            });
+          }
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

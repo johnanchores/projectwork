@@ -320,11 +320,12 @@ h2 strong {
   border-bottom-color: var(--primary-blue);
 }
 
-.details-content p {
+.details-content {
   font-size: 14px;
   color: var(--text-medium);
   line-height: 1.6;
   margin-bottom: 15px;
+  height: fit-content;
 }
 
 .document-link {
@@ -494,4 +495,55 @@ h2 strong {
   .salary {
     font-size: 16px;
   }
+}
+
+/* Stile base per l'overlay (Sfondo scuro) */
+/* Stile base per l'overlay */
+.overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow-y: auto;
+  /* 💥 QUESTO È IL PUNTO CHIAVE PER NASCONDERLO ALL'INIZIO 💥 */
+  display: none;
+
+  /* Le proprietà seguenti servono solo quando è visibile */
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+/* Stile per MOSTRARE l'overlay, viene aggiunto dal JavaScript */
+.overlay-modal.show {
+  /* 💥 Usa 'flex' o 'block' per visualizzarlo 💥 */
+  display: flex;
+}
+
+/* Regoliamo la posizione e la dimensione del pannello all'interno dell'overlay */
+.job-details-panel {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  /* Rimuovi la gestione della colonna laterale precedente */
+}
+
+/* Bottone di chiusura all'interno del modale */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 24px;
+  z-index: 1001;
 }
