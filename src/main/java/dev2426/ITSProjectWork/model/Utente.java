@@ -1,5 +1,6 @@
 package dev2426.ITSProjectWork.model;
-	
+
+import jakarta.persistence.Column; // Import aggiunto per l'annotazione @Column
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,85 +10,90 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "utente")
 public class Utente {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_utente;	
-	private String nome;
-	private String cognome;
-	private String email;
-	private String password;
-	private byte[] CV;
-	private String stato;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id_utente; 
+    
+    private String nome;
+    private String cognome;
+    private String email;
+    private String password;
+    @Column(name = "curriculum_path")
+    private String curriculumPath;
+    
+    private String stato;
 
-	public long getIdUtente() {
-		return id_utente;
-	}
+    public long getIdUtente() {
+        return id_utente;
+    }
 
-	public void setIdUtente(long idUtente) {
-		this.id_utente = idUtente;
-	}
+    public void setIdUtente(long idUtente) {
+        this.id_utente = idUtente;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public String getCognome() {
-		return cognome;
-	}
+    public String getCognome() {
+        return cognome;
+    }
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String getCurriculumPath() {
+        return curriculumPath;
+    }
 
-	public byte[] getCV() {
-		return CV;
-	}
+    public void setCurriculumPath(String curriculumPath) {
+        this.curriculumPath = curriculumPath;
+    }
+    
+    public String getStato() {
+        return stato;
+    }
 
-	public void setCV(byte[] cV) {
-		CV = cV;
-	}
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
 
-	public Utente(long idUtente, String nome, String cognome, String email, String password, byte[] cV) {
-		super();
-		this.id_utente = idUtente;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.email = email;
-		this.password = password;
-		CV = cV;
-	}
+    // --- Costruttori ---
 
-	public Utente() {
-		
-	}
+    public Utente(long idUtente, String nome, String cognome, String email, String password, String curriculumPath) {
+        super();
+        this.id_utente = idUtente;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+        this.curriculumPath = curriculumPath; // CV Path
+        this.stato = "ATTIVO"; // Esempio: imposta uno stato di default
+    }
 
-	public String getStato() {
-		return stato;
-	}
-
-	public void setStato(String stato) {
-		this.stato = stato;
-	}
-
+    public Utente() {
+        
+    }
 }
