@@ -114,56 +114,11 @@ body::before {
   box-shadow: 0 0 25px rgba(0, 217, 255, 0.8);
 }
 
-/* =======================================
-    3. CONTAINER & SEZIONI
-    ======================================= */
-.admin-container {
-  max-width: 1400px;
-  width: 95%;
-  margin: 40px auto;
-  padding: 0 20px;
-}
 
-.tirocinio-form textarea::placeholder {
-  color: #616161;
-  opacity: 0.8;
-}
-
-.tirocinio-form input::placeholder {
-  color: #616161;
-  opacity: 0.8;
-}
-
-section {
-  padding: 30px;
-  background: var(--card-bg); /* Glassmorphism Base */
-  backdrop-filter: blur(8px);
-  border-radius: 15px;
-  box-shadow: var(--shadow-vibrant);
-  border: var(--border-glow);
-  margin-bottom: 40px;
-}
-
-hr {
-  border: none;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(0, 188, 212, 0.5),
-    transparent
-  );
-  margin: 40px 0;
-}
-
-h2 {
-  font-size: 1.8em;
-  color: var(--secondary-purple);
-  margin-bottom: 25px;
-  border-bottom: 2px solid var(--primary-teal);
-  padding-bottom: 10px;
-  font-weight: 600;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+.nav-switch-button.logout:hover {
+    background-color: var(--color-teal-light);
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.6);
 }
 
 /* =======================================
