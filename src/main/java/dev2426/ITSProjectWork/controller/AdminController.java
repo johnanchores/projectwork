@@ -20,14 +20,13 @@ public class AdminController {
 	
 	@GetMapping("/admin")
 	public String showPage() {
-		return "redirect:/profiloadmin";
+		return "redirect:/private/profiloadmin";
 	}
 	
 	@GetMapping("/visualizzaCandidature")
 	public void showCandidature(Model model) {
 		List<CandidaturaGUI> listaCandidatureVisual = servizioCandidatura.getAllCandGUI();
-		model.addAttribute("listaCandidature", listaCandidatureVisual);
-		
+		model.addAttribute("listaCandidature", listaCandidatureVisual);	
 	}
 
 }
