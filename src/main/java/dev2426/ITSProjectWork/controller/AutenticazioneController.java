@@ -60,7 +60,7 @@ public class AutenticazioneController {
 
 		if (authentication != null && authentication.isAuthenticated()
 				&& !authentication.getName().equals("anonymousUser")) {
-			return "redirect:/home";
+			return "redirect:/dashboard";
 		} else {
 			return "redirect:/login";
 		}
