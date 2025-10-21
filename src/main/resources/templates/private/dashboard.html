@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>Ricerca Lavoro - Tirocini</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link
@@ -85,9 +85,11 @@
           </div>
 
           <div class="apply-actions">
+            <!--
             <button class="favorite-btn" id="aside-favorite-btn">
               <i class="material-icons">favorite_border</i>
             </button>
+            -->
             <button class="apply-btn" id="aside-apply-btn">Candidati</button>
           </div>
         </aside>
