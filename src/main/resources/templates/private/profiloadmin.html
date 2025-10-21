@@ -6,7 +6,7 @@
     <title>Pannello Admin - Gestione Candidature</title>
     <link rel="stylesheet" href="../../static/css/profiloadmin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    </head>
+</head>
 <body>
     <header class="admin-header">
         <h1><img
@@ -14,10 +14,18 @@
             alt=""
             height="130px"
           /> Pannello di Amministrazione</h1>
-        <a href="dashboard.html" class="nav-switch-button"><i class="fa-eye-slash"></i> Vai alla dashboard</a>
-        <a href="profilo.html" class="nav-switch-button">
-            <i class="fas fa-user-circle"></i> Vai all'Area Utente
-        </a>
+        
+        <div class="header-nav-links">
+            <a href="dashboard.html" class="nav-switch-button"><i class="fas fa-table-columns"></i> Vai alla dashboard</a>
+            
+            <a href="profilo.html" class="nav-switch-button">
+                <i class="fas fa-user-circle"></i> Vai all'Area Utente
+            </a>
+            
+            <a href="/logout" class="nav-switch-button logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
     </header>
 
     <main class="admin-container">
