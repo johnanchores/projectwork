@@ -12,19 +12,20 @@
   </head>
   <body>
     <header>
+      <img th:src="@{/image/logo2.png}" alt="Logo" height="50px" />
+
       <h1>
-        <img th:src="@{/image/logo2}" alt="Logo" height="30px" />
-        Profilo di <span th:text="${utente.nome}">Nome Utente</span>
+        Profilo di <span th:text="${' ' + utente.nome}">Nome Utente</span>
       </h1>
 
       <div class="header-nav">
-        <a th:href="@{/home}" class="nav-switch-button"
+        <a th:href="@{/dashboard}" class="nav-switch-button"
           ><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a
         >
         <a th:href="@{/admin}" class="nav-switch-button"
           ><i class="fas fa-lock-open"></i> Vai all'Area Admin</a
         >
-        <a th:href="@{/home}" class="nav-switch-button"
+        <a th:href="@{/login?logout}" class="nav-switch-button"
           ><i class="fas fa-sign-out-alt"></i> Logout</a
         >
       </div>
