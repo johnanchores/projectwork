@@ -61,6 +61,7 @@ public class CandidaturaService {
 			CandidaturaGUI gui = new CandidaturaGUI();
 			gui.setMansioneTirocinio(c.getTirocinio().getMansione());
 			gui.setNomeAzienda(c.getTirocinio().getAzienda().getNome());
+			gui.setDescrizioneTirocinio(c.getTirocinio().getDescrizione());
 
 			switch (c.getStato()) {
 				case 0:
