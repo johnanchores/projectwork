@@ -40,9 +40,6 @@ public class DashboardController {
 	@Autowired
 	private TirocinioService tServ;
 
-	@Autowired
-	private CompetenzaService coServ;
-
 	@GetMapping("/dashboard")
 	public String showHome(Model model) {
 		List<Tirocinio> listaTir = tServ.getAll();
