@@ -1,22 +1,17 @@
 /* =======================================
     1. VARIABILI & SETUP GLOBALE
-    ======================================= */
+======================================= */
 :root {
-    /* Colori Tema Light/Teal */
-    --color-teal-primary: #008080; /* Teal scuro, dominante */
-    --color-teal-light: #00b3b3; /* Teal chiaro per hover/accento */
-    --color-background: #f0f4f8; /* Sfondo generale molto soft blue-grey */
-    --color-card: white; /* Sfondo delle schede */
-    --color-text-dark: #2c3e50; /* Testo principale */
-    --color-text-medium: #7f8c8d; /* Testo secondario/label */
-    --color-border: #e0e6ed; /* Bordo leggero */
-
-    /* Ombre & Raggi */
-    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08); 
-    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4); 
-    --radius-main: 10px; 
-
-    /* Colori Stati & Azioni */
+    --color-teal-primary: #008080;
+    --color-teal-light: #00b3b3;
+    --color-background: #f0f4f8;
+    --color-card: white;
+    --color-text-dark: #2c3e50;
+    --color-text-medium: #7f8c8d;
+    --color-border: #e0e6ed;
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4);
+    --radius-main: 10px;
     --danger-red: #f44336;
     --success-green: #4caf50;
     --warning-yellow: #ffc107;
@@ -35,7 +30,7 @@ body {
 
 /* =======================================
     2. STRUTTURA GENERALE & TITOLI
-    ======================================= */
+======================================= */
 .admin-container {
     max-width: 1200px;
     width: 95%;
@@ -70,11 +65,11 @@ h2 {
 
 /* =======================================
     3. HEADER & NAVIGAZIONE
-    ======================================= */
+======================================= */
 .admin-header {
     background-color: var(--color-card);
-    padding: 18px 50px; 
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
+    padding: 18px 50px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     display: flex;
@@ -105,8 +100,8 @@ h2 {
 .nav-switch-button {
     background: var(--color-teal-primary);
     color: white;
-    padding: 10px 18px; 
-    border-radius: 20px; 
+    padding: 10px 18px;
+    border-radius: 20px;
     font-weight: 600;
     font-size: 14px;
     text-decoration: none;
@@ -120,20 +115,13 @@ h2 {
 
 .nav-switch-button:hover {
     background-color: var(--color-teal-light);
-    transform: translateY(-2px); 
-    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.6);
-}
-
-
-.nav-switch-button.logout:hover {
-    background-color: var(--color-teal-light);
-    transform: translateY(-2px); 
+    transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 128, 128, 0.6);
 }
 
 /* =======================================
     4. FORM: Aggiungi/Modifica Annuncio
-    ======================================= */
+======================================= */
 .tirocinio-form {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -156,8 +144,9 @@ h2 {
     font-size: 0.95em;
 }
 
-.tirocinio-form input, 
-.tirocinio-form textarea {
+.tirocinio-form input,
+.tirocinio-form textarea,
+.tirocinio-form select {
     padding: 12px;
     border: 1px solid var(--color-border);
     border-radius: 6px;
@@ -174,10 +163,11 @@ h2 {
     opacity: 0.6;
 }
 
-.tirocinio-form input:focus, 
-.tirocinio-form textarea:focus {
+.tirocinio-form input:focus,
+.tirocinio-form textarea:focus,
+.tirocinio-form select:focus {
     border-color: var(--color-teal-light);
-    box-shadow: 0 0 0 3px rgba(0, 179, 179, 0.1); 
+    box-shadow: 0 0 0 3px rgba(0, 179, 179, 0.1);
     outline: none;
 }
 
@@ -225,7 +215,7 @@ h2 {
 
 /* =======================================
     5. TABELLA: Candidature Ricevute
-    ======================================= */
+======================================= */
 .section-table > p {
     color: var(--color-text-medium);
     margin-bottom: 25px;
@@ -260,7 +250,7 @@ h2 {
     transition: background-color 0.3s;
 }
 
-/* Stili degli Stati */
+/* Stati candidatura */
 .status {
     padding: 5px 10px;
     border-radius: 12px;
@@ -271,19 +261,19 @@ h2 {
 }
 
 .status-pending {
-    background-color: #fff3cd; 
+    background-color: #fff3cd;
     color: #856404;
 }
 .status-accepted {
-    background-color: #d4edda; 
+    background-color: #d4edda;
     color: #155724;
 }
 .status-rejected {
-    background-color: #f8d7da; 
+    background-color: #f8d7da;
     color: #721c24;
 }
 
-/* Pulsanti Azioni Tabella */
+/* Pulsanti tabella */
 .btn-action {
     padding: 8px 12px;
     border: none;
@@ -293,7 +283,7 @@ h2 {
     font-size: 12px;
     font-weight: 600;
     transition: all 0.2s;
-    color: white; 
+    color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     margin-top: 5px;
 }
@@ -303,29 +293,14 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.btn-action.view {
-    background-color: var(--color-teal-primary); 
-}
-.btn-action.accept {
-    background-color: var(--success-green); 
-}
-.btn-action.reject {
-    background-color: var(--danger-red); 
-}
-.btn-action.remove {
-    background-color: #6c757d; 
-}
-
+.btn-action.view { background-color: var(--color-teal-primary); }
+.btn-action.accept { background-color: var(--success-green); }
+.btn-action.reject { background-color: var(--danger-red); }
+.btn-action.remove { background-color: #6c757d; }
 
 /* =======================================
-    6. MEDIA QUERIES (RESPONSIVENESS)
-    ======================================= */
-@media (max-width: 1024px) {
-    .tirocinio-form {
-        grid-template-columns: 1fr;
-    }
-}
-
+    6. RESPONSIVE
+======================================= */
 @media (max-width: 768px) {
     .admin-header {
         flex-direction: column;
@@ -333,17 +308,17 @@ h2 {
         padding: 15px 20px;
         margin-bottom: 20px;
     }
-    
+
     .header-nav-links {
         flex-direction: column;
         width: 100%;
     }
-    
+
     .nav-switch-button {
         width: 100%;
         justify-content: center;
     }
-    
+
     .admin-container {
         padding: 0 10px;
         margin: 20px auto;
@@ -352,18 +327,19 @@ h2 {
     section {
         padding: 20px;
     }
-    
+
     .section-table {
         overflow-x: auto;
     }
 
     .candidature-table {
-        min-width: 700px; 
+        min-width: 700px;
     }
 
     .form-actions {
         flex-direction: column;
     }
+
     .btn-primary, .btn-secondary {
         width: 100%;
         justify-content: center;
