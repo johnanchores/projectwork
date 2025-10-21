@@ -10,25 +10,17 @@
 </head>
 
 <body>
-    <header class="header"> 
-        <h1><img
-                src="/src/main/resources/static/image/logo2.png"
-                alt=""
-                height="130px"
-            />   Profilo di <span th:text="${utente.nome}">Nome Utente</span>
+    <header>
+        <h1>
+            <img th:src="@{/image/logo2.png}" alt="Logo" height="130px" />
+            Profilo di&nbsp<span th:text="${utente.nome}">Nome Utente</span>
+        </h1>
 
-</h1>
-        
-        <div class="header-nav-links">
-            <a href="dashboard.html" class="nav-switch-button"><i class="fas fa-table-columns"></i> Vai alla dashboard</a>
-            
-            <a href="profiloadmin.html" class="nav-switch-button">
-                <i class="fas fa-user-circle"></i> Vai all'Area Admin
-            </a>
-            
-            <a href="/logout" class="nav-switch-button logout">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+        <div class="header-nav">
+            <a th:href="@{/dashboard}" class="nav-switch-button"><i class="fa-solid fa-table-columns"></i> Vai alla
+                dashboard</a>
+            <a th:href="@{/admin}" class="nav-switch-button"><i class="fas fa-lock-open"></i> Vai all'Area Admin</a>
+            <a th:href="@{/login?logout}" class="nav-switch-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </header>
 
@@ -48,16 +40,21 @@
 
                 <div class="candidatura-item" th:each="candidatura : ${listaCandidature}">
                     <h3 th:text="${candidatura.mansioneTirocinio}">Frontend Developer</h3>
-                    <p><strong>Azienda:</strong> <span th:text="${candidatura.nomeAzienda}"></span></p>
+                    <p><strong>Azienda:</strong> <span th:text="${candidatura.nomeAzienda}">Nome Azienda</span></p>
                     <span class="status"
                         th:classappend="${candidatura.stato == 'Accettata' ? 'accepted' : (candidatura.stato == 'Rifiutata' ? 'rejected' : 'pending')}"
                         th:text="${candidatura.stato}">
                         In revisione
                     </span>
 
-                    <button class="btn-anteprima">
-                        <i class="fas fa-eye"></i> Visualizza Dettagli
-                    </button>
+                    <a href="#" class="btn-anteprima" onclick="openModal(event, 
+                         this.closest('.candidatura-item').querySelector('h3').textContent, 
+                         this.closest('.candidatura-item').querySelector('p strong ~ span').textContent,
+                         this.closest('.candidatura-item').querySelector('.status').textContent,
+                         this.closest('.candidatura-item').querySelector('.status').className)">
+                        <i class="fas fa-eye"></i> 
+                        Visualizza dettagli
+                    </a>
                 </div>
             </div>
         </section>
@@ -88,9 +85,9 @@
                     <span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
                 </div>
 
-                <hr style="grid-column: 1 / -1; margin-top: 15px; border-color: rgba(255, 255, 255, 0.1);">
+                <hr style="grid-column: 1 / -1; margin-top: 15px; border-color: rgba(0, 0, 0, 0.1);">
 
-                <h3 class="password-section-title">Cambia Password (lascia vuoto per non modificare)</h3>
+                <h3 style="color: var(--primary-teal);">Cambia Password (lascia vuoto per non modificare)</h3>
 
                 <div class="form-group">
                     <label for="password">Password Corrente:</label>
@@ -129,67 +126,25 @@
         </section>
     </main>
 
-    <script>
-        function showSection(sectionId, event) {
-            document.querySelectorAll('.profile-section').forEach(section => {
-                section.classList.remove('active');
-            });
-
-            document.querySelectorAll('.nav-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            document.getElementById(sectionId).classList.add('active');
-
-            const targetButton = event ? event.currentTarget : document.querySelector;
-            if (targetButton) {
-                targetButton.classList.add('active');
-            }
-        }
-
-        function toggleVisibility(inputId, buttonElement) {
-            const passwordInput = document.getElementById(inputId);
-            const icon = buttonElement.querySelector('i');
-
-            if (passwordInput.getAttribute('type') === 'password') {
-                passwordInput.setAttribute('type', 'text');
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.setAttribute('type', 'password');
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // Inizializza la sezione 'candidature' se nessuna è attiva
-            if (!document.querySelector('.profile-nav .nav-button.active')) {
-                document.getElementById('candidature').classList.add('active');
-                document.querySelector('.nav-button[onclick*="candidature"]').classList.add('active');
-            }
-
-            const fileInputMap = {
-                'curriculumFile': 'curriculumFileName'
-            };
-
-            for (const inputId in fileInputMap) {
-                const fileInput = document.getElementById(inputId);
-                const fileNameDisplay = document.getElementById(fileInputMap[inputId]);
-
-                if (fileInput && fileNameDisplay) {
-                    fileInput.addEventListener('change', function () {
-                        if (this.files.length > 0) {
-                            fileNameDisplay.textContent = this.files[0].name;
-                        } else {
-                            fileNameDisplay.textContent = 'Nessun file selezionato';
-                        }
-                    });
-                }
-            }
-        });
-    </script>
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3>Dettagli Candidatura</h3>
+            
+            <div class="modal-body">
+                <p><strong>Mansione:</strong> <span id="modal-mansione"></span></p>
+                <p><strong>Azienda:</strong> <span id="modal-azienda"></span></p>
+                <p><strong>Stato:</strong> <span id="modal-stato"></span></p>
+                
+                <hr>
+                
+                <p style="color: #666; font-style: italic; font-size: 0.9em;">
+                    Qui potrebbero esserci note aggiuntive sul tirocinio o informazioni specifiche (es. data di invio).
+                </p>
+            </div>
+        </div>
+    </div>
+	<script src="../static/js/profilo.js"></script>
 </body>
 
 </html>
