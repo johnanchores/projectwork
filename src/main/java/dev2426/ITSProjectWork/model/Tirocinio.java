@@ -1,5 +1,7 @@
 package dev2426.ITSProjectWork.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Tirocinio {
 	private String durata;
 	private long id_azienda;
 	private String descrizione;
+	private List<Long> id_competenze; 
 	
 	public long getIdTirocinio() {
 		return id_tirocinio;
@@ -57,6 +60,12 @@ public class Tirocinio {
 	}
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+	public List<Long> getId_competenze() {
+		return id_competenze;
+	}
+	public void setId_competenze(List<Long> id_competenze) {
+		this.id_competenze = id_competenze;
 	}
 	
 }

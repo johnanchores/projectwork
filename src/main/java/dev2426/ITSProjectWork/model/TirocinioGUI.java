@@ -9,6 +9,7 @@ public class TirocinioGUI {
 	private String nomeAzienda;
 	private String descrizione;
 	private List<Long> competenze;
+	private List<String> nome_competenza;
 	public String getMansione() {
 		return mansione;
 	}
@@ -42,6 +43,12 @@ public class TirocinioGUI {
 	}
 	public void setCompetenze(List<Long> competenze) {
 		this.competenze = competenze;
+	}
+	public List<String> getNome_competenza() {
+		return nome_competenza;
+	}
+	public void setNome_competenza(String nome_competenza) {
+		this.nome_competenza.add(nome_competenza);
 	}
 
 }

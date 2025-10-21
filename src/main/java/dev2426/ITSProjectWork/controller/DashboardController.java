@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import dev2426.ITSProjectWork.model.Candidatura;
 import dev2426.ITSProjectWork.model.Competenza;
 import dev2426.ITSProjectWork.model.Azienda;
@@ -28,16 +30,16 @@ public class DashboardController {
 
 	@Autowired
 	private AziendaService aServ;
-	
+
 	@Autowired
 	private UtentiService uServ;
-	
+
 	@Autowired
 	private CandidaturaService cServ;
-	
+
 	@Autowired
 	private TirocinioService tServ;
-	
+
 	@Autowired
 	private CompetenzaService coServ;
 
@@ -49,26 +51,33 @@ public class DashboardController {
 		List<Competenza> listaCompMatch = new ArrayList<>();
 		List<TirocinioGUI> listaCompleta = new ArrayList<>();
 		for (Tirocinio t : listaTir) {
+			TirocinioGUI tg = new TirocinioGUI();
 			for (Azienda a : listaA) {
-				for (Competenza co : listaCo) {
-					if (t.getId_azienda() == a.getIdAzienda()) {
-						TirocinioGUI tg = new TirocinioGUI();
-						tg.setDescrizione(t.getDescrizione());
-						tg.setDurata(t.getDurata());
-						tg.setMansione(t.getMansione());
-						tg.setNomeAzienda(a.getNome());
-					}
+
+				if (t.getId_azienda() == a.getIdAzienda()) {
+
+					tg.setDescrizione(t.getDescrizione());
+					tg.setDurata(t.getDurata());
+					tg.setMansione(t.getMansione());
+					tg.setNomeAzienda(a.getNome());
+
 				}
 
 			}
-		}
+			for (Competenza c : listaCo) {
+				if (t.getId_competenze().contains(c.getIdCompetenza())) {
+					tg.setNome_competenza(c.getNome());
+				}
+			}
 
+		}
 		model.addAttribute("tirocini", listaCompleta);
 		return "dashboard";
 	}
 
-	@PostMapping("/candidatura")
-	public String Candidatura(@ModelAttribute("Candidatura") Candidatura newCand, Principal p) {
+	@PostMapping("/candidature")
+	public String Candidatura(@ModelAttribute("Candidatura") Candidatura newCand, Principal p,
+			@RequestParam Long id_tirocinio) {
 
 		if (p == null) {
 			return "redirect:/login";
@@ -79,6 +88,7 @@ public class DashboardController {
 			Utente user = userOptional.get();
 			newCand.setId_utente(user.getIdUtente());
 		}
+		newCand.setIdTirocinio(id_tirocinio);
 		newCand.setStato(0);
 		cServ.insert(newCand);
 		return "redirect:/home";
