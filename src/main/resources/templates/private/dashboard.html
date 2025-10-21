@@ -16,34 +16,20 @@
         <a th:href="@{/}" class="sidebar-icon active"
           ><i class="material-icons">home</i></a
         >
-        <a th:href="@{/bookmarks}" class="sidebar-icon"
-          ><i class="material-icons">bookmark_border</i></a
-        >
-        <a th:href="@{/jobs}" class="sidebar-icon"
-          ><i class="material-icons">work_outline</i></a
-        >
-        <a th:href="@{/schedule}" class="sidebar-icon"
-          ><i class="material-icons">schedule</i></a
-        >
-        <a th:href="@{/inbox}" class="sidebar-icon"
-          ><i class="material-icons">inbox</i></a
-        >
-        <a th:href="@{/settings}" class="sidebar-icon"
-          ><i class="material-icons">settings</i></a
-        >
         <div class="user-profile">
           <img th:src="@{/image/image.png}" alt="User" class="profile-pic" />
         </div>
       </div>
 
       <main class="content-area">
-        <section class="job-list" id="job-list" th:each="job : ${tirocini}">
+        <section class="job-list" id="job-list">
           <article
             class="job-card"
+            th:each="job : ${tirocini}"
             th:data-job-id="${job.id_tirocinio}"
             onclick="loadJobDetails(this)"
           >
-            <div class="company-logo bg-blue large">B</div>
+            <div class="company-logo bg-blue large" th:text="${job.nomeAzienda.substring(0, 1).toUpperCase()}">B</div>
 
             <div class="job-info">
               <span class="salary" th:text="${job.durata}">Durata</span>
@@ -55,42 +41,50 @@
                 Descrizione Breve
               </p>
 
-              <div class="tags-row">
-                <span class="location-tag">UX Designer</span>
-              </div>
+              <section class="tags-row">
+                <div th:each="competenza : ${job.competenze}">
+                  <span class="location-tag" th:text="${competenza.nome}"
+                    >UX Designer</span
+                  >
+                </div>
+              </section>
             </div>
           </article>
         </section>
       </main>
 
-      <aside class="job-details-panel">
-        <div class="company-header">
-          <div id="aside-logo" class="company-logo bg-blue large"></div>
-          <h2 id="aside-mansione">Seleziona un Tirocinio</h2>
-          <p id="aside-azienda"></p>
-          <div class="detail-tabs">
-            <button class="tab active">Vacancy</button>
-            <button class="tab">Company</button>
-          </div>
-        </div>
-
-        <div class="details-content" id="aside-descrizione">
-          <p>
-            Seleziona un tirocinio dalla lista per visualizzare i dettagli
-            completi, il documento allegato e le opzioni di candidatura.
-          </p>
-        </div>
-
-        <div class="document-link" id="aside-document-link"></div>
-
-        <div class="apply-actions">
-          <button class="favorite-btn" id="aside-favorite-btn">
-            <i class="material-icons">favorite_border</i>
+      <div id="jobDetailsOverlay" class="overlay-modal">
+        <aside class="job-details-panel">
+          <button class="close-btn" onclick="closeJobDetailsOverlay()">
+            <i class="material-icons">close</i>
           </button>
-          <button class="apply-btn" id="aside-apply-btn">Candidati</button>
-        </div>
-      </aside>
-    </div>
+          
+          <div class="company-header">
+            <div id="aside-logo" class="company-logo bg-blue large"></div>
+            <h2 id="aside-mansione">Seleziona un Tirocinio</h2>
+            <p id="aside-azienda"></p>
+            <div class="detail-tabs">
+              <button class="tab active">Vacancy</button>
+              <button class="tab">Company</button>
+            </div>
+          </div>
+
+          <div class="details-content" id="aside-descrizione">
+            <p>
+              Seleziona un tirocinio dalla lista per visualizzare i dettagli
+              completi e le opzioni di candidatura.
+            </p>
+          </div>
+
+          <div class="apply-actions">
+            <button class="favorite-btn" id="aside-favorite-btn">
+              <i class="material-icons">favorite_border</i>
+            </button>
+            <button class="apply-btn" id="aside-apply-btn">Candidati</button>
+          </div>
+        </aside>
+      </div>
+      </div>
 
     <script th:src="@{/js/dashboard.js}"></script>
   </body>

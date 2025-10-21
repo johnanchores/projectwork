@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,7 +17,9 @@ public class Tirocinio {
 	private String mansione;
 	private String durata;
 	private long id_azienda;
-	private String descrizione; 
+	private String descrizione;
+	@ManyToMany
+	private List<Competenza> competenze;
 	
 	public long getIdTirocinio() {
 		return id_tirocinio;
@@ -55,8 +58,15 @@ public class Tirocinio {
 	public String getDescrizione() {
 		return descrizione;
 	}
+
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
 	
+	public List<Competenza> getCompetenze() {
+		return competenze;
+	}
+	public void setCompetenze(List<Competenza> competenze) {
+		this.competenze = competenze;
+	}
 }
