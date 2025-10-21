@@ -1,6 +1,5 @@
 package dev2426.ITSProjectWork.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TirocinioGUI {
@@ -9,7 +8,7 @@ public class TirocinioGUI {
 	private String durata;
 	private String nomeAzienda;
 	private String descrizione;
-	private List<String> nome_competenza;
+	private List<Competenza> competenze;
 	private long id_tirocinio;
 
 	public long getId_tirocinio() {
@@ -46,20 +45,18 @@ public class TirocinioGUI {
 	}
 	
 	public TirocinioGUI() {
-		this.nome_competenza = new ArrayList<>();
+
+	}
+	public List<Competenza> getCompetenze() {
+		return competenze;
 	}
 	
-	public List<String> getNome_competenza() {
-		return nome_competenza;
+	public void setCompetenza(Competenza competenza) {
+		this.competenze.add(competenza);
 	}
 	
-	public void setNome_competenza(List<String>	nome_competenza) {
-		this.nome_competenza = nome_competenza;
+	public void setCompetenze(List<Competenza>	competenze) {
+		this.competenze = competenze;
 	}
-	
-	public void addNome_competenza(String nome_competenza) {
-		this.nome_competenza.add(nome_competenza);
-	}
-	
 
 }

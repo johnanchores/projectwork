@@ -57,6 +57,7 @@ public class DashboardController {
 					tg.setMansione(t.getMansione());
 					tg.setNomeAzienda(a.getNome());
 					tg.setId_tirocinio(t.getIdTirocinio());
+					tg.setCompetenze(t.getCompetenze());
 
 				}
 
