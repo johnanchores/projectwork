@@ -31,7 +31,12 @@
             th:data-job-id="${job.id_tirocinio}"
             onclick="loadJobDetails(this)"
           >
-            <div class="company-logo bg-blue large" th:text="${job.nomeAzienda.substring(0, 1).toUpperCase()}">B</div>
+            <div
+              class="company-logo bg-blue large"
+              th:text="${job.nomeAzienda.substring(0, 1).toUpperCase()}"
+            >
+              B
+            </div>
 
             <div class="job-info">
               <span class="salary" th:text="${job.durata}">Durata</span>
@@ -60,7 +65,7 @@
           <button class="close-btn" onclick="closeJobDetailsOverlay()">
             <i class="material-icons">close</i>
           </button>
-          
+
           <div class="company-header">
             <div id="aside-logo" class="company-logo bg-blue large"></div>
             <h2 id="aside-mansione">Seleziona un Tirocinio</h2>
@@ -76,6 +81,7 @@
               Seleziona un tirocinio dalla lista per visualizzare i dettagli
               completi e le opzioni di candidatura.
             </p>
+            <section class="tags-row" id="aside-competenze"></section>
           </div>
 
           <div class="apply-actions">
@@ -86,7 +92,7 @@
           </div>
         </aside>
       </div>
-      </div>
+    </div>
 
     <script th:src="@{/js/dashboard.js}"></script>
   </body>
