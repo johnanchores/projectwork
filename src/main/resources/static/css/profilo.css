@@ -203,10 +203,11 @@ header h1 span {
 
 
 /* =======================================
-  5. SEZIONE MODIFICA PROFILO (FORM)
+  5. SEZIONE MODIFICA PROFILO (FORM) - AGGIORNATO
 ======================================= */
 .profile-form {
     display: grid;
+    /* Griglia a 2 colonne di base */
     grid-template-columns: repeat(2, 1fr);
     gap: 25px 30px; 
 }
@@ -232,7 +233,8 @@ header h1 span {
 }
 
 .form-group input {
-    padding: 12px;
+    /* ALTEZZA AUMENTATA: 15px di padding sopra e sotto */
+    padding: 15px 12px;
     border: 1px solid var(--color-border);
     border-radius: 6px;
     font-size: 16px;
@@ -259,7 +261,7 @@ header h1 span {
     top: 50%;
     transform: translateY(-50%);
     left: 15px; /* Icona a sinistra */
-    right: auto; /* Assicura che non sia a destra */
+    right: auto; 
     z-index: 10;
     cursor: pointer;
     font-size: 1.1em;
@@ -267,54 +269,32 @@ header h1 span {
 }
 
 .password-group input {
-    /* PADDING-LEFT per fare spazio all'icona a sinistra */
+    /* PADDING-LEFT per fare spazio all'icona a sinistra (altezza gestita dalla regola superiore) */
     padding-left: 45px; 
-    padding-right: 12px; /* Mantenuto un padding normale a destra */
+    padding-right: 12px; 
 }
 
-/* NUOVI STILI PER LA RIORGANIZZAZIONE DELLA SEZIONE PASSWORD */
-.form-group-password-divider {
-    grid-column: 1 / -1; 
-    margin: 15px 0;
-}
-
-.form-group-password-divider hr {
-    border: none;
-    border-top: 1px solid var(--color-border); 
-    margin: 0;
-}
-
+/* Stili per il titolo della sezione Password */
 .password-section-title {
     grid-column: 1 / -1; 
     font-size: 1.4em;
     margin-top: 0; 
-    padding-bottom: 10px;
+    padding-bottom: 6px;
     border-bottom: 1px solid var(--color-border);
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     color: var(--color-teal-primary);
-    font-weight: 700; /* Aggiunto per coerenza con gli altri titoli */
+    font-weight: 700; 
 }
 
-/* Contenitore per i 3 campi password in una griglia a 2 colonne */
-.password-fields-grid {
-    grid-column: 1 / -1; /* Occupare l'intera larghezza della griglia principale */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Due colonne, come il resto del form */
-    gap: 25px 30px; /* Stessi gap del form principale */
+/* Forziamo il campo "Conferma nuova Password" ad occupare tutta la riga (3° campo password nel form) */
+/* L'ordine nel DOM è: Nome (1), Cognome (2), File Upload (3), Titolo Password (4), Pass Corrente (5), Nuova Pass (6), Conferma Pass (7) */
+.profile-form .form-group:nth-of-type(7) { 
+    grid-column: 1 / -1;
 }
 
-/* Per il terzo campo password (Conferma) farlo espandere su 2 colonne se necessario */
-.password-fields-grid .form-group:nth-child(3) {
-    /* Mette il terzo campo sotto gli altri due, allineato a sinistra */
-    grid-column: 1 / 2; 
-}
-/* FINE NUOVI STILI */
-
-
-/* File Upload Group (CV) */
+/* File Upload Group (CV) - Resta full-width */
 .file-upload-group {
     grid-column: 1 / -1;
-    /* FIX: Assicurare che gli elementi all'interno usino flex */
     display: flex; 
     flex-direction: column; 
     padding: 25px; 
@@ -331,7 +311,7 @@ header h1 span {
     margin-bottom: 15px;
 }
 
-/* FIX: Utilizzare la classe specifica .btn-upload, che è stata aggiunta all'HTML */
+/* Utilizzare la classe specifica .btn-upload, che è stata aggiunta all'HTML */
 .btn-upload { 
     background: var(--color-teal-primary);
     color: white;
@@ -341,7 +321,6 @@ header h1 span {
     align-self: flex-start;
     margin-bottom: 5px;
     cursor: pointer;
-    /* FIX: Override .btn-save styles that might conflict */
     font-size: 1em; 
     box-shadow: none; 
 }
@@ -378,7 +357,7 @@ header h1 span {
     background: var(--color-teal-primary);
     color: white;
     box-shadow: var(--shadow-button);
-    border: none; /* Aggiunto per consistenza, anche se il reset lo fa */
+    border: none; 
 }
 
 .btn-save:hover {
@@ -388,7 +367,7 @@ header h1 span {
 }
 
 /* =======================================
-  6. RESPONSIVENESS
+  6. RESPONSIVENESS - AGGIORNATO
 ======================================= */
 @media (max-width: 850px) {
     .profile-container {
@@ -401,20 +380,15 @@ header h1 span {
         gap: 20px;
     }
     
+    /* Rimuove l'override specifico per il 7° campo (Conferma Password) 
+       per farlo diventare 1 colonna come gli altri su mobile */
+    .profile-form .form-group:nth-of-type(7) {
+        grid-column: auto;
+    }
+
     /* Assicura che i campi password si allineino correttamente a 1 colonna */
     .password-group input {
         padding-left: 45px; 
-    }
-
-    /* La griglia delle password diventa a 1 colonna su schermi stretti */
-    .password-fields-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    /* Rimuove l'override specifico per il 3° campo su mobile */
-    .password-fields-grid .form-group:nth-child(3) {
-        grid-column: auto; 
     }
 }
 

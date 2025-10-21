@@ -10,7 +10,11 @@
 <body>
     <header>
         <h1>
-            <img th:src="@{/image/logo2}" alt="Logo" height="30px" /> 
+            <img
+            src="/src/main/resources/static/image/logo2.png"
+            alt=""
+            height="130px"
+          />
             Profilo di <span th:text="${utente.nome}">Nome Utente</span>
         </h1>
 
@@ -81,7 +85,7 @@
                 <div class="form-group">
                     <label for="password">Password Corrente:</label>
                     <div class="password-group">
-                        <input type="password" id="password" th:field="*{password}" placeholder="Inserisci la password attuale">
+                        <input type="password" id="password" th:field="*{password}" placeholder="Inserisci password attuale">
                         <button type="button" class="toggle-password" onclick="toggleVisibility('password', this)"><i class="fas fa-eye"></i></button>
                     </div>
                 </div>
@@ -89,7 +93,7 @@
                 <div class="form-group">
                     <label for="passwordNuova">Nuova Password:</label>
                     <div class="password-group">
-                        <input type="password" id="passwordNuova" th:field="*{passwordNuova}" placeholder="Inserisci la nuova password">
+                        <input type="password" id="passwordNuova" th:field="*{passwordNuova}" placeholder="Inserisci nuova password">
                          <button type="button" class="toggle-password" onclick="toggleVisibility('passwordNuova', this)"><i class="fas fa-eye"></i></button>
                     </div>
                 </div>
@@ -97,7 +101,7 @@
                 <div class="form-group">
                     <label for="confermaPassword">Conferma nuova Password:</label>
                     <div class="password-group">
-                        <input type="password" id="confermaPassword" th:field="*{confermaPassword}" placeholder="Reinserisci la nuova password">
+                        <input type="password" id="confermaPassword" th:field="*{confermaPassword}" placeholder="Ripeti nuova password">
                          <button type="button" class="toggle-password" onclick="toggleVisibility('confermaPassword', this)"><i class="fas fa-eye"></i></button>
                     </div>
                 </div>
