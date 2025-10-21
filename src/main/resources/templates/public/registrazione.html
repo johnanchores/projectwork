@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione</title>
-      <link rel="stylesheet" href="../css/registrazione.css" />
+      <link rel="stylesheet" href="../../static/css/registrazione.css" />
 </head>
 
 <body>
@@ -14,8 +14,8 @@
             Registrati
         </p>
 	
-		<div th:if="${errorMessage}" style="color:red"> <span th:text="${errorMessage}"> Errore: email già registrata</span> </div>
-		<div th:if="${passwordError}" style="color:red"> <span th:text="${passwordError}"> Errore: le password non coincidono </span> </div>
+		<!--<div th:if="${errorMessage}" style="color:red"> <span th:text="${errorMessage}"> Errore: email già registrata</span> </div>
+		<div th:if="${passwordError}" style="color:red"> <span th:text="${passwordError}"> Errore: le password non coincidono </span> </div>-->
 		
         <form class="registration-form" th:action="@{/register}" th:object="${utente}" method="POST">
 
