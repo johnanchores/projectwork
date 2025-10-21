@@ -1,14 +1,13 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary-blue: #009999; 
-  --secondary-blue: #028b8b; 
+  --primary-blue: #009999;
+  --secondary-blue: #028b8b;
   --bg-light: #e3fcfc;
   --text-dark: #333;
   --text-medium: #555;
   --border-color: #e0e0e0;
-  --card-hover-bg: #e3fcfc; 
+  --card-hover-bg: #e3fcfc;
   --color-red: #dc3545;
 }
 
@@ -34,11 +33,9 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   width: 100%;
-  height: 95vh; 
+  height: 95vh;
   overflow: hidden;
 }
-
-
 
 .sidebar {
   width: 80px;
@@ -355,7 +352,7 @@ h2 strong {
   gap: 15px;
   padding-top: 20px;
   border-top: 1px solid var(--border-color);
-  margin-top: auto; 
+  margin-top: auto;
 }
 
 .favorite-btn {
@@ -390,4 +387,111 @@ h2 strong {
 
 .apply-btn:hover {
   background-color: #028b8bc9;
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    height: 70px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+
+  .user-profile {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .content-area {
+    padding: 20px;
+  }
+
+  .job-details-panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .app-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    height: 60px;
+    justify-content: space-around;
+    padding: 5px 0;
+  }
+
+  .sidebar-icon i {
+    font-size: 22px;
+  }
+
+  .content-area {
+    padding: 15px;
+  }
+
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .job-info h3 {
+    font-size: 16px;
+  }
+
+  .job-description {
+    font-size: 13px;
+  }
+
+  .job-details-panel {
+    display: none;
+  }
+
+  .apply-actions {
+    flex-direction: column;
+  }
+
+  .apply-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  .pill {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .job-card {
+    padding: 15px;
+  }
+
+  .job-info h3 {
+    font-size: 15px;
+  }
+
+  .salary {
+    font-size: 16px;
+  }
 }
