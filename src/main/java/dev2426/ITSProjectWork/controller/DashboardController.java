@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,14 +41,10 @@ public class DashboardController {
 	@Autowired
 	private TirocinioService tServ;
 
-	@Autowired
-	private CompetenzaService coServ;
-
 	@GetMapping("/dashboard")
 	public String showHome(Model model) {
 		List<Tirocinio> listaTir = tServ.getAll();
 		List<Azienda> listaA = aServ.getAll();
-		List<Competenza> listaCo = coServ.getAll();
 		List<TirocinioGUI> listaCompleta = new ArrayList<>();
 		for (Tirocinio t : listaTir) {
 			TirocinioGUI tg = new TirocinioGUI();
@@ -64,7 +61,13 @@ public class DashboardController {
 				}
 
 			}
-		
+
+			Set<Competenza> competenzeDelTirocinio = t.getCompetenze();
+
+			for (Competenza co : competenzeDelTirocinio) {
+				tg.addNome_competenza(co.getNome());
+			}
+
 			listaCompleta.add(tg);
 
 		}
