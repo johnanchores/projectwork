@@ -18,7 +18,7 @@ public class AdminController {
 	@Autowired
 	private CandidaturaService servizioCandidatura;
 	
-	@GetMapping("/amministrazione")
+	@GetMapping("/admin")
 	public String showPage() {
 		return "redirect:/profiloadmin";
 	}
