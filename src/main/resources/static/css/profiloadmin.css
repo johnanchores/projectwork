@@ -2,389 +2,412 @@
     1. VARIABILI & SETUP GLOBALE
     ======================================= */
 :root {
-    --dark-bg: #008a8a; /* Blu petrolio scuro */
-    --primary-teal: #00bcd4; /* Neon Blue/Teal */
-    --secondary-purple: #ffffff; /* Bianco (per simulare il viola brillante su fondo scuro) */
-    --text-light: #ffffff;
-    --card-bg: rgba(255, 255, 255, 0.05); /* Sfondo semi-trasparente scuro */
-    --border-glow: 1px solid rgba(255, 255, 255, 0.3);
-    --shadow-vibrant: 0 0 15px rgba(0, 188, 212, 0.5);
-    --shadow-inset: inset 0 0 10px rgba(0, 0, 0, 0.5);
-    --danger-red: #f44336;
-    --success-green: #4caf50;
-    --warning-yellow: #ffeb3b;
+  --dark-bg: #008a8a; /* Blu petrolio scuro */
+  --primary-teal: #00bcd4; /* Neon Blue/Teal */
+  --secondary-purple: #ffffff; /* Bianco (per simulare il viola brillante su fondo scuro) */
+  --text-light: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.05); /* Sfondo semi-trasparente scuro */
+  --border-glow: 1px solid rgba(255, 255, 255, 0.3);
+  --shadow-vibrant: 0 0 15px rgba(0, 188, 212, 0.5);
+  --shadow-inset: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  --danger-red: #f44336;
+  --success-green: #4caf50;
+  --warning-yellow: #ffeb3b;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    min-height: 100vh;
-    color: var(--text-light);
-    background-color: var(--dark-bg);
-    overflow-x: hidden;
-    position: relative;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-light);
+  background-color: var(--dark-bg);
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* Effetto Animato Sfondo */
 body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle at 10% 20%, rgba(0, 188, 212, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(156, 39, 176, 0.1) 0%, transparent 40%);
-    animation: backgroundShift 30s linear infinite alternate;
-    z-index: -1;
-    filter: blur(10px);
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(
+      circle at 10% 20%,
+      rgba(0, 188, 212, 0.1) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(156, 39, 176, 0.1) 0%,
+      transparent 40%
+    );
+  animation: backgroundShift 30s linear infinite alternate;
+  z-index: -1;
+  filter: blur(10px);
 }
 
 @keyframes backgroundShift {
-    0% { transform: translate(-50%, -50%); }
-    100% { transform: translate(0%, 0%); }
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
 }
 
 /* =======================================
     2. HEADER & NAVIGAZIONE GLOBALE
     ======================================= */
 .admin-header {
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(5px);
-    padding: 20px 40px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 20;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 20px 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
 }
 
 .admin-header h1 {
-    margin: 0;
-    font-size: 1.8em;
-    color: var(--primary-teal);
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px var(--primary-teal);
-    /* Stile per l'icona nel titolo */
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Spazio tra icona e testo */
+  margin: 0;
+  font-size: 1.8em;
+  color: var(--primary-teal);
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px var(--primary-teal);
+  /* Stile per l'icona nel titolo */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spazio tra icona e testo */
 }
 
 .admin-header p {
-    margin: 5px 0 15px;
-    font-size: 1.1em;
-    color: rgba(255, 255, 255, 0.7);
+  margin: 5px 0 15px;
+  font-size: 1.1em;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .nav-switch-button {
-    background: linear-gradient(90deg, var(--primary-teal), var(--secondary-purple));
-    color: var(--dark-bg);
-    padding: 10px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
+  background: linear-gradient(
+    90deg,
+    var(--primary-teal),
+    var(--secondary-purple)
+  );
+  color: var(--dark-bg);
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
 }
 
 .nav-switch-button:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 217, 255, 0.8);
+  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.8);
 }
 
 /* =======================================
     3. CONTAINER & SEZIONI
     ======================================= */
 .admin-container {
-    max-width: 1400px;
-    width: 95%;
-    margin: 40px auto;
-    padding: 0 20px;
+  max-width: 1400px;
+  width: 95%;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .tirocinio-form textarea::placeholder {
-    color: #616161;
-    opacity: 0.8;
+  color: #616161;
+  opacity: 0.8;
 }
 
 .tirocinio-form input::placeholder {
-    color: #616161;
-    opacity: 0.8;
+  color: #616161;
+  opacity: 0.8;
 }
 
 section {
-    padding: 30px;
-    background: var(--card-bg); /* Glassmorphism Base */
-    backdrop-filter: blur(8px);
-    border-radius: 15px;
-    box-shadow: var(--shadow-vibrant);
-    border: var(--border-glow);
-    margin-bottom: 40px;
+  padding: 30px;
+  background: var(--card-bg); /* Glassmorphism Base */
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  box-shadow: var(--shadow-vibrant);
+  border: var(--border-glow);
+  margin-bottom: 40px;
 }
 
 hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(0, 188, 212, 0.5), transparent);
-    margin: 40px 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 188, 212, 0.5),
+    transparent
+  );
+  margin: 40px 0;
 }
 
 h2 {
-    font-size: 1.8em;
-    color: var(--secondary-purple);
-    margin-bottom: 25px;
-    border-bottom: 2px solid var(--primary-teal);
-    padding-bottom: 10px;
-    font-weight: 600;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  font-size: 1.8em;
+  color: var(--secondary-purple);
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--primary-teal);
+  padding-bottom: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 /* =======================================
     4. FORM TIROCINIO
     ======================================= */
 .tirocinio-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group.full-width {
-    grid-column: 1 / -1;
+  grid-column: 1 / -1;
 }
 
 .tirocinio-form label {
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--primary-teal);
-    font-size: 0.95em;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--primary-teal);
+  font-size: 0.95em;
 }
 
-.tirocinio-form input[type="text"], 
+.tirocinio-form input[type="text"],
 .tirocinio-form textarea,
 .tirocinio-form input[type="number"] {
-    padding: 14px;
-    border: var(--border-glow);
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-light);
-    box-shadow: var(--shadow-inset);
-    width: 100%;
-    box-sizing: border-box;
+  padding: 14px;
+  border: var(--border-glow);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-light);
+  box-shadow: var(--shadow-inset);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.tirocinio-form input[type="text"]:focus, 
+.tirocinio-form input[type="text"]:focus,
 .tirocinio-form textarea:focus,
 .tirocinio-form input[type="number"]:focus {
-    border-color: var(--secondary-purple);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), var(--shadow-inset);
-    outline: none;
-    background: rgba(255, 255, 255, 0.1);
+  border-color: var(--secondary-purple);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), var(--shadow-inset);
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .tirocinio-form textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 .form-actions {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 /* Pulsanti Azione Form */
-.btn-primary, .btn-secondary {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    transition: all 0.4s;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.btn-primary,
+.btn-secondary {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: all 0.4s;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn-primary {
-    background: linear-gradient(90deg, var(--success-green), #6edb72);
-    color: var(--dark-bg);
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+  background: linear-gradient(90deg, var(--success-green), #6edb72);
+  color: var(--dark-bg);
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
 }
 
 .btn-primary:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 20px var(--success-green), 0 8px 15px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 0 20px var(--success-green), 0 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 .btn-secondary {
-    background: linear-gradient(90deg, #6c757d, #99a4ad);
-    color: var(--text-light);
-    box-shadow: 0 0 10px rgba(108, 117, 125, 0.5);
+  background: linear-gradient(90deg, #6c757d, #99a4ad);
+  color: var(--text-light);
+  box-shadow: 0 0 10px rgba(108, 117, 125, 0.5);
 }
 
 .btn-secondary:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 20px #6c757d, 0 8px 15px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 0 20px #6c757d, 0 8px 15px rgba(0, 0, 0, 0.5);
 }
-
 
 /* =======================================
     5. TABELLA CANDIDATURE
     ======================================= */
 .section-table > p {
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 25px;
 }
 
 .candidature-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.candidature-table th, .candidature-table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.candidature-table th,
+.candidature-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .candidature-table th {
-    background-color: rgba(0, 188, 212, 0.1);
-    color: var(--primary-teal);
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85em;
+  background-color: rgba(0, 188, 212, 0.1);
+  color: var(--primary-teal);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85em;
 }
 
 .candidature-table tbody tr:hover {
-    background-color: rgba(0, 188, 212, 0.05);
-    transition: background-color 0.3s;
+  background-color: rgba(0, 188, 212, 0.05);
+  transition: background-color 0.3s;
 }
 
 .candidature-table td {
-    font-size: 0.95em;
-    color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95em;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Stato Candidatura */
 .status {
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: bold;
-    color: var(--dark-bg);
-    text-transform: uppercase;
-    display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--dark-bg);
+  text-transform: uppercase;
+  display: inline-block;
 }
 
 .status-pending {
-    background-color: var(--warning-yellow); 
-    box-shadow: 0 0 5px var(--warning-yellow);
+  background-color: var(--warning-yellow);
+  box-shadow: 0 0 5px var(--warning-yellow);
 }
 
 .status-accepted {
-    background-color: var(--success-green); 
-     color: var(--text-light);
-    box-shadow: 0 0 5px var(--success-green);
+  background-color: var(--success-green);
+  color: var(--text-light);
+  box-shadow: 0 0 5px var(--success-green);
 }
 
 .status-rejected {
-    background-color: var(--danger-red); 
-    color: var(--text-light);
-    box-shadow: 0 0 5px var(--danger-red);
+  background-color: var(--danger-red);
+  color: var(--text-light);
+  box-shadow: 0 0 5px var(--danger-red);
 }
 
 /* Pulsanti Azioni Tabella */
 .btn-action {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-    font-size: 12px;
-    font-weight: 600;
-    transition: all 0.2s;
-    color: var(--dark-bg);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    margin-top: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+  color: var(--dark-bg);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  margin-top: 5px;
 }
 
 .btn-action:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .btn-action.view {
-    background-color: var(--primary-teal); 
+  background-color: var(--primary-teal);
 }
 .btn-action.accept {
-    background-color: var(--success-green); 
-     color: var(--text-light);
+  background-color: var(--success-green);
+  color: var(--text-light);
 }
 .btn-action.reject {
-    background-color: var(--danger-red); 
-    color: var(--text-light);
+  background-color: var(--danger-red);
+  color: var(--text-light);
 }
 .btn-action.remove {
-    background-color: #6c757d; 
-    color: var(--text-light);
+  background-color: #6c757d;
+  color: var(--text-light);
 }
 
 /* =======================================
     6. RESPONSIVENESS
     ======================================= */
 @media (max-width: 1024px) {
-    .tirocinio-form {
-        grid-template-columns: 1fr;
-    }
+  .tirocinio-form {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-    .admin-header {
-        padding: 15px 20px;
-    }
-    .admin-container {
-        padding: 0 10px;
-        margin: 20px auto;
-    }
-    .admin-header h1 {
-        font-size: 1.5em;
-    }
-    section {
-        padding: 20px;
-    }
-    
-    /* Tabella Responsiva */
-    .section-table {
-        overflow-x: auto;
-    }
+  .admin-header {
+    padding: 15px 20px;
+  }
+  .admin-container {
+    padding: 0 10px;
+    margin: 20px auto;
+  }
+  .admin-header h1 {
+    font-size: 1.5em;
+  }
+  section {
+    padding: 20px;
+  }
 
-    .candidature-table {
-        min-width: 700px; /* Forza la tabella a scorrere su schermi piccoli */
-    }
+  /* Tabella Responsiva */
+  .section-table {
+    overflow-x: auto;
+  }
 
-    .form-actions {
-        flex-direction: column;
-    }
-    .btn-primary, .btn-secondary {
-        width: 100%;
-        justify-content: center;
-    }
+  .candidature-table {
+    min-width: 700px; /* Forza la tabella a scorrere su schermi piccoli */
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
 }
