@@ -4,20 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profilo Utente</title>
-    <link rel="stylesheet" th:href="@{/css/profilo.css}">
+    <link rel="stylesheet" href="../static/profilo.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1><img th:src="@{/image/logo2.png}" alt="Logo" height="130px" /> Profilo di <span th:text="${utente.nome}"></span></h1>
-        <a th:href="@{/home}" class="nav-switch-button"><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a>
-        <a th:href="@{/admin}" class="nav-switch-button"><i class="fas fa-lock-open mr-2"></i> Vai all'Area Admin</a>
+        <h1>
+            <img th:src="@{/image/logo2}" alt="Logo" height="30px" /> 
+            Profilo di <span th:text="${utente.nome}">Nome Utente</span>
+        </h1>
+        
+
+        <div class="header-nav">
+            <a th:href="@{/home}" class="nav-switch-button"><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a>
+            <a th:href="@{/admin}" class="nav-switch-button"><i class="fas fa-lock-open"></i> Vai all'Area Admin</a>
+            <a th:href="@{/home}" class="nav-switch-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
     </header>
 
     <main class="profile-container">
         <nav class="profile-nav">
-            <button class="nav-button active" onclick="showSection('candidature')">Dettagli Candidature</button>
-            <button class="nav-button" onclick="showSection('modifica-profilo')">Modifica Profilo</button>
+            <button class="nav-button active" onclick="showSection('candidature', event)">Dettagli Candidature</button>
+            <button class="nav-button" onclick="showSection('modifica-profilo', event)">Modifica Profilo</button>
         </nav>
 
         <section id="candidature" class="profile-section active">
@@ -46,12 +54,13 @@
                     <label for="curriculumFile">Curriculum Vitae (PDF/DOCX):</label>
                     <input type="file" id="curriculumFile" name="curriculumFile" accept=".pdf,.doc,.docx" style="display: none;">
                     
-                    <button type="button" class="btn-upload" onclick="document.getElementById('curriculumFile').click()">
+                    <button type="button" class="btn-save btn-upload" onclick="document.getElementById('curriculumFile').click()">
                         <i class="fas fa-file-pdf"></i> Carica Curriculum
                     </button>
                     <span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
                 </div>
-                <hr>
+                <hr style="grid-column: 1 / -1; margin-top: 15px; border-color: var(--color-border);">
+                
                 <h3>Cambia Password (lascia vuoto per non modificare)</h3>
 
                 <div class="form-group">
@@ -80,14 +89,14 @@
 
                 <div class="form-actions">
                     <button type="submit" class="btn-save">Salva modifiche</button>
-                     <button type="submit" class="btn-save">Anteprima CV</button>
                 </div>
             </form>
         </section>
     </main>
 
     <script>
-        function showSection(sectionId) {
+        // FIX: Added 'event' as a parameter and check to resolve a potential JS error
+        function showSection(sectionId, event) {
             document.querySelectorAll('.profile-section').forEach(section => {
                 section.classList.remove('active');
             });
@@ -98,6 +107,7 @@
 
             document.getElementById(sectionId).classList.add('active');
 
+            // FIX: Use the passed event or fall back to finding the button
             const targetButton = event ? event.currentTarget : document.querySelector(`.nav-button[onclick*="${sectionId}"]`);
             if (targetButton) {
                 targetButton.classList.add('active');
@@ -127,11 +137,11 @@
             }
 
             const fileInputMap = {
-                'profileImage': 'profileImageName',
+                // 'profileImage': 'profileImageName', // Removed as it wasn't in the HTML
                 'curriculumFile': 'curriculumFileName' 
             };
-	
-            for (const inputId in fileInputMap) {
+        
+             for (const inputId in fileInputMap) {
                 const fileInput = document.getElementById(inputId);
                 const fileNameDisplay = document.getElementById(fileInputMap[inputId]);
 
