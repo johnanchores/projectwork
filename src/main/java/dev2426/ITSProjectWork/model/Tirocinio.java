@@ -71,4 +71,5 @@ public class Tirocinio {
 	public void setCompetenze(List<Competenza> competenze) {
 		this.competenze = competenze;
 	}
+	
 }
