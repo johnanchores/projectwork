@@ -20,9 +20,6 @@ public class DettagliUtenteService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// cerco se esiste utente per email
-		
-		System.out.println(email);	
 		Utente utente = repo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
 		
