@@ -10,11 +10,10 @@ function handleApply(jobId) {
   }
 
   // Richiesta POST al server
-  fetch("/candidatura", {
+  fetch("/candidature", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      // **ATTENZIONE:** Includere qui X-CSRF-TOKEN se usi Spring Security.
     },
     body: JSON.stringify({
       tirocinioId: jobId,
@@ -100,7 +99,13 @@ function loadJobDetails(clickedCard) {
   // 💥 AGGIORNA IL CONTENUTO DELLA SEZIONE COMPETENZE 💥
   document.getElementById("aside-competenze").innerHTML = competenzeHtml;
 
-  // ... (Logica di collegamento del bottone Candidati) ...
+  // Collega il bottone "Candidati" al gestore
+  const applyBtn = document.getElementById("aside-apply-btn");
+  applyBtn.disabled = false; // Riabilita il bottone se era disabilitato
+  applyBtn.textContent = "Candidati"; // Reset testo
+  applyBtn.onclick = function () {
+    handleApply(jobId);
+  };
 
   // 6. MOSTRA L'OVERLAY
   const overlay = document.getElementById("jobDetailsOverlay");
