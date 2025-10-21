@@ -64,16 +64,12 @@ public class DashboardController {
 				}
 
 			}
-			for (Competenza c : listaCo) {
-				if (t.getId_competenze().contains(c.getIdCompetenza())) {
-					tg.addNome_competenza(c.getNome());
-				}
-			}
+		
 			listaCompleta.add(tg);
 
 		}
 		model.addAttribute("tirocini", listaCompleta);
-		return "/privte/dashboard";
+		return "/private/dashboard";
 	}
 
 	@PostMapping("/candidature")

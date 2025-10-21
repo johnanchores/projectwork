@@ -40,7 +40,7 @@
         <section class="job-list" id="job-list" th:each="job : ${tirocini}">
           <article
             class="job-card"
-            th:data-job-id="${job.idTirocinio}"
+            th:data-job-id="${job.id_tirocinio}"
             onclick="loadJobDetails(this)"
           >
             <div class="company-logo bg-blue large">B</div>
