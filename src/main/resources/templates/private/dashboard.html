@@ -40,20 +40,18 @@
         <section class="job-list" id="job-list" th:each="job : ${tirocini}">
           <article
             class="job-card"
-            th:data-job-id="${job.tirocinio.idTirocinio}"
+            th:data-job-id="${job.idTirocinio}"
             onclick="loadJobDetails(this)"
           >
             <div class="company-logo bg-blue large">B</div>
 
             <div class="job-info">
-              <span class="salary" th:text="${job.tirocinio.durata}"
-                >Durata</span
-              >
-              <h3 th:text="${job.tirocinio.mansione}">Titolo Mansione</h3>
-              <p class="company-name" th:text="${job.azienda.nome}">
+              <span class="salary" th:text="${job.durata}">Durata</span>
+              <h3 th:text="${job.mansione}">Titolo Mansione</h3>
+              <p class="company-name" th:text="${job.nomeAzienda}">
                 Nome Azienda
               </p>
-              <p class="job-description" th:text="${job.tirocinio.descrizione}">
+              <p class="job-description" th:text="${job.descrizione}">
                 Descrizione Breve
               </p>
 

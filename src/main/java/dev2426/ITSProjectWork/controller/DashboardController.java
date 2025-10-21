@@ -43,7 +43,7 @@ public class DashboardController {
 	@Autowired
 	private CompetenzaService coServ;
 
-	@GetMapping("/home")
+	@GetMapping("/dashboard")
 	public String showHome(Model model) {
 		List<Tirocinio> listaTir = tServ.getAll();
 		List<Azienda> listaA = aServ.getAll();
@@ -60,6 +60,7 @@ public class DashboardController {
 					tg.setDurata(t.getDurata());
 					tg.setMansione(t.getMansione());
 					tg.setNomeAzienda(a.getNome());
+					tg.setId_tirocinio(t.getIdTirocinio());
 
 				}
 
@@ -72,7 +73,7 @@ public class DashboardController {
 
 		}
 		model.addAttribute("tirocini", listaCompleta);
-		return "dashboard";
+		return "/privte/dashboard";
 	}
 
 	@PostMapping("/candidature")
