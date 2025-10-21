@@ -48,7 +48,6 @@ public class DashboardController {
 		List<Tirocinio> listaTir = tServ.getAll();
 		List<Azienda> listaA = aServ.getAll();
 		List<Competenza> listaCo = coServ.getAll();
-		List<Competenza> listaCompMatch = new ArrayList<>();
 		List<TirocinioGUI> listaCompleta = new ArrayList<>();
 		for (Tirocinio t : listaTir) {
 			TirocinioGUI tg = new TirocinioGUI();
@@ -69,8 +68,10 @@ public class DashboardController {
 					tg.setNome_competenza(c.getNome());
 				}
 			}
+			listaCompleta.add(tg);
 
 		}
+		
 		model.addAttribute("tirocini", listaCompleta);
 		return "dashboard";
 	}
