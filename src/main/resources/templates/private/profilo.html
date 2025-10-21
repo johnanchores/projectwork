@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profilo Utente</title>
-    <link rel="stylesheet" href="../static/profilo.css"> 
+    <link rel="stylesheet" href="/css/profilo.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -94,7 +94,6 @@
     </main>
 
     <script>
-        // FIX: Added 'event' as a parameter and check to resolve a potential JS error
         function showSection(sectionId, event) {
             document.querySelectorAll('.profile-section').forEach(section => {
                 section.classList.remove('active');
@@ -106,7 +105,6 @@
 
             document.getElementById(sectionId).classList.add('active');
 
-            // FIX: Use the passed event or fall back to finding the button
             const targetButton = event ? event.currentTarget : document.querySelector(`.nav-button[onclick*="${sectionId}"]`);
             if (targetButton) {
                 targetButton.classList.add('active');
@@ -136,7 +134,6 @@
             }
 
             const fileInputMap = {
-                // 'profileImage': 'profileImageName', // Removed as it wasn't in the HTML
                 'curriculumFile': 'curriculumFileName' 
             };
         
