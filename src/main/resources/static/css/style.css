@@ -320,11 +320,12 @@ h2 strong {
   border-bottom-color: var(--primary-blue);
 }
 
-.details-content p {
+.details-content {
   font-size: 14px;
   color: var(--text-medium);
   line-height: 1.6;
   margin-bottom: 15px;
+  height: fit-content;
 }
 
 .document-link {
