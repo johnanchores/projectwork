@@ -61,24 +61,26 @@ public class DashboardController {
 	}
 
 	@PostMapping("/candidature")
-	public String Candidatura(Principal p, @RequestParam Long id_tirocinio) {
+	public String Candidatura(Principal p, @RequestParam long id_tirocinio) {
 
 		if (p == null) {
 			return "redirect:/login";
 		}
 
 		Optional<Utente> userOptional = utentiServ.findByEmail(p.getName());
+		Optional<Tirocinio> tirocinioOptional = tiroServ.find(id_tirocinio);
 		
 		if (userOptional.isPresent()) {
 			Utente user = userOptional.get();
+			Tirocinio tirocinio = tirocinioOptional.get();
 			Candidatura newCand = new Candidatura();
-			newCand.setId_utente(user.getIdUtente());
-			newCand.setIdTirocinio(id_tirocinio);
+			newCand.setUtente(user);
+			newCand.setTirocinio(tirocinio);
 			newCand.setStato(0); 
 			candServ.insert(newCand);
 		}
 		
-		return "redirect:/home";	
+		return "redirect:/dashboard";	
 	}
 
 }
