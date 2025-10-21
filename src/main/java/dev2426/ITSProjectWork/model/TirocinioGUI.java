@@ -52,6 +52,7 @@ public class TirocinioGUI {
 	public void setNome_competenza(List<String>	nome_competenza) {
 		this.nome_competenza = nome_competenza;
 	}
+	
 	public void addNome_competenza(String nome_competenza) {
 		this.nome_competenza.add(nome_competenza);
 	}
