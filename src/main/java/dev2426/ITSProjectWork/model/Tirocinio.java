@@ -16,7 +16,7 @@ public class Tirocinio {
 	private String mansione;
 	private String durata;
 	private long id_azienda;
-	private String descrizione;
+	private String descrizione; 
 	
 	public long getIdTirocinio() {
 		return id_tirocinio;
