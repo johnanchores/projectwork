@@ -2,306 +2,223 @@
   1. VARIABILI & SETUP GLOBALE
 ======================================= */
 :root {
-    --dark-bg: #0a9d9d;
-    --primary-teal: #00bcd4; /* Neon Blue/Teal */
-    --secondary-purple: #ffffff; /* Violet/Magenta */
-    --text-light: #ffffff;
-    --card-bg: rgba(255, 255, 255, 0.05); /* Sfondo semi-trasparente scuro */
-    --border-glow: 1px solid rgba(255, 255, 255, 0.3);
-    --shadow-vibrant: 0 0 15px rgba(0, 188, 212, 0.5);
-    --shadow-inset: inset 0 0 10px rgba(0, 0, 0, 0.5);
-    --text-dark: #333333; /* Nuovo colore per testo scuro su sfondo chiaro */
+    --color-teal-primary: #008080; /* Teal scuro, dominante */
+    --color-teal-light: #00b3b3; /* Teal chiaro per hover/accento */
+    --color-background: #f0f4f8; /* Sfondo generale molto soft blue-grey */
+    --color-card: white; /* Sfondo delle schede */
+    --color-text-dark: #2c3e50; /* Testo principale */
+    --color-text-medium: #7f8c8d; /* Testo secondario/label */
+    --color-border: #e0e6ed; /* Bordo leggero */
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombra soft per le card */
+    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4); /* Ombra per i bottoni */
+    --radius-main: 10px; /* Raggio per le card/contenitori */
+}
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* Consider linking 'Inter' font or using a fallback */
+    font-family: "Inter", sans-serif; 
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    min-height: 100vh;
+    background-color: var(--color-background);
     display: flex;
     flex-direction: column;
-    color: var(--text-light);
-    background-color: var(--dark-bg);
-    overflow-x: hidden;
-    position: relative;
+    align-items: center; 
+    min-height: 100vh;
+    color: var(--color-text-dark);
+    padding-bottom: 50px;
 }
 
-/* Effetto Animato Sfondo */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle at 10% 20%, rgba(0, 188, 212, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(39, 60, 176, 0.1) 0%, transparent 40%);
-    animation: backgroundShift 30s linear infinite alternate;
-    z-index: -1;
-    filter: blur(10px);
+a {
+    text-decoration: none;
 }
 
-@keyframes backgroundShift {
-    0% { transform: translate(-50%, -50%); }
-    100% { transform: translate(0%, 0%); }
+button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
 }
 
 /* =======================================
   2. HEADER & NAVIGAZIONE GLOBALE
 ======================================= */
 header {
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(5px);
-    padding: 20px 40px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background-color: var(--color-card);
+    padding: 18px 50px; 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
     position: sticky;
     top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 20;
+    width: 100%;
+    max-width: 1200px; 
+    border-radius: 0 0 var(--radius-main) var(--radius-main);
+    margin-bottom: 40px;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 1.8em;
-    color: var(--primary-teal);
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px var(--primary-teal);
-    /* Stile per l'icona nel titolo */
+    font-size: 1.7em;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px; /* Spazio tra icona e testo */
+}
+
+header h1 img {
+    height: 30px; /* Ridotto per un header più compatto */
+    margin-right: 10px;
+}
+
+header h1 span {
+    color: var(--color-teal-primary);
+}
+
+/* New class for the navigation links div */
+.header-nav { 
+    display: flex;
+    gap: 15px;
 }
 
 .nav-switch-button {
-    background: linear-gradient(90deg, var(--primary-teal), var(--secondary-purple));
-    color: var(--dark-bg);
-    padding: 10px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
+    display: flex;
+    align-items: center;
+    background-color: var(--color-teal-primary);
+    color: white;
+    padding: 10px 18px; /* Padding leggermente ridotto */
+    border-radius: 20px; 
+    font-weight: 600;
+    box-shadow: var(--shadow-button);
+}
+
+.nav-switch-button i {
+    margin-right: 8px;
 }
 
 .nav-switch-button:hover {
-    opacity: 0.9;
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 25px rgba(0, 217, 255, 0.8);
+    background-color: var(--color-teal-light);
+    transform: translateY(-2px); 
 }
 
 /* =======================================
-  3. CONTAINER DASHBOARD
+  3. CONTENITORE PRINCIPALE & NAV
 ======================================= */
 .profile-container {
-    max-width: 1200px;
-    width: 95%;
-    margin: 40px auto 0;
+    max-width: 1000px; 
+    width: 90%;
+    margin: 0 auto; 
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    gap: 35px; 
 }
 
-/* Navigazione Principale (Tabs) */
+/* Navigazione Interna (Tabs) */
 .profile-nav {
     display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.05);
-    box-shadow: var(--shadow-inset);
-    max-width: fit-content;
+    gap: 10px;
+    padding: 8px; 
+    border-radius: var(--radius-main);
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-soft);
 }
 
 .nav-button {
-    background: none;
-    border: none;
-    padding: 12px 30px;
-    cursor: pointer;
-    font-size: 1em;
-    color: var(--text-light);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border-radius: 10px;
+    padding: 12px 30px; 
+    border-radius: 8px;
     font-weight: 500;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    color: var(--color-text-medium);
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1em; /* Assicura la dimensione del testo */
 }
-
-.nav-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 188, 212, 0.1);
-    transition: left 0.4s;
-}
-
-.nav-button:hover::before { left: 0; }
 
 .nav-button.active {
-    background: linear-gradient(45deg, var(--primary-teal), var(--secondary-purple));
-    color: var(--dark-bg);
-    font-weight: 700;
-    box-shadow: 0 0 15px var(--primary-teal), 0 5px 10px rgba(0, 0, 0, 0.5);
-    transform: translateY(-2px);
+    background-color: var(--color-teal-light);
+    color: white; 
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 179, 179, 0.4);
 }
-
-.nav-button.active i { color: var(--dark-bg); }
 
 .nav-button:not(.active):hover {
-    color: var(--primary-teal);
-    text-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+    background-color: var(--color-background);
+    color: var(--color-teal-primary);
+    transform: translateY(-1px);
 }
-
-/* Icone nella nav */
-.nav-button i {
-    font-size: 1.1em;
-    color: var(--primary-teal);
-    transition: color 0.4s;
-}
-
-.nav-button.active i { color: var(--dark-bg); }
 
 /* Sezione Contenuto */
 .profile-section {
     display: none;
-    padding: 30px;
-    background: var(--card-bg);
-    backdrop-filter: blur(8px);
-    border-radius: 15px;
-    box-shadow: var(--shadow-vibrant);
-    border: var(--border-glow);
-    flex-grow: 1;
-    transition: opacity 0.5s, transform 0.5s;
+    padding: 40px; 
+    background: var(--color-card);
+    border-radius: var(--radius-main);
+    box-shadow: var(--shadow-soft);
 }
 
 .profile-section.active {
     display: block;
-    animation: slideIn 0.6s ease-out;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .profile-section h2 {
-    font-size: 1.6em;
-    color: var(--secondary-purple);
+    font-size: 1.8em; 
     margin-bottom: 30px;
-    border-bottom: 2px solid var(--secondary-purple);
+    border-bottom: 3px solid var(--color-teal-primary);
     padding-bottom: 10px;
-    font-weight: 600;
-    text-shadow: 0 0 8px rgba(87, 242, 196, 0.5);
+    font-weight: 700;
+    color: var(--color-teal-primary); 
 }
 
 /* =======================================
-  4. SEZIONE CANDIDATURE (LISTA)
+  4. SEZIONE CANDIDATURE
 ======================================= */
 .candidature-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: 1fr; 
+    gap: 15px;
 }
 
 .candidatura-item {
-    padding: 25px;
-    background: linear-gradient(#ffffff, #a2f1e6);
-    border-radius: 12px;
-    border-left: 5px solid var(--primary-teal);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    padding: 20px;
+    background: var(--color-card);
+    border-radius: var(--radius-main);
+    border-left: 5px solid var(--color-teal-primary);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .candidatura-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 188, 212, 0.5);
-    border-left-color: var(--secondary-purple);
+    transform: translateX(5px); 
+    border-left-color: var(--color-teal-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .candidatura-item h3 {
-    margin-top: 0;
-    color: var(--primary-teal);
-    font-size: 1.3em;
-    margin-bottom: 15px;
+    color: var(--color-text-dark);
+    font-size: 1.1em;
 }
 
-.candidatura-item p {
-    margin: 8px 0;
-    font-size: 0.9em;
-    color: var(--text-dark);
-}
-
-.candidatura-item strong {
-    color: var(--text-dark);
-}
-
-.status {
-    font-weight: 700;
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 0.75em;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-top: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.5px;
-}
-
-.status.accepted {
-    background: linear-gradient(45deg, #4caf50, #81c784);
-    color: #ffffff;
-}
-
-.status.rejected {
-    background: linear-gradient(45deg, #f44336, #e57373);
-    color: white;
-}
-
-.status.pending {
-    background: linear-gradient(45deg, #ffeb3b, #ffee58);
-    color: var(--text-dark);
-}
-
-.btn-anteprima {
-    background: #f0f0f0;
-    color: var(--primary-teal);
-    border: 2px solid var(--primary-teal);
-    padding: 10px 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-weight: 600;
-    transition: all 0.3s;
-    box-shadow: 0 0 5px rgba(0, 188, 212, 0.3);
-    text-shadow: none;
-}
-
-.btn-anteprima:hover {
-    background: var(--primary-teal);
-    color: #ffffff;
-    border-color: var(--primary-teal);
-    transform: scale(1.02);
-}
 
 /* =======================================
-  5. SEZIONE MODIFICA PROFILO (FORM)
+  5. SEZIONE MODIFICA PROFILO (FORM) - AGGIORNATO
 ======================================= */
 .profile-form {
-    /* MODIFICA PER L'INCOLONNAMENTO */
     display: grid;
-    grid-template-columns: 1fr; /* Forza tutti gli elementi su una singola colonna */
-    gap: 30px;
+    /* Griglia a 2 colonne di base */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px 30px; 
+}
+
+.profile-form h3 {
+    grid-column: 1 / -1;
+    font-size: 1.4em;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 15px;
 }
 
 .form-group {
@@ -312,136 +229,210 @@ header h1 {
 .form-group label {
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--secondary-purple);
-    font-size: 0.95em;
+    color: var(--color-text-medium); 
 }
 
 .form-group input {
-    padding: 14px;
-    border: var(--border-glow);
-    border-radius: 8px;
+    /* ALTEZZA AUMENTATA: 15px di padding sopra e sotto */
+    padding: 15px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
     font-size: 16px;
-    transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-light);
-    box-shadow: var(--shadow-inset);
+    background: var(--color-card);
 }
 
 .form-group input:focus {
-    border-color: var(--secondary-purple);
-    box-shadow: 0 0 15px rgba(102, 255, 217, 0.6), var(--shadow-inset);
+    border-color: var(--color-teal-light);
+    box-shadow: 0 0 0 3px rgba(0, 179, 179, 0.1); 
     outline: none;
-    background: rgba(255, 255, 255, 0.1);
 }
 
+/* Allineamento Gruppi Password */
 .password-group {
-    display: flex;
-    align-items: center;
     position: relative;
 }
 
-.password-group input {
-    flex-grow: 1;
-}
-
+/* Icona occhio spostata a SINISTRA */
 .toggle-password {
     background: none;
     border: none;
-    color: var(--primary-teal);
+    color: var(--color-teal-light);
     position: absolute;
-    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px; /* Icona a sinistra */
+    right: auto; 
+    z-index: 10;
     cursor: pointer;
-    padding: 0;
     font-size: 1.1em;
-    transition: color 0.3s;
+    padding: 0;
 }
 
-.toggle-password:hover {
-    color: var(--secondary-purple);
+.password-group input {
+    /* PADDING-LEFT per fare spazio all'icona a sinistra (altezza gestita dalla regola superiore) */
+    padding-left: 45px; 
+    padding-right: 12px; 
 }
 
+/* Stili per il titolo della sezione Password */
+.password-section-title {
+    grid-column: 1 / -1; 
+    font-size: 1.4em;
+    margin-top: 0; 
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 5px;
+    color: var(--color-teal-primary);
+    font-weight: 700; 
+}
+
+/* Forziamo il campo "Conferma nuova Password" ad occupare tutta la riga (3° campo password nel form) */
+/* L'ordine nel DOM è: Nome (1), Cognome (2), File Upload (3), Titolo Password (4), Pass Corrente (5), Nuova Pass (6), Conferma Pass (7) */
+.profile-form .form-group:nth-of-type(7) { 
+    grid-column: 1 / -1;
+}
+
+/* File Upload Group (CV) - Resta full-width */
+.file-upload-group {
+    grid-column: 1 / -1;
+    display: flex; 
+    flex-direction: column; 
+    padding: 25px; 
+    border: 2px dashed var(--color-teal-light); 
+    background-color: #f7fcfc; 
+    border-radius: var(--radius-main);
+    align-items: flex-start; 
+}
+
+.file-upload-group label {
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--color-teal-primary);
+    margin-bottom: 15px;
+}
+
+/* Utilizzare la classe specifica .btn-upload, che è stata aggiunta all'HTML */
+.btn-upload { 
+    background: var(--color-teal-primary);
+    color: white;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 600;
+    align-self: flex-start;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 1em; 
+    box-shadow: none; 
+}
+
+.btn-upload i {
+    margin-right: 8px;
+}
+
+.btn-upload:hover {
+    background-color: var(--color-teal-light);
+    transform: translateY(-1px);
+}
+
+.file-name-display {
+    font-size: 0.9em;
+    color: var(--color-text-medium);
+    font-style: italic;
+    padding-top: 5px;
+}
+
+/* Azioni Form (Salva) */
 .form-actions {
     grid-column: 1 / -1;
     display: flex;
-    justify-content: flex-start;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.btn-save, .btn-preview {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    transition: all 0.4s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-transform: uppercase;
+    justify-content: flex-start; 
+    margin-top: 15px;
 }
 
 .btn-save {
-    background: linear-gradient(90deg, #ffffff, #8bc34a);
-    color: var(--dark-bg);
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+    padding: 14px 40px; 
+    border-radius: var(--radius-main);
+    font-size: 1.05em;
+    font-weight: 600;
+    background: var(--color-teal-primary);
+    color: white;
+    box-shadow: var(--shadow-button);
+    border: none; 
 }
 
 .btn-save:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 20px #4caf50, 0 8px 15px rgba(0, 0, 0, 0.5);
-}
-
-.btn-preview {
-    background: linear-gradient(90deg, #5b6563, #92b8ba);
-    color: var(--text-light);
-    box-shadow: 0 0 10px rgba(85, 245, 210, 0.8);
-}
-
-.btn-preview:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 20px var(--secondary-purple), 0 8px 15px rgba(0, 0, 0, 0.5);
+    background-color: var(--color-teal-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 128, 128, 0.3);
 }
 
 /* =======================================
-  6. RESPONSIVENESS
+  6. RESPONSIVENESS - AGGIORNATO
 ======================================= */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
+    .profile-container {
+        max-width: 95%;
+        gap: 25px;
+    }
+
+    .profile-form {
+        grid-template-columns: 1fr; /* Una colonna su schermi più stretti */
+        gap: 20px;
+    }
+    
+    /* Rimuove l'override specifico per il 7° campo (Conferma Password) 
+       per farlo diventare 1 colonna come gli altri su mobile */
+    .profile-form .form-group:nth-of-type(7) {
+        grid-column: auto;
+    }
+
+    /* Assicura che i campi password si allineino correttamente a 1 colonna */
+    .password-group input {
+        padding-left: 45px; 
+    }
+}
+
+@media (max-width: 600px) {
     header {
         flex-direction: column;
+        align-items: center;
         padding: 15px 20px;
-        text-align: center;
     }
 
-    header h1 { margin-bottom: 10px; }
+    header h1 {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
 
+    .header-nav {
+        flex-direction: column; /* Impila i link di navigazione */
+        width: 100%;
+        gap: 10px;
+    }
+    
     .nav-switch-button {
         width: 100%;
-        text-align: center;
-    }
-
-    .profile-container {
-        margin: 20px auto;
-        width: 90%;
+        justify-content: center;
     }
 
     .profile-nav {
         flex-direction: column;
-        max-width: 100%;
+        padding: 10px;
     }
+    
+    .profile-section { padding: 25px; }
 
-    .nav-button { padding: 12px 20px; }
-
-    .profile-section { padding: 20px; }
-
-    /* Anche il form in modalità responsive usa 1 colonna, quindi resta coerente */
-    .profile-form { grid-template-columns: 1fr; }
-
-    .form-actions { flex-direction: column; }
-
-    .btn-save, .btn-preview {
+    /* MOBILE: Rende i bottoni Salva full-width */
+    .form-actions {
+        justify-content: center;
+    }
+    
+    .btn-save {
         width: 100%;
+    }
+    
+    .btn-upload {
+        width: 100%; /* Rende il bottone upload full-width sul mobile */
         justify-content: center;
     }
 }

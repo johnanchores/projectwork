@@ -1,154 +1,80 @@
-function loadJobDetails(clickedCard) {
-    // 1. GESTIONE CLASSE 'ACTIVE'
-    // Rimuove la classe 'active' da tutte le card
-    const allCards = document.querySelectorAll('.job-card');
-    allCards.forEach(card => card.classList.remove('active'));
 
-    // Aggiunge la classe 'active' alla card cliccata
-    clickedCard.classList.add('active');
+const token = document.querySelector("meta[name='_csrf']").getAttribute("content");
+const header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
 
-    // 2. RECUPERO DATI DALLA CARD
-    // Dati visualizzati sulla card
-    const mansione = clickedCard.querySelector('h3').textContent;
-    const azienda = clickedCard.querySelector('.company-name').textContent;
-    const descrizioneBreve = clickedCard.querySelector('.job-description').textContent;
-    
-    // Dati passati tramite data-attributes per le azioni
-    const documentName = clickedCard.dataset.documentName;
-    const applyUrl = clickedCard.dataset.applyUrl || '#'; // '#' se non c'è URL
+let currentTirocinioId = null;
 
-    // 3. AGGIORNAMENTO DEL PANNELLO ASIDE (Header e Descrizione)
-    document.getElementById('aside-mansione').textContent = mansione;
-    document.getElementById('aside-azienda').textContent = azienda;
-    
-    // Simula l'iniziale del logo
-    document.getElementById('aside-logo').textContent = azienda.charAt(0).toUpperCase();
+function handleApply() {
+  if (!currentTirocinioId) {
+    alert("Errore: Per favore, seleziona un tirocinio dalla lista prima di candidarti.");
+    return;
+  }
 
-    // Aggiornamento Descrizione (nota: in una vera app useresti i dati completi dal server)
-    document.getElementById('aside-descrizione').innerHTML = `<p>${descrizioneBreve}</p>`; 
+  
+  const formData = new URLSearchParams();
+  formData.append('id_tirocinio', currentTirocinioId);
 
-    // 4. AGGIORNAMENTO DOCUMENTO (Sezione Dinamica)
-    const documentLinkContainer = document.getElementById('aside-document-link');
-    if (documentName && documentName !== 'null') { // Verifica se il nome del documento è presente
-        documentLinkContainer.innerHTML = `
-            <i class="material-icons">description</i>
-            <span>${documentName}</span>
-        `;
-    } else {
-        documentLinkContainer.innerHTML = ''; // Nasconde se non c'è documento
-    }
-
-    // 5. AGGIORNAMENTO AZIONI (Bottone Candidati)
-    const applyButton = document.getElementById('aside-apply-btn');
-    if (applyButton) {
-        // Assegna l'URL come attributo dati, puoi usarlo per reindirizzare o aprire un modale
-        applyButton.setAttribute('data-url', applyUrl); 
-        
-        // Esempio: reindirizza al click
-        applyButton.onclick = function() {
-            // Nota: in un'applicazione seria, qui si aggiungerebbe un target="_blank"
-            // o si gestirebbe l'evento con un modale.
-            window.open(applyUrl, '_blank');
-        };
-    }
-    
-    // Opzionale: scrolla l'aside nella vista sui dispositivi mobili
-    document.querySelector('.job-details-panel').scrollTop = 0;
-}
-
-/**
- * Gestisce l'invio della richiesta di candidatura tramite POST.
- * @param {string} jobId L'ID univoco del tirocinio a cui candidarsi.
- */
-function handleApply(jobId) {
-    if (!jobId) {
-        console.error("ID del tirocinio non trovato per la candidatura.");
-        alert("Errore: Impossibile candidarsi senza ID del tirocinio.");
-        return;
-    }
-    
-    // Richiesta POST al server
-    fetch('/candidatura', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // **ATTENZIONE:** Se usi Spring Security, potresti dover includere
-            // qui l'header X-CSRF-TOKEN.
-        },
-        body: JSON.stringify({
-            tirocinioId: jobId
-        })
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-        }
-        throw new Error('Errore durante la candidatura: ' + response.statusText);
-    })
-    .then(data => {
+  fetch("/candidature", { 
+    method: "POST",
+    headers: {
+     
+      "Content-Type": "application/x-www-form-urlencoded",
+	  [header]: token
+    },
+    body: formData,  })
+    .then((response) => {
+      if (response.ok) {
         alert("Candidatura inviata con successo! ✅");
-        
-        // Aggiorna lo stato del bottone
-        const applyButton = document.getElementById('aside-apply-btn');
-        applyButton.textContent = "Candidato!";
-        applyButton.disabled = true;
+        window.location.reload(); 
+      } else {
+        throw new Error("Errore durante la candidatura: " + response.statusText);
+      }
     })
-    .catch(error => {
-        console.error('Errore di candidatura:', error);
-        alert("Candidatura fallita. Riprova più tardi.");
+    .catch((error) => {
+      console.error("Errore di candidatura:", error);
+      alert("Candidatura fallita. Riprova più tardi.");
     });
 }
 
-
-/**
- * Aggiorna il pannello dei dettagli quando una card viene cliccata.
- * @param {HTMLElement} clickedCard La card del lavoro cliccata.
- */
 function loadJobDetails(clickedCard) {
-    // 1. GESTIONE CLASSE 'ACTIVE'
-    const allCards = document.querySelectorAll('.job-card');
-    allCards.forEach(card => card.classList.remove('active'));
-    clickedCard.classList.add('active');
 
-    // 2. RECUPERO DATI DALLA CARD
-    const jobId = clickedCard.dataset.jobId; 
-    const mansione = clickedCard.querySelector('h3').textContent;
-    const azienda = clickedCard.querySelector('.company-name').textContent;
-    const descrizioneBreve = clickedCard.querySelector('.job-description').textContent;
-    const documentName = clickedCard.dataset.documentName; 
-    
-    // 3. AGGIORNAMENTO DEL PANNELLO ASIDE (Header e Descrizione)
-    document.getElementById('aside-mansione').textContent = mansione;
-    document.getElementById('aside-azienda').textContent = azienda;
-    document.getElementById('aside-logo').textContent = azienda.charAt(0).toUpperCase();
-    document.getElementById('aside-descrizione').innerHTML = `<p>${descrizioneBreve}</p>`; 
+  document.querySelectorAll('.job-card').forEach(card => card.classList.remove('active'));
+  
+  clickedCard.classList.add('active');
 
-    // 4. AGGIORNAMENTO DOCUMENTO
-    const documentLinkContainer = document.getElementById('aside-document-link');
-    if (documentName && documentName !== 'null' && documentName.trim() !== '') {
-        documentLinkContainer.innerHTML = `
-            <i class="material-icons">description</i>
-            <span>${documentName}</span>
-        `;
-    } else {
-        documentLinkContainer.innerHTML = ''; 
-    }
+  const jobId = clickedCard.dataset.jobId;
+  const mansione = clickedCard.querySelector("h3").textContent;
+  const azienda = clickedCard.querySelector(".company-name").textContent;
+  const descrizione = clickedCard.querySelector(".job-description").textContent;
+  const logoInitial = clickedCard.querySelector(".company-logo").textContent;
+  const competenzeHtml = clickedCard.querySelector(".tags-row").innerHTML;
+  
+ 
+  currentTirocinioId = jobId;
 
-    // 5. COLLEGAMENTO DELL'AZIONE POST AL BOTTONE CANDIDATI
-    const applyButton = document.getElementById('aside-apply-btn');
-    
-    // Resetta lo stato del bottone e il gestore di eventi
-    applyButton.textContent = "Candidati";
-    applyButton.disabled = false; 
-    applyButton.onclick = null; 
-        
-    if (applyButton) {
-        // Assegna la nuova funzione handleApply con l'ID corrente
-        applyButton.onclick = function() {
-            handleApply(jobId);
-        };
-    }
-    
-    // Opzionale: scrolla l'aside nella vista sui dispositivi mobili
-    document.querySelector('.job-details-panel').scrollTop = 0;
+  document.getElementById("aside-mansione").textContent = mansione;
+  document.getElementById("aside-azienda").textContent = azienda;
+  document.getElementById("aside-descrizione").querySelector("p").textContent = descrizione;
+  document.getElementById("aside-logo").textContent = logoInitial;
+  document.getElementById("aside-competenze").innerHTML = competenzeHtml;
+
+  document.getElementById("jobDetailsOverlay").classList.add("show");
 }
+
+
+function closeJobDetailsOverlay() {
+  document.getElementById("jobDetailsOverlay").classList.remove("show");
+  document.querySelectorAll('.job-card').forEach(card => card.classList.remove('active'));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+ 
+  document.getElementById("aside-apply-btn").addEventListener("click", handleApply);
+
+ 
+  document.getElementById("jobDetailsOverlay").addEventListener("click", function (event) {
+    if (event.target === this) {
+      closeJobDetailsOverlay();
+    }
+  });
+});
