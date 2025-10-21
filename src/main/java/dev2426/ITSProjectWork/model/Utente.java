@@ -18,6 +18,7 @@ public class Utente {
 	private String email;
 	private String password;
 	private byte[] CV;
+	private String stato;
 
 	public long getIdUtente() {
 		return id_utente;
@@ -79,6 +80,14 @@ public class Utente {
 
 	public Utente() {
 		
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 
 }
