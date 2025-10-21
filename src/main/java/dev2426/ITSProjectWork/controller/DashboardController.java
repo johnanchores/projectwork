@@ -87,7 +87,7 @@ public class DashboardController {
 		newCand.setIdTirocinio(id_tirocinio);
 		newCand.setStato(0);
 		cServ.insert(newCand);
-		return "redirect:/home";
+		return "redirect:/home";	
 	}
 
 }
