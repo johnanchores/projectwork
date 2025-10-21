@@ -27,6 +27,9 @@ public class CandidaturaService {
 	}
 	
 	public void insert(Candidatura nuova) {
+		if (repo.utenteCandidato(nuova.getUtente(), nuova.getTirocinio())) {
+            throw new IllegalStateException("Sei già candidato per questo tirocinio.");
+        }
 		repo.save(nuova);
 	}
 	
