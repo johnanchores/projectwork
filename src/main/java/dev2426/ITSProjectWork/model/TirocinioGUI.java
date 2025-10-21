@@ -10,6 +10,16 @@ public class TirocinioGUI {
 	private String descrizione;
 	private List<Long> competenze;
 	private List<String> nome_competenza;
+	private long id_tirocinio;
+
+	public long getId_tirocinio() {
+		return id_tirocinio;
+	}
+
+	public void setId_tirocinio(long id_tirocinio) {
+		this.id_tirocinio = id_tirocinio;
+	}
+	
 	public String getMansione() {
 		return mansione;
 	}
@@ -47,7 +57,12 @@ public class TirocinioGUI {
 	public List<String> getNome_competenza() {
 		return nome_competenza;
 	}
-	public void setNome_competenza(String nome_competenza) {
+	
+	public void setNome_competenza(List<String>	nome_competenza) {
+		this.nome_competenza = nome_competenza;
+	}
+	
+	public void addNome_competenza(String nome_competenza) {
 		this.nome_competenza.add(nome_competenza);
 	}
 

@@ -18,8 +18,7 @@ public class Tirocinio {
 	private String mansione;
 	private String durata;
 	private long id_azienda;
-	private String descrizione;
-	private List<Long> id_competenze; 
+	private String descrizione; 
 	
 	public long getIdTirocinio() {
 		return id_tirocinio;
@@ -60,12 +59,6 @@ public class Tirocinio {
 	}
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
-	}
-	public List<Long> getId_competenze() {
-		return id_competenze;
-	}
-	public void setId_competenze(List<Long> id_competenze) {
-		this.id_competenze = id_competenze;
 	}
 	
 }
