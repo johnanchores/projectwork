@@ -23,9 +23,9 @@ public class ProfiloController {
 
 	@Autowired
 	private UtentiService uServ;
-	
+
 	@Autowired
-    private CandidaturaService candServ;
+	private CandidaturaService candServ;
 
 	@GetMapping("/profilo")
 	public String showProfile(@AuthenticationPrincipal UserDetails dettagli, Model modello) {
@@ -34,10 +34,10 @@ public class ProfiloController {
 
 		if (optionalUtente.isPresent()) {
 			Utente utente = optionalUtente.get();
-			
+
 			List<CandidaturaGUI> listaCandidature = candServ.getUserCandidatureGui(utente);
 			modello.addAttribute("listaCandidature", listaCandidature);
-			
+
 			modello.addAttribute("utente", utente);
 
 			UtenteGUI utenteGui = new UtenteGUI();
@@ -57,6 +57,7 @@ public class ProfiloController {
 			@ModelAttribute("utenteGUI") UtenteGUI datiForm,
 			Model modello) {
 
+		// 1. Gestione Password (il tuo codice esistente)
 		if (datiForm.getPasswordNuova() != null && !datiForm.getPasswordNuova().isEmpty()) {
 			if (!datiForm.getPasswordNuova().equals(datiForm.getConfermaPassword())) {
 				modello.addAttribute("updateError", "La nuova password e la conferma non corrispondono.");
@@ -73,6 +74,17 @@ public class ProfiloController {
 
 		long idUtente = optionalUtente.get().getIdUtente();
 
+		if (datiForm.getCurriculumFile() != null && !datiForm.getCurriculumFile().isEmpty()) {
+			try {
+				uServ.saveCurriculumFile(idUtente, datiForm.getCurriculumFile());
+			} catch (Exception e) {
+				// Gestione dell'errore di I/O (salvataggio su disco fallito)
+				modello.addAttribute("updateError", "Errore nel caricamento del Curriculum: " + e.getMessage());
+				return showProfile(dettagli, modello);
+			}
+		}
+
+		// 3. Salvataggio degli altri dati (nome, cognome, password)
 		boolean successo = uServ.update(idUtente, datiForm);
 
 		if (successo) {
