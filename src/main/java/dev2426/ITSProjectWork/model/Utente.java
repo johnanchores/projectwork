@@ -76,8 +76,8 @@ public class Utente {
         return ruolo;
     }
 
-    public void setStato(String stato) {
-        this.ruolo = stato;
+    public void setStato(String ruolo) {
+        this.ruolo = ruolo;
     }
 
     public Utente(long idUtente, String nome, String cognome, String email, String password, String curriculumPath) {
