@@ -1,21 +1,24 @@
+/* =======================================
+  1. VARIABILI & SETUP GLOBALE
+======================================= */
 :root {
-    --color-teal-primary: #008080;
-    --color-teal-light: #00b3b3;
+    --color-teal-primary: #008080; 
+    --color-teal-light: #00b3b3; 
     --color-background: #f0f4f8;
-    --color-card: white;
+    --color-card: white; 
     --color-text-dark: #2c3e50;
-    --color-text-medium: #7f8c8d;
-    --color-border: #e0e6ed;
+    --color-text-medium: #7f8c8d; 
+    --color-border: #e0e6ed; 
     --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4);
-    --radius-main: 10px;
+    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4); 
+    --radius-main: 10px; 
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", sans-serif; 
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
@@ -23,7 +26,7 @@ body {
     background-color: var(--color-background);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
     min-height: 100vh;
     color: var(--color-text-dark);
     padding-bottom: 50px;
@@ -40,12 +43,12 @@ button {
 }
 
 /* =======================================
- 2. HEADER & NAVIGAZIONE GLOBALE
+  2. HEADER & NAVIGAZIONE GLOBALE
 ======================================= */
-header {
+.header {
     background-color: var(--color-card);
-    padding: 18px 50px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 18px 50px; 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
     position: sticky;
     top: 0;
     display: flex;
@@ -55,85 +58,88 @@ header {
     width: 100%;
     max-width: 1200px;
     border-radius: 0 0 var(--radius-main) var(--radius-main);
-    margin-bottom: 40px;
+    margin: 0 auto 40px auto;
 }
 
-header h1 {
+.header h1 {
+    margin: 0;
     font-size: 1.7em;
-    font-weight: 700;
+    color: var(--color-teal-primary);
     display: flex;
     align-items: center;
-}
-
-header h1 img {
-    height: 30px;
-    margin-right: 10px;
-}
-
-header h1 span {
-    color: var(--color-teal-primary);
+    gap: 10px;
 }
 
 .header-nav-links {
     display: flex;
     gap: 15px;
+    align-items: center;
 }
 
 .nav-switch-button {
+    background: var(--color-teal-primary);
+    color: white;
+    padding: 10px 18px; 
+    border-radius: 20px; 
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: var(--shadow-button);
     display: flex;
     align-items: center;
-    background-color: var(--color-teal-primary);
-    color: white;
-    padding: 10px 18px;
-    border-radius: 20px;
-    font-weight: 600;
-    box-shadow: var(--shadow-button);
-}
-
-.nav-switch-button i {
-    margin-right: 8px;
+    gap: 8px;
 }
 
 .nav-switch-button:hover {
     background-color: var(--color-teal-light);
-    transform: translateY(-2px);
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.6);
+}
+
+
+.nav-switch-button.logout:hover {
+    background-color: var(--color-teal-light);
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.6);
 }
 
 /* =======================================
- 3. CONTENITORE PRINCIPALE & NAV
+  3. CONTENITORE PRINCIPALE & NAV
 ======================================= */
 .profile-container {
-    max-width: 1000px;
+    max-width: 1000px; 
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto; 
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    gap: 35px;
+    gap: 35px; 
 }
 
 .profile-nav {
     display: flex;
     gap: 10px;
-    padding: 8px;
+    padding: 8px; 
     border-radius: var(--radius-main);
     background-color: var(--color-card);
     box-shadow: var(--shadow-soft);
 }
 
 .nav-button {
-    padding: 12px 30px;
+    padding: 12px 30px; 
     border-radius: 8px;
     font-weight: 500;
     color: var(--color-text-medium);
     flex-grow: 1;
     text-align: center;
-    font-size: 1em;
+    font-size: 1em; 
 }
 
 .nav-button.active {
     background-color: var(--color-teal-light);
-    color: white;
+    color: white; 
     font-weight: 600;
     box-shadow: 0 2px 5px rgba(0, 179, 179, 0.4);
 }
@@ -146,7 +152,7 @@ header h1 span {
 
 .profile-section {
     display: none;
-    padding: 40px;
+    padding: 40px; 
     background: var(--color-card);
     border-radius: var(--radius-main);
     box-shadow: var(--shadow-soft);
@@ -157,115 +163,20 @@ header h1 span {
 }
 
 .profile-section h2 {
-    font-size: 1.8em;
+    font-size: 1.8em; 
     margin-bottom: 30px;
     border-bottom: 3px solid var(--color-teal-primary);
     padding-bottom: 10px;
     font-weight: 700;
-    color: var(--color-teal-primary);
+    color: var(--color-teal-primary); 
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-body {
-    background-color: #fefefe;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    width: 90%;
-    max-width: 550px;
-    position: relative;
-    animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-    from {opacity: 0; transform: translateY(-50px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-.close-button {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 32px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-.modal-body h3 {
-    color: var(--primary-teal, #009999);
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.modal-body p {
-    margin: 10px 0;
-    font-size: 1.1em;
-}
-
-.modal-body strong {
-    color: #333;
-    display: inline-block;
-    min-width: 120px;
-}
-
-.modal-body span#modal-stato {
-    font-weight: bold;
-    padding: 4px 10px;
-    border-radius: 5px;
-    display: inline-block;
-}
-
-.modal-body span.accepted {
-    background-color: #e6ffe6;
-    color: #008000;
-    border: 1px solid #008000;
-}
-.modal-body span.rejected {
-    background-color: #ffe6e6;
-    color: #cc0000;
-    border: 1px solid #cc0000;
-}
-.modal-body span.pending {
-    background-color: #ffffcc;
-    color: #ffaa00;
-    border: 1px solid #ffaa00;
-}
-
-@media (max-width: 600px) {
-    .modal-body {
-        width: 95%;
-        padding: 20px;
-        margin-top: 50px;
-    }
-}
-
-
+/* =======================================
+  4. SEZIONE CANDIDATURE
+======================================= */
 .candidature-list {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; 
     gap: 15px;
 }
 
@@ -278,7 +189,7 @@ header h1 span {
 }
 
 .candidatura-item:hover {
-    transform: translateX(5px);
+    transform: translateX(5px); 
     border-left-color: var(--color-teal-light);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -290,12 +201,12 @@ header h1 span {
 
 
 /* =======================================
- 5. SEZIONE MODIFICA PROFILO (FORM) - AGGIORNATO
+  5. SEZIONE MODIFICA PROFILO (FORM) 
 ======================================= */
 .profile-form {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px 30px;
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px 30px; 
 }
 
 .profile-form h3 {
@@ -315,7 +226,7 @@ header h1 span {
 .form-group label {
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--color-text-medium);
+    color: var(--color-text-medium); 
 }
 
 .form-group input {
@@ -328,7 +239,7 @@ header h1 span {
 
 .form-group input:focus {
     border-color: var(--color-teal-light);
-    box-shadow: 0 0 0 3px rgba(0, 179, 179, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 179, 179, 0.1); 
     outline: none;
 }
 
@@ -343,8 +254,8 @@ header h1 span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 15px;
-    right: auto;
+    left: 15px; 
+    right: auto; 
     z-index: 10;
     cursor: pointer;
     font-size: 1.1em;
@@ -352,34 +263,35 @@ header h1 span {
 }
 
 .password-group input {
-    padding-left: 45px;
-    padding-right: 12px;
+    padding-left: 45px; 
+    padding-right: 12px; 
 }
 
 .password-section-title {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; 
     font-size: 1.4em;
-    margin-top: 0;
+    margin-top: 0; 
     padding-bottom: 6px;
     border-bottom: 1px solid var(--color-border);
     margin-bottom: 5px;
     color: var(--color-teal-primary);
-    font-weight: 700;
+    font-weight: 700; 
 }
 
-.profile-form .form-group:nth-of-type(7) {
+.profile-form .form-group:nth-of-type(7) { 
     grid-column: 1 / -1;
 }
+
 
 .file-upload-group {
     grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    padding: 25px;
-    border: 2px dashed var(--color-teal-light);
-    background-color: #f7fcfc;
+    display: flex; 
+    flex-direction: column; 
+    padding: 25px; 
+    border: 2px dashed var(--color-teal-light); 
+    background-color: #f7fcfc; 
     border-radius: var(--radius-main);
-    align-items: flex-start;
+    align-items: flex-start; 
 }
 
 .file-upload-group label {
@@ -389,7 +301,7 @@ header h1 span {
     margin-bottom: 15px;
 }
 
-.btn-upload {
+.btn-upload { 
     background: var(--color-teal-primary);
     color: white;
     border-radius: 6px;
@@ -398,8 +310,8 @@ header h1 span {
     align-self: flex-start;
     margin-bottom: 5px;
     cursor: pointer;
-    font-size: 1em;
-    box-shadow: none;
+    font-size: 1em; 
+    box-shadow: none; 
 }
 
 .btn-upload i {
@@ -421,19 +333,19 @@ header h1 span {
 .form-actions {
     grid-column: 1 / -1;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-start; 
     margin-top: 15px;
 }
 
 .btn-save {
-    padding: 14px 40px;
+    padding: 14px 40px; 
     border-radius: var(--radius-main);
     font-size: 1.05em;
     font-weight: 600;
     background: var(--color-teal-primary);
     color: white;
     box-shadow: var(--shadow-button);
-    border: none;
+    border: none; 
 }
 
 .btn-save:hover {
@@ -443,7 +355,7 @@ header h1 span {
 }
 
 /* =======================================
- 6. RESPONSIVENESS - AGGIORNATO
+  6. RESPONSIVENESS 
 ======================================= */
 @media (max-width: 850px) {
     .profile-container {
@@ -452,16 +364,17 @@ header h1 span {
     }
 
     .profile-form {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
         gap: 20px;
     }
+    
 
     .profile-form .form-group:nth-of-type(7) {
         grid-column: auto;
     }
 
     .password-group input {
-        padding-left: 45px;
+        padding-left: 45px; 
     }
 }
 
@@ -477,12 +390,12 @@ header h1 span {
         margin-bottom: 10px;
     }
 
-    .header-nav-links {
-        flex-direction: column;
+    .header-nav {
+        flex-direction: column; 
         width: 100%;
         gap: 10px;
     }
-
+    
     .nav-switch-button {
         width: 100%;
         justify-content: center;
@@ -492,19 +405,19 @@ header h1 span {
         flex-direction: column;
         padding: 10px;
     }
-
+    
     .profile-section { padding: 25px; }
 
     .form-actions {
         justify-content: center;
     }
-
+    
     .btn-save {
         width: 100%;
     }
-
+    
     .btn-upload {
-        width: 100%;
+        width: 100%; 
         justify-content: center;
     }
 }
