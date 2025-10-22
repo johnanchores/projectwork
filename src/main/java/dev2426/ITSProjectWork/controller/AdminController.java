@@ -48,6 +48,7 @@ public class AdminController {
 	@PostMapping("/registraTirocinio")
 	public String registerTirocinio(@ModelAttribute TirocinioGUI nuovoTirocinio, @ModelAttribute Azienda azienda) {
 		Tirocinio t = new Tirocinio();
+		
 		t.setMansione(nuovoTirocinio.getMansione());
 		t.setCompetenze(nuovoTirocinio.getCompetenze());
 		t.setAzienda(azienda);
