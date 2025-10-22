@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,9 +23,11 @@
         <a th:href="@{/dashboard}" class="nav-switch-button"
           ><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a
         >
-        <a th:href="@{/admin}" class="nav-switch-button"
-          ><i class="fas fa-lock-open"></i> Vai all'Area Admin</a
-        >
+		<div sec:authorize="hasRole('ADMIN')">
+		    <a th:href="@{/admin}" class="nav-switch-button">
+		        <i class="fas fa-lock-open"></i> Vai all'Area Admin
+		    </a>
+		</div>
         <a th:href="@{/login?logout}" class="nav-switch-button"
           ><i class="fas fa-sign-out-alt"></i> Logout</a
         >
