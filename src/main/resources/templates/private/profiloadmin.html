@@ -11,13 +11,13 @@
 <body>
   <header class="admin-header">
     <h1>
-      <img src="/src/main/resources/static/image/logo2.png" alt="logo" height="100">
+      <img src="/image/logo2.png" alt="logo" height="100">
       Pannello di Amministrazione
     </h1>
     <nav class="header-nav-links">
       <a th:href="@{/dashboard}" class="nav-btn"><i class="fas fa-table-columns"></i> Dashboard</a>
       <a th:href="@{/profilo}" class="nav-btn"><i class="fas fa-user-circle"></i> Area Utente</a>
-      <a th:href="@{/login?logout}" class="nav-btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a th:href="@{/logout}" class="nav-btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </header>
 
