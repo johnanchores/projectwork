@@ -73,11 +73,15 @@
             <a
               href="#"
               class="btn-anteprima"
-              onclick="openModal(event, 
-                         this.closest('.candidatura-item').querySelector('h3').textContent, 
-                         this.closest('.candidatura-item').querySelector('p strong ~ span').textContent,
-                         this.closest('.candidatura-item').querySelector('.status').textContent,
-                         this.closest('.candidatura-item').querySelector('.status').className)"
+              th:attr="data-mansione=${candidatura.mansioneTirocinio}, 
+                       data-azienda=${candidatura.nomeAzienda}, 
+                       data-descrizione=${candidatura.descrizioneTirocinio}, 
+                       data-durata=${candidatura.durataTirocinio}, 
+                       data-nome=${utente.nome}, 
+                       data-cognome=${utente.cognome}, 
+                       data-email=${utente.email}, 
+                       data-stato=${candidatura.stato}"
+              onclick="openModal(event, this)"
             >
               <i class="fas fa-eye"></i>
               Visualizza dettagli
@@ -209,47 +213,45 @@
       <div class="modal-content">
         <span class="close-button" onclick="closeModal()">&times;</span>
         <h3>Dettagli Candidatura</h3>
-
         <div class="modal-body">
           <p><strong>Mansione:</strong> <span id="modal-mansione"></span></p>
           <p><strong>Azienda:</strong> <span id="modal-azienda"></span></p>
-          <p><strong>Stato:</strong> <span id="modal-stato"></span></p>
-
-          <hr />
-
-          <p style="color: #666; font-style: italic; font-size: 0.9em">
-            Qui potrebbero esserci note aggiuntive sul tirocinio o informazioni
-            specifiche (es. data di invio).
+          <p>
+            <strong>Descrizione:</strong> <span id="modal-descrizione"></span>
           </p>
+          <p><strong>Durata:</strong> <span id="modal-durata"></span></p>
+          <hr />
+          <p>
+            <strong>Candidato:</strong> <span id="modal-nome"></span>
+            <span id="modal-cognome"></span> (<span id="modal-email"></span>)
+          </p>
+          <p><strong>Stato:</strong> <span id="modal-stato"></span></p>
         </div>
       </div>
     </div>
+
     <script>
       /* ===================================== */
       /* FUNZIONI MODAL (AGGIUNTE) */
       /* ===================================== */
-      function openModal(event, mansione, azienda, statoTesto, statoClassi) {
-        event.preventDefault(); // Impedisce al link di reindirizzare
-
-        // Popola il contenuto del modale
-        document.getElementById("modal-mansione").textContent = mansione;
-        document.getElementById("modal-azienda").textContent = azienda;
-
-        const statoSpan = document.getElementById("modal-stato");
-        statoSpan.textContent = statoTesto.trim();
-
-        // Applica le classi di colore al testo dello stato all'interno del modale
-        statoSpan.className = ""; // Rimuovi classi precedenti
-
-        if (statoClassi.includes("accepted")) {
-          statoSpan.classList.add("accepted");
-        } else if (statoClassi.includes("rejected")) {
-          statoSpan.classList.add("rejected");
-        } else {
-          statoSpan.classList.add("pending");
-        }
-
-        // Mostra il modale
+      function openModal(event, el) {
+        event.preventDefault();
+        document.getElementById("modal-mansione").textContent =
+          el.getAttribute("data-mansione");
+        document.getElementById("modal-azienda").textContent =
+          el.getAttribute("data-azienda");
+        document.getElementById("modal-descrizione").textContent =
+          el.getAttribute("data-descrizione");
+        document.getElementById("modal-durata").textContent =
+          el.getAttribute("data-durata");
+        document.getElementById("modal-nome").textContent =
+          el.getAttribute("data-nome");
+        document.getElementById("modal-cognome").textContent =
+          el.getAttribute("data-cognome");
+        document.getElementById("modal-email").textContent =
+          el.getAttribute("data-email");
+        document.getElementById("modal-stato").textContent =
+          el.getAttribute("data-stato");
         document.getElementById("detailsModal").style.display = "flex";
       }
 
