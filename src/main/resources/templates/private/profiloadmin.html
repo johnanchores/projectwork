@@ -49,6 +49,7 @@
             </tr>
           </thead>
           <tbody>
+<<<<<<< HEAD
             <tr th:each="candidatura : ${listaCandidature}" 
                 th:data-nome="${candidatura.nomeUtente}" 
                 th:data-cognome="${candidatura.cognomeUtente}" 
@@ -79,6 +80,32 @@
                     <button type="submit" class="btn-action reject" title="Rifiuta"><i class="fas fa-times"></i></button>
                 </form>
               </td>
+=======
+			<tbody>
+			    <tr th:each="candidatura : ${listaCandidature}">
+			      <td th:text="${candidatura.nomeUtente + ' ' + candidatura.cognomeUtente}">Mario Rossi</td>
+			      <td th:text="${candidatura.mansioneTirocinio}">Frontend Developer</td>
+			      <td>
+			        <span class="status"
+			              th:classappend="${candidatura.stato == 'Accettata' ? 'status-accepted' : (candidatura.stato == 'Rifiutata' ? 'status-rejected' : 'status-pending')}"
+			              th:text="${candidatura.stato}">
+			          In Attesa
+			        </span>
+			      </td>
+			      <td class="action-buttons">
+			        <button class="btn-action view"><i class="fas fa-eye"></i></button>
+			        
+			        <form th:action="@{/admin/candidature/{id}/accetta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
+			            <button type="submit" class="btn-action accept" title="Accetta"><i class="fas fa-check"></i></button>
+			        </form>
+			        
+			        <form th:action="@{/admin/candidature/{id}/rifiuta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
+			            <button type="submit" class="btn-action reject" title="Rifiuta"><i class="fas fa-times"></i></button>
+			        </form>
+			      </td>
+			    </tr>
+			</tbody>d>
+>>>>>>> parent of c40f407 (Merge branch 'Alessandro' into John)
             </tr>
           </tbody>
         </table>
@@ -90,6 +117,7 @@
     <div class="modal-content">
       <span class="close-btn" id="closeModal">&times;</span>
       <h2><i class="fas fa-plus-square"></i> Aggiungi Tirocinio</h2>
+<<<<<<< HEAD
       <form class="tirocinio-form" th:action="@{/registraTirocinio}" th:object="${nuovoTirocinio}" method="post">
         <div class="form-group">
           <label for="titolo">Titolo Tirocinio:</label>
@@ -128,6 +156,54 @@
           <button type="reset" class="btn-secondary"><i class="fas fa-eraser"></i> Svuota</button>
         </div>
       </form>
+=======
+	  <form class="tirocinio-form" th:action="@{/registraTirocinio}" th:object="${nuovoTirocinio}" method="post">
+	      <div class="form-group">
+	        <label for="titolo">Titolo Annuncio:</label>
+	        <input type="text" id="titolo" th:field="*{mansione}" placeholder="Esempio: Sviluppatore Java" required>
+	      </div>
+
+	      <div class="form-group">
+	        <label for="azienda">Azienda:</label>
+	        <select id="azienda" th:field="*{aziendaId}" required>
+	          <option value="" disabled selected>Seleziona un'azienda</option>
+	          <option th:each="az : ${listaAziende}"
+	                  th:value="${az.idAzienda}"
+	                  th:text="${az.nome}"></option>
+	        </select>
+	      </div>
+
+	      <div class="form-group">
+	        <label for="durata">Durata (Mesi):</label>
+	        <input type="number" id="durata" th:field="*{durata}" min="1" max="12" placeholder="1-12" required>
+	      </div>
+
+	      <div class="form-group">
+	        <label for="orari">Orari di Lavoro:</label>
+	        <input type="text" id="orari" th:field="*{orari}" placeholder="Full-time / Part-time / Flessibile">
+	      </div>
+
+	      <div class="form-group full-width">
+	        <label>Competenze Richieste:</label>
+	        <div class="tag-select">
+	          <div th:each="comp : ${listaCompetenze}" class="skill-tag-checkbox">
+	            <input type="checkbox" th:id="${'comp-' + comp.idCompetenza}" th:field="*{competenzeId}" th:value="${comp.idCompetenza}">
+	            <label th:for="${'comp-' + comp.idCompetenza}" th:text="${comp.nome}"></label>
+	          </div>
+	        </div>
+	      </div>
+	      
+	      <div class="form-group full-width">
+	        <label for="descrizione">Descrizione:</label>
+	        <textarea id="descrizione" th:field="*{descrizione}" rows="3" placeholder="Descrizione del tirocinio"></textarea>
+	      </div>
+
+	      <div class="form-actions full-width">
+	        <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Salva</button>
+	        <button type="reset" class="btn-secondary"><i class="fas fa-eraser"></i> Svuota</button>
+	      </div>
+	  </form>
+>>>>>>> parent of c40f407 (Merge branch 'Alessandro' into John)
     </div>
   </div>
 
