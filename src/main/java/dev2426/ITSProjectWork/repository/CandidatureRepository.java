@@ -19,7 +19,8 @@ public interface CandidatureRepository extends JpaRepository<Candidatura, Long> 
                "   u.nome, " +                  
                "   u.cognome, " +               
                "   t.mansione, " +              
-               "   a.nome, " +                  
+               "   a.nome, " +
+               "   t.orario_lavoro, " +
                "   CASE c.stato " +
                "       WHEN 0 THEN 'In attesa' " +
                "       WHEN 1 THEN 'Accettata' " +
