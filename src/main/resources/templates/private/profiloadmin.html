@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pannello Admin - Gestione Candidature</title>
-  <link rel="stylesheet" href="../../static/css/profiloadmin.css">
+  <link rel="stylesheet" href="/css/profiloadmin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
@@ -15,14 +15,13 @@
       Pannello di Amministrazione
     </h1>
     <nav class="header-nav-links">
-      <a href="dashboard.html" class="nav-btn"><i class="fas fa-table-columns"></i> Dashboard</a>
-      <a href="profilo.html" class="nav-btn"><i class="fas fa-user-circle"></i> Area Utente</a>
-      <a href="/logout" class="nav-btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a th:href="@{/dashboard}" class="nav-btn"><i class="fas fa-table-columns"></i> Dashboard</a>
+      <a th:href="@{/profilo}" class="nav-btn"><i class="fas fa-user-circle"></i> Area Utente</a>
+      <a th:href="@{/login?logout}" class="nav-btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </header>
 
   <main class="admin-container">
-    <!-- SEZIONE CANDIDATURE -->
     <section class="section-table">
       <div class="section-header">
         <h2><i class="fas fa-file-alt"></i> Candidature Ricevute</h2>
@@ -59,7 +58,6 @@
     </section>
   </main>
 
-  <!-- MODALE -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" id="closeModal">&times;</span>
@@ -93,13 +91,11 @@
           <input type="text" id="orari" placeholder="Full-time / Part-time / Flessibile">
         </div>
 
-        <!-- COMPETENZE RICHIESTE -->
         <div class="form-group full-width">
           <label>Competenze Richieste:</label>
           <div class="tag-select" id="richieste"></div>
         </div>
 
-        <!-- COMPETENZE ACQUISIBILI -->
         <div class="form-group full-width">
           <label>Competenze Acquisibili:</label>
           <div class="tag-select" id="acquisibili"></div>
@@ -119,13 +115,11 @@
   </div>
 
   <script>
-    // Apertura e chiusura modale
     const modal = document.getElementById('modal');
     document.getElementById('openModal').onclick = () => modal.style.display = 'flex';
     document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
     window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
 
-    // Tag selector con lista fissa
     const skillLists = {
       richieste: ["Python", "JavaScript", "HTML", "CSS", "Java", "SQL", "Machine Learning", "React", "C++", "UI/UX Design"],
       acquisibili: ["Teamwork", "Project Management", "Problem Solving", "Analisi Dati", "Comunicazione", "Leadership"]
