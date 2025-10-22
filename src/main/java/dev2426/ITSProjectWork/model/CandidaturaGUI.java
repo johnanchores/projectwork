@@ -8,8 +8,8 @@ public class CandidaturaGUI {
 	private String mansioneTirocinio;
 	private String nomeAzienda;
 	private String stato;
-	private String descrizioneTirocinio; // Aggiunto
-	private String durataTirocinio;     // Aggiunto
+	private String descrizioneTirocinio; 
+	private String durataTirocinio;    
 
 	public CandidaturaGUI(long id_candidatura, String nomeUtente, String cognomeUtente, String mansioneTirocinio,
 			String nomeAzienda, String stato, String descrizioneTirocinio, String durataTirocinio) {
