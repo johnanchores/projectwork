@@ -35,9 +35,9 @@ public class DashboardController {
 	@GetMapping("/dashboard")
 	public String showHome(Model model) {
 		List<Tirocinio> listaTir = tiroServ.getAll();
-		
+
 		List<TirocinioGUI> listaCompleta = new ArrayList<>();
-		
+
 		for (Tirocinio t : listaTir) {
 			TirocinioGUI tg = new TirocinioGUI();
 
@@ -47,12 +47,12 @@ public class DashboardController {
 			tg.setDescrizione(t.getDescrizione());
 
 			if (t.getAzienda() != null) {
-                tg.setNomeAzienda(t.getAzienda().getNome());
-            }
-            if (t.getCompetenze() != null) {
-                tg.setCompetenze(t.getCompetenze());
-            }
-		
+				tg.setNomeAzienda(t.getAzienda().getNome());
+			}
+			if (t.getCompetenze() != null) {
+				tg.setCompetenze(t.getCompetenze());
+			}
+
 			listaCompleta.add(tg);
 
 		}
@@ -61,7 +61,7 @@ public class DashboardController {
 	}
 
 	@PostMapping("/candidature")
-	public String Candidatura(Principal p, @RequestParam long id_tirocinio) {
+	public String Candidatura(Principal p, @RequestParam long id_tirocinio, Model model) {
 
 		if (p == null) {
 			return "redirect:/login";
@@ -69,18 +69,26 @@ public class DashboardController {
 
 		Optional<Utente> userOptional = utentiServ.findByEmail(p.getName());
 		Optional<Tirocinio> tirocinioOptional = tiroServ.find(id_tirocinio);
-		
+
 		if (userOptional.isPresent()) {
 			Utente user = userOptional.get();
 			Tirocinio tirocinio = tirocinioOptional.get();
 			Candidatura newCand = new Candidatura();
 			newCand.setUtente(user);
 			newCand.setTirocinio(tirocinio);
-			newCand.setStato(0); 
-			candServ.insert(newCand);
-		}
-		
-		return "redirect:/dashboard";	
+			newCand.setStato(0);
+			
+			try {
+	            candServ.insert(newCand);
+	        } catch (IllegalStateException e) {
+	            model.addAttribute("candidaturaError", e.getMessage());
+	            return showHome(model); 
+	        }
+	    } else {
+	        model.addAttribute("candidaturaError", "Utente o tirocinio non validi.");
+	        return showHome(model);
+	    }
+	    
+	    return "redirect:/dashboard";
 	}
-
 }
