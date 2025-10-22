@@ -80,24 +80,22 @@ public class UtentiService {
 
     public void saveCurriculumFile(long idUtente, MultipartFile file) throws IOException {
     
-    // Definisci la directory di destinazione (DEVE ESISTERE!)
-    // Ad esempio: una cartella "uploads/cvs" nella root del progetto o altrove.
+   
     String uploadDir = "./uploads/cvs/"; 
     Path copyLocation = Paths.get(uploadDir + idUtente + "_" + file.getOriginalFilename());
 
-    // Assicurati che la directory esista
+
     Files.createDirectories(copyLocation.getParent());
     
-    // Copia il file nel percorso di destinazione
+
     Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
 
-    // 4. AGGIORNA IL PERCORSO NEL DATABASE
+
     Optional<Utente> optionalUtente = repo.findById(idUtente);
 	if (optionalUtente.isPresent()) {
 		Utente utente = optionalUtente.get();
-		// Salva il nome del file o il percorso nel modello Utente
+
 		utente.setCurriculumPath(copyLocation.toString());
-		// utente.setCurriculumFileName(file.getOriginalFilename());
 		repo.save(utente);
 	}
 
