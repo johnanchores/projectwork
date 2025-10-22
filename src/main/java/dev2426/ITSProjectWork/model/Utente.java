@@ -1,5 +1,7 @@
 package dev2426.ITSProjectWork.model;
 	
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,10 @@ public class Utente {
 	private byte[] CV;
 	private String ruolo;
 	
+	@OneToMany
+	@JoinColumn(name = "id_candidatura")
+	private List<Candidatura> candidature;
+
 	public long getIdUtente() {
 		return id_utente;
 	}
@@ -82,4 +88,12 @@ public class Utente {
 		this.ruolo = ruolo;
 	}
 	
+    public List<Candidatura> getCandidature() {
+        return candidature;
+    }
+	
+    public void setCandidatura(List<Candidatura> candidature) {
+        this.candidature = candidature;
+    }
+
 }
