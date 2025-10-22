@@ -175,6 +175,107 @@ button {
     color: var(--color-teal-primary); 
 }
 
+.modal {
+    display: none; /* Nascosto di default */
+    position: fixed; 
+    z-index: 1001; /* Assicura che sia sopra tutto il resto */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6); /* Sfondo semi-trasparente */
+    justify-content: center;
+    align-items: center;
+    /* Usa flex per la centratura al posto di margin: auto */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    width: 90%; 
+    max-width: 550px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {opacity: 0; transform: translateY(-50px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.modal-content h3 {
+    color: var(--primary-teal, #009999);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-body p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.modal-body strong {
+    color: #333;
+    display: inline-block;
+    min-width: 120px; /* Spazio per l'etichetta */
+}
+
+/* Stili specifici per lo stato all'interno del modale */
+.modal-body span#modal-stato {
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* Colori dello stato (Devono corrispondere a quelli nel CSS principale) */
+.modal-body span.accepted {
+    background-color: #e6ffe6; 
+    color: #008000;
+    border: 1px solid #008000;
+}
+.modal-body span.rejected {
+    background-color: #ffe6e6; 
+    color: #cc0000;
+    border: 1px solid #cc0000;
+}
+.modal-body span.pending {
+    background-color: #ffffcc; 
+    color: #ffaa00;
+    border: 1px solid #ffaa00;
+}
+
+/* Responsive per il Modal */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin-top: 50px; /* Piccolo margine dall'alto per schermi piccoli */
+    }
+}
+
 /* =======================================
   4. SEZIONE CANDIDATURE
 ======================================= */
@@ -437,4 +538,151 @@ button {
         width: 100%; /* Rende il bottone upload full-width sul mobile */
         justify-content: center;
     }
+}
+
+/* =======================================
+  7. STILI OVERLAY DETTAGLIO (COPIATI DA style.css)
+======================================= */
+
+/* Stile base per l'overlay (Sfondo scuro) */
+.overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow-y: auto;
+  /* 💥 QUESTO È IL PUNTO CHIAVE PER NASCONDERLO ALL'INIZIO 💥 */
+  display: none;
+
+  /* Le proprietà seguenti servono solo quando è visibile */
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+/* Stile per MOSTRARE l'overlay, viene aggiunto dal JavaScript */
+.overlay-modal.show {
+  /* 💥 Usa 'flex' o 'block' per visualizzarlo 💥 */
+  display: flex;
+}
+
+/* Bottone di chiusura all'interno del modale */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 24px;
+  z-index: 1001;
+}
+
+/* Assicurati che l'icona del pulsante di chiusura sia grande */
+.close-btn i {
+    font-size: 24px;
+}
+
+/* Regoliamo la posizione e la dimensione del pannello all'interno dell'overlay */
+.job-details-panel {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  padding: 30px; /* Usa il padding originale della dashboard per i dettagli */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex; /* Assicura che sia un flex container */
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Header del Dettaglio */
+.company-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Logo (Iniziale) */
+.company-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  flex-shrink: 0;
+}
+
+.company-logo.large {
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  margin: 0 auto 10px;
+}
+
+.bg-blue {
+  background-color: var(--primary-blue);
+}
+
+.company-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark); /* Utilizza il colore scuro del testo della dashboard */
+  margin-bottom: 5px;
+}
+
+.company-header p {
+  color: var(--text-medium);
+  margin-bottom: 20px;
+}
+
+/* Tabs */
+.detail-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-medium);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-bottom-color 0.2s;
+}
+
+.tab.active {
+  color: var(--primary-blue);
+  border-bottom-color: var(--primary-blue);
+}
+
+/* Contenuto del Dettaglio */
+.details-content {
+  font-size: 14px;
+  color: var(--text-medium);
+  line-height: 1.6;
+  margin-bottom: 15px;
+  height: fit-content;
+}
+
+/* Adattamento Responsive per il pannello (se necessario) */
+@media (max-width: 768px) {
+  .job-details-panel {
+    width: 95%;
+    max-width: none;
+    padding: 20px;
+  }
 }
