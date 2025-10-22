@@ -1,143 +1,191 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pannello Admin - Gestione Candidature</title>
-  <link rel="stylesheet" href="/css/profiloadmin.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pannello Admin - Gestione Candidature</title>
+    <link rel="stylesheet" href="/css/profiloadmin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="admin-header">
+      <h1>
+        <img
+          src="/src/main/resources/static/image/logo2.png"
+          alt=""
+          height="130px"
+        />
+        Pannello di Amministrazione
+      </h1>
+      <a href="dashboard.html" class="nav-switch-button"
+        ><i class="fa-eye-slash"></i> Vai alla dashboard</a
+      >
+      <a href="profilo.html" class="nav-switch-button">
+        <i class="fas fa-user-circle"></i> Vai all'Area Utente
+      </a>
+    </header>
 
-<body>
-  <header class="admin-header">
-    <h1>
-      <img src="/image/logo2.png" alt="logo" height="100">
-      Pannello di Amministrazione
-    </h1>
-    <nav class="header-nav-links">
-      <a th:href="@{/dashboard}" class="nav-btn"><i class="fas fa-table-columns"></i> Dashboard</a>
-      <a th:href="@{/profilo}" class="nav-btn"><i class="fas fa-user-circle"></i> Area Utente</a>
-      <a th:href="@{/logout}" class="nav-btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </header>
+    <main class="admin-container">
+      <section class="section-form">
+        <h2>
+          <i class="fas fa-plus-square"></i> Aggiungi/Modifica Annuncio
+          Tirocinio
+        </h2>
+        <form class="tirocinio-form">
+          <div class="form-group">
+            <label for="titolo">Titolo Annuncio:</label>
+            <input
+              type="text"
+              id="titolo"
+              name="titolo"
+              placeholder="Esempio: Data Scientist Intern"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="azienda">Azienda:</label>
+            <input
+              type="text"
+              id="azienda"
+              name="azienda"
+              placeholder="Nome dell'Azienda"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="durata">Durata (Mesi):</label>
+            <input
+              type="number"
+              id="durata"
+              name="durata"
+              placeholder="Esempio: 6"
+              min="1"
+            />
+          </div>
+          <div class="form-group">
+            <label for="orari">Orari di Lavoro:</label>
+            <input
+              type="text"
+              id="orari"
+              name="orari"
+              placeholder="Full-time / Part-time / Flessibile"
+            />
+          </div>
 
-  <main class="admin-container">
-    <section class="section-table">
-      <div class="section-header">
+          <div class="form-group full-width">
+            <label for="competenze-richieste">Competenze Richieste:</label>
+            <textarea
+              id="competenze-richieste"
+              name="competenze-richieste"
+              rows="3"
+              placeholder="Esempio: Python, SQL, Machine Learning, Comunicazione"
+            ></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label for="competenze-acquisibili">Competenze Acquisibili:</label>
+            <textarea
+              id="competenze-acquisibili"
+              name="competenze-acquisibili"
+              rows="3"
+              placeholder="Cosa imparerà il tirocinante"
+            ></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label for="descrizione">Descrizione:</label>
+            <textarea
+              id="descrizione"
+              name="descrizione"
+              rows="3"
+              placeholder="descrizione"
+            ></textarea>
+          </div>
+
+          <div class="form-actions full-width">
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-save"></i> Salva/Aggiorna Tirocinio
+            </button>
+            <button type="reset" class="btn-secondary">
+              <i class="fas fa-eraser"></i> Svuota Form
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <hr />
+
+      <section class="section-table">
         <h2><i class="fas fa-file-alt"></i> Candidature Ricevute</h2>
-        <button id="openModal" class="btn-add"><i class="fas fa-plus"></i> Aggiungi Tirocinio</button>
-      </div>
+        <p>
+          Lista completa delle persone che si sono candidate ai tirocini
+          pubblicati.
+        </p>
 
-      <p class="section-subtitle">Lista completa delle persone candidate ai tirocini pubblicati.</p>
-
-      <div class="table-wrapper">
-        <table class="candidature-table">
-          <thead>
-            <tr>
-              <th><i class="fas fa-user"></i> Candidato</th>
-              <th><i class="fas fa-briefcase"></i> Annuncio</th>
-              <th><i class="fas fa-info-circle"></i> Stato</th>
-              <th>Azioni</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mario Rossi</td>
-              <td>Frontend Developer</td>
-              <td><span class="status status-pending">In Attesa</span></td>
-              <td>
-                <button class="btn-action view"><i class="fas fa-eye"></i></button>
-                <button class="btn-action accept"><i class="fas fa-check"></i></button>
-                <button class="btn-action reject"><i class="fas fa-times"></i></button>
-                <button class="btn-action remove"><i class="fas fa-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeModal">&times;</span>
-      <h2><i class="fas fa-plus-square"></i> Aggiungi / Modifica Annuncio</h2>
-
-      <form class="tirocinio-form">
-        <div class="form-group">
-          <label for="titolo">Titolo Annuncio:</label>
-          <input type="text" id="titolo" placeholder="Esempio: Data Scientist Intern" required>
+        <div class="table-wrapper">
+          <table class="candidature-table">
+            <thead>
+              <tr>
+                <th><i class="fas fa-user"></i> Candidato</th>
+                <th><i class="fas fa-briefcase"></i> Annuncio</th>
+                <th><i class="fas fa-info-circle"></i> Stato Attuale</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mario Rossi</td>
+                <td>Frontend Developer</td>
+                <td><span class="status status-pending">In Attesa</span></td>
+                <td>
+                  <button class="btn-action view" title="Visualizza CV">
+                    <i class="fas fa-eye"></i> CV
+                  </button>
+                  <button class="btn-action accept" title="Accetta Candidatura">
+                    <i class="fas fa-check"></i>
+                  </button>
+                  <button class="btn-action reject" title="Rifiuta Candidatura">
+                    <i class="fas fa-times"></i>
+                  </button>
+                  <button class="btn-action remove" title="Rimuovi Candidatura">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Laura Verdi</td>
+                <td>Junior UX Designer</td>
+                <td><span class="status status-accepted">Accettata</span></td>
+                <td>
+                  <button class="btn-action view" title="Visualizza CV">
+                    <i class="fas fa-eye"></i> CV
+                  </button>
+                  <button class="btn-action reject" title="Rifiuta Candidatura">
+                    <i class="fas fa-times"></i>
+                  </button>
+                  <button class="btn-action remove" title="Rimuovi Candidatura">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Giuseppe Bianchi</td>
+                <td>Backend Engineer</td>
+                <td><span class="status status-rejected">Rifiutata</span></td>
+                <td>
+                  <button class="btn-action view" title="Visualizza CV">
+                    <i class="fas fa-eye"></i> CV
+                  </button>
+                  <button class="btn-action remove" title="Rimuovi Candidatura">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="form-group">
-          <label for="azienda">Azienda:</label>
-          <select id="azienda" required>
-            <option disabled selected>Seleziona un'azienda</option>
-            <option>TechCorp</option>
-            <option>DesignStudio</option>
-            <option>DataSolutions</option>
-            <option>Innovatek</option>
-            <option>Softwave</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="durata">Durata (Mesi):</label>
-          <input type="number" id="durata" min="1" max="12" placeholder="1-12" required>
-        </div>
-
-        <div class="form-group">
-          <label for="orari">Orari di Lavoro:</label>
-          <input type="text" id="orari" placeholder="Full-time / Part-time / Flessibile">
-        </div>
-
-        <div class="form-group full-width">
-          <label>Competenze Richieste:</label>
-          <div class="tag-select" id="richieste"></div>
-        </div>
-
-        <div class="form-group full-width">
-          <label>Competenze Acquisibili:</label>
-          <div class="tag-select" id="acquisibili"></div>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="descrizione">Descrizione:</label>
-          <textarea id="descrizione" rows="3" placeholder="Descrizione del tirocinio"></textarea>
-        </div>
-
-        <div class="form-actions full-width">
-          <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Salva</button>
-          <button type="reset" class="btn-secondary"><i class="fas fa-eraser"></i> Svuota</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const modal = document.getElementById('modal');
-    document.getElementById('openModal').onclick = () => modal.style.display = 'flex';
-    document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
-    window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
-
-    const skillLists = {
-      richieste: ["Python", "JavaScript", "HTML", "CSS", "Java", "SQL", "Machine Learning", "React", "C++", "UI/UX Design"],
-      acquisibili: ["Teamwork", "Project Management", "Problem Solving", "Analisi Dati", "Comunicazione", "Leadership"]
-    };
-
-    function createTagSelector(containerId, skills) {
-      const container = document.getElementById(containerId);
-      skills.forEach(skill => {
-        const tag = document.createElement("div");
-        tag.classList.add("skill-tag");
-        tag.textContent = skill;
-        tag.onclick = () => tag.classList.toggle("selected");
-        container.appendChild(tag);
-      });
-    }
-
-    createTagSelector("richieste", skillLists.richieste);
-    createTagSelector("acquisibili", skillLists.acquisibili);
-  </script>
-</body>
+      </section>
+    </main>
+  </body>
 </html>
