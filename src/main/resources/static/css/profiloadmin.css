@@ -15,6 +15,8 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* ========== HEADER ========== */
@@ -32,6 +34,7 @@ body {
   max-width: 1200px;
   border-radius: 0 0 var(--radius) var(--radius);
   margin: 0 auto 40px auto;
+  flex-wrap: wrap;
 }
 
 .header h1 {
@@ -46,6 +49,8 @@ body {
   display: flex;
   gap: 15px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-switch-button {
@@ -69,10 +74,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 128, 128, 0.6);
 }
 
-.nav-switch-button.logout:hover {
-  background-color: var(--teal-light);
-}
-
 /* ========== SEZIONE CANDIDATURE ========== */
 .admin-container {
   width: 95%;
@@ -89,6 +90,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 .btn-add {
   background: var(--teal);
@@ -102,18 +105,24 @@ body {
 }
 .btn-add:hover { background: var(--teal-light); }
 
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .candidature-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  min-width: 600px;
 }
 .candidature-table th, .candidature-table td {
   padding: 14px;
   border-bottom: 1px solid var(--border);
+  text-align: left;
 }
 .candidature-table th {
   color: var(--teal);
-  text-align: left;
 }
 .status {
   padding: 5px 10px;
@@ -122,6 +131,9 @@ body {
   font-size: 0.8rem;
 }
 .status-pending { background: #fff3cd; color: #856404; }
+.status-accepted { background: #d4edda; color: #155724; }
+.status-rejected { background: #f8d7da; color: #721c24; }
+
 .btn-action {
   border: none;
   border-radius: 6px;
@@ -155,6 +167,8 @@ body {
   max-width: 700px;
   position: relative;
   animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 .close-btn {
   position: absolute;
@@ -222,6 +236,7 @@ textarea { resize: vertical; }
   grid-column: 1 / -1;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 15px;
   margin-top: 10px;
 }
@@ -240,4 +255,64 @@ textarea { resize: vertical; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== MEDIA QUERIES (RESPONSIVE) ========== */
+
+/* Tablet (max 992px) */
+@media (max-width: 992px) {
+  .header {
+    padding: 15px 30px;
+  }
+  .header h1 img {
+    height: 90px;
+  }
+  .section-table {
+    padding: 20px;
+  }
+}
+
+/* Mobile grande (max 768px) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .header-nav-links {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .btn-add {
+    width: 100%;
+  }
+  .candidature-table th, .candidature-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile piccolo (max 480px) */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.3em;
+  }
+  .nav-switch-button {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  .modal-content {
+    padding: 20px;
+  }
+  input, textarea, select {
+    font-size: 14px;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+  }
 }
