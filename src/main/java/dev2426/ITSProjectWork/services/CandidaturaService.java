@@ -77,5 +77,18 @@ public class CandidaturaService {
         
         return candidatureGUI;
     }
+	
+	public boolean cambiaStato(Long idCandidatura, Integer nuovoStato) {
+        Optional<Candidatura> optionalCandidatura = repo.findById(idCandidatura);
+        
+        if (optionalCandidatura.isPresent()) {
+            Candidatura candidatura = optionalCandidatura.get();
+            candidatura.setStato(nuovoStato);
+            repo.save(candidatura);
+            return true;
+        }
+        
+        return false;
+    }
 
 }

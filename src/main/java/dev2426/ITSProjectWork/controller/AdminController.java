@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -76,6 +77,28 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("errorMessage", "Errore: l'azienda selezionata non è valida.");
         }
         
+        return "redirect:/admin";
+    }
+    
+    @PostMapping("/admin/candidature/{id}/accetta")
+    public String accettaCandidatura(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        boolean successo = candidaturaService.cambiaStato(id, 1); 
+        if (successo) {
+            redirectAttributes.addFlashAttribute("successMessage", "Candidatura accettata con successo!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Errore: candidatura non trovata.");
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/candidature/{id}/rifiuta")
+    public String rifiutaCandidatura(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        boolean successo = candidaturaService.cambiaStato(id, 2);
+        if (successo) {
+            redirectAttributes.addFlashAttribute("successMessage", "Candidatura rifiutata con successo.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Errore: candidatura non trovata.");
+        }
         return "redirect:/admin";
     }
 }

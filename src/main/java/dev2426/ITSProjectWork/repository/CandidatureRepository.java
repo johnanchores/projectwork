@@ -20,7 +20,6 @@ public interface CandidatureRepository extends JpaRepository<Candidatura, Long> 
                "   u.cognome, " +               
                "   t.mansione, " +              
                "   a.nome, " +
-               "   t.orario_lavoro, " +
                "   CASE c.stato " +
                "       WHEN 0 THEN 'In attesa' " +
                "       WHEN 1 THEN 'Accettata' " +
@@ -28,7 +27,8 @@ public interface CandidatureRepository extends JpaRepository<Candidatura, Long> 
                "       ELSE 'Sconosciuto' " +
                "   END, " +
                "   t.descrizione, " +
-               "   t.durata) " +
+               "   t.durata, " +
+               "   t.orario_lavoro) " +
                "FROM Candidatura c " +          
                "JOIN c.utente u " +              
                "JOIN c.tirocinio t " +           

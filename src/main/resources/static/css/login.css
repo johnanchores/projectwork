@@ -20,7 +20,7 @@ body {
 }
 
 .login-panel {
-  width: -webkit-fill-available;
+  width: 100%;
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -236,7 +236,7 @@ body {
 
   .login-panel,
   .signup-panel {
-    width: -webkit-fill-available;
+    width: 100%;
     padding: 20px;
   }
 

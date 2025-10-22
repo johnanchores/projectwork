@@ -1,263 +1,194 @@
 <!DOCTYPE html>
-<html
-  lang="it"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pannello Admin - Gestione Candidature</title>
-    <link rel="stylesheet" th:href="@{/css/profiloadmin.css}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pannello Admin - Gestione Candidature</title>
+  <link rel="stylesheet" href="/css/profiloadmin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
 
-  <body>
-    <header class="header">
-      <h1>
-        <img th:src="@{/image/logo2.png}" alt="logo" height="100" />
+<body>
+  <header class="admin-header">
+    <h1>
+        <img th:src="@{/image/logo2.png}" alt="logo" height="100">
         Pannello di Amministrazione
-      </h1>
-      <nav class="header-nav-links">
-        <a th:href="@{/dashboard}" class="nav-switch-button"
-          ><i class="fas fa-table-columns"></i> Dashboard</a
-        >
-        <a th:href="@{/profilo}" class="nav-switch-button"
-          ><i class="fas fa-user-circle"></i> Area Utente</a
-        >
-        <form th:action="@{/logout}" method="post" style="display: inline">
-          <button
-            type="submit"
-            class="nav-switch-button logout"
-            style="
-              border: none;
-              background: none;
-              cursor: pointer;
-              padding: 0;
-              font-family: inherit;
-              font-size: inherit;
-              color: inherit;
-            "
-          >
+    </h1>
+    <div class="header-nav">
+        <a th:href="@{/dashboard}" class="nav-switch-button">
+            <i class="fas fa-table-columns"></i> Vai alla Dashboard
+        </a>
+        <a th:href="@{/profilo}" class="nav-switch-button">
+            <i class="fas fa-user-circle"></i> Area Utente
+        </a>
+        <a th:href="@{/login?logout}" class="nav-switch-button">
             <i class="fas fa-sign-out-alt"></i> Logout
-          </button>
-        </form>
-      </nav>
-    </header>
+        </a>
+    </div>
+  </header>
 
-    <main class="admin-container">
-      <div
-        th:if="${successMessage}"
-        class="feedback-message success"
-        th:text="${successMessage}"
-      ></div>
-      <div
-        th:if="${errorMessage}"
-        class="feedback-message error"
-        th:text="${errorMessage}"
-      ></div>
+  <main class="admin-container">
+    <div th:if="${successMessage}" class="feedback-message success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="feedback-message error" th:text="${errorMessage}"></div>
+	<script th:if="${errorMessage}">
+		var message = "Errore: Candidatura non trovata"
+		alert(message);
+	</script>
+	<script th:if="${successMessage}">
+			var message = "Candidatura cambiata con successo!"
+			alert(message);
+		</script>
 
-      <section class="section-table">
-        <div class="section-header">
-          <h2><i class="fas fa-file-alt"></i> Candidature Ricevute</h2>
-          <button id="openModal" class="btn-add">
-            <i class="fas fa-plus"></i> Aggiungi Tirocinio
-          </button>
+
+    <section class="section-table">
+      <div class="section-header">
+        <h2><i class="fas fa-file-alt"></i> Candidature Ricevute</h2>
+        <button id="openModal" class="btn-add"><i class="fas fa-plus"></i> Aggiungi Tirocinio</button>
+      </div>
+      <p class="section-subtitle">Lista completa delle persone candidate ai tirocini pubblicati.</p>
+
+      <div class="table-wrapper">
+        <table class="candidature-table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-user"></i> Candidato</th>
+              <th><i class="fas fa-briefcase"></i> Titolo Tirocinio</th>
+              <th><i class="fas fa-hourglass-half"></i> Stato</th>
+              <th><i class="fas fa-cogs"></i> Azioni</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="candidatura : ${listaCandidature}" 
+                th:data-nome="${candidatura.nomeUtente}" 
+                th:data-cognome="${candidatura.cognomeUtente}" 
+                th:data-mansione="${candidatura.mansioneTirocinio}" 
+                th:data-azienda="${candidatura.nomeAzienda}" 
+                th:data-descrizione="${candidatura.descrizioneTirocinio}" 
+                th:data-durata="${candidatura.durataTirocinio}"
+                th:data-orari="${candidatura.orario_lavoro}">
+
+              <td th:text="${candidatura.nomeUtente + ' ' + candidatura.cognomeUtente}">Mario Rossi</td>
+              <td th:text="${candidatura.mansioneTirocinio}">Frontend Developer</td>
+              <td>
+                <span class="status"
+                      th:classappend="${candidatura.stato == 'Accettata' ? 'status-accepted' : (candidatura.stato == 'Rifiutata' ? 'status-rejected' : 'status-pending')}">
+                  <span th:text="${candidatura.stato}">In Attesa</span>
+                </span>
+              </td>
+              <td class="action-buttons">
+                <button class="btn-action view detail-btn" title="Visualizza Dettagli">
+                  <i class="fas fa-eye"></i>
+                </button>
+
+                <form th:action="@{/admin/candidature/{id}/accetta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn-action accept" title="Accetta"><i class="fas fa-check"></i></button>
+                </form>
+
+                <form th:action="@{/admin/candidature/{id}/rifiuta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn-action reject" title="Rifiuta"><i class="fas fa-times"></i></button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modale Aggiungi Tirocinio -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2><i class="fas fa-plus-square"></i> Aggiungi Tirocinio</h2>
+      <form class="tirocinio-form" th:action="@{/registraTirocinio}" th:object="${nuovoTirocinio}" method="post">
+        <div class="form-group">
+          <label for="titolo">Titolo Tirocinio:</label>
+          <input type="text" id="titolo" th:field="*{mansione}" placeholder="Esempio: Sviluppatore Java" required>
         </div>
-        <p class="section-subtitle">
-          Lista completa delle persone candidate ai tirocini pubblicati.
-        </p>
-
-        <div class="table-wrapper">
-          <table class="candidature-table">
-            <thead>
-              <tr>
-                <th>Candidato</th>
-                <th>Titolo Tirocinio</th>
-                <th>Stato</th>
-                <th>Azioni</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="candidatura : ${listaCandidature}">
-                <td
-                  th:text="${candidatura.nomeUtente + ' ' + candidatura.cognomeUtente}"
-                >
-                  Mario Rossi
-                </td>
-                <td th:text="${candidatura.mansioneTirocinio}">
-                  Frontend Developer
-                </td>
-                <td>
-                  <span
-                    class="status"
-                    th:classappend="${candidatura.stato == 'Accettata' ? 'status-accepted' : (candidatura.stato == 'Rifiutata' ? 'status-rejected' : 'status-pending')}"
-                    th:text="${candidatura.stato}"
-                  >
-                    In Attesa
-                  </span>
-                </td>
-                <td class="action-buttons">
-                  <button class="btn-action view">
-                    <i class="fas fa-eye"></i>
-                  </button>
-
-                  <form
-                    th:action="@{/admin/candidature/{id}/accetta(id=${candidatura.id_candidatura})}"
-                    method="post"
-                    style="display: inline"
-                  >
-                    <button
-                      type="submit"
-                      class="btn-action accept"
-                      title="Accetta"
-                    >
-                      <i class="fas fa-check"></i>
-                    </button>
-                  </form>
-
-                  <form
-                    th:action="@{/admin/candidature/{id}/rifiuta(id=${candidatura.id_candidatura})}"
-                    method="post"
-                    style="display: inline"
-                  >
-                    <button
-                      type="submit"
-                      class="btn-action reject"
-                      title="Rifiuta"
-                    >
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="form-group">
+          <label for="azienda">Azienda:</label>
+          <select id="azienda" th:field="*{aziendaId}" required>
+            <option value="" disabled selected>Seleziona un'azienda</option>
+            <option th:each="az : ${listaAziende}" th:value="${az.idAzienda}" th:text="${az.nome}"></option>
+          </select>
         </div>
-      </section>
-    </main>
-
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <h2><i class="fas fa-plus-square"></i> Aggiungi Tirocinio</h2>
-
-        <form
-          class="tirocinio-form"
-          th:action="@{/registraTirocinio}"
-          th:object="${nuovoTirocinio}"
-          method="post"
-        >
-          <div class="form-group">
-            <label for="titolo">Titolo Tirocinio:</label>
-            <input
-              type="text"
-              id="titolo"
-              th:field="*{mansione}"
-              placeholder="Esempio: Sviluppatore Java"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="azienda">Azienda:</label>
-            <select id="azienda" th:field="*{aziendaId}" required>
-              <option value="" disabled selected>Seleziona un'azienda</option>
-              <option
-                th:each="az : ${listaAziende}"
-                th:value="${az.idAzienda}"
-                th:text="${az.nome}"
-              ></option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="durata">Durata (Mesi):</label>
-            <input
-              type="number"
-              id="durata"
-              th:field="*{durata}"
-              min="1"
-              max="12"
-              placeholder="1-12"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="orari">Orari di Lavoro:</label>
-            <input
-              type="text"
-              id="orari"
-              th:field="*{orari}"
-              placeholder="Full-time / Part-time / Flessibile"
-            />
-          </div>
-
-          <div class="form-group full-width">
-            <label>Competenze:</label>
-            <div class="tag-select">
-              <div
-                th:each="comp : ${listaCompetenze}"
-                class="skill-tag-checkbox"
-              >
-                <input
-                  type="checkbox"
-                  th:id="${'comp-' + comp.idCompetenza}"
-                  th:field="*{competenzeId}"
-                  th:value="${comp.idCompetenza}"
-                />
-                <label
-                  th:for="${'comp-' + comp.idCompetenza}"
-                  th:text="${comp.nome}"
-                ></label>
-              </div>
+        <div class="form-group">
+          <label for="durata">Durata (Mesi):</label>
+          <input type="number" id="durata" th:field="*{durata}" min="1" max="12" placeholder="1-12" required>
+        </div>
+        <div class="form-group">
+          <label for="orari">Orari di Lavoro:</label>
+          <input type="text" id="orari" th:field="*{orari}" placeholder="Full-time / Part-time / Flessibile">
+        </div>
+        <div class="form-group full-width">
+          <label>Competenze:</label>
+          <div class="tag-select">
+            <div th:each="comp : ${listaCompetenze}" class="skill-tag-checkbox">
+              <input type="checkbox" th:id="${'comp-' + comp.idCompetenza}" th:field="*{competenzeId}" th:value="${comp.idCompetenza}">
+              <label th:for="${'comp-' + comp.idCompetenza}" th:text="${comp.nome}"></label>
             </div>
           </div>
-
-          <div class="form-group full-width">
-            <label for="descrizione">Descrizione:</label>
-            <textarea
-              id="descrizione"
-              th:field="*{descrizione}"
-              rows="3"
-              placeholder="Descrizione del tirocinio"
-            ></textarea>
-          </div>
-
-          <div class="form-actions full-width">
-            <button type="submit" class="btn-primary">
-              <i class="fas fa-save"></i> Salva
-            </button>
-            <button type="reset" class="btn-secondary">
-              <i class="fas fa-eraser"></i> Svuota
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="form-group full-width">
+          <label for="descrizione">Descrizione:</label>
+          <textarea id="descrizione" th:field="*{descrizione}" rows="3" placeholder="Descrizione del tirocinio"></textarea>
+        </div>
+        <div class="form-actions full-width">
+          <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Salva</button>
+          <button type="reset" class="btn-secondary"><i class="fas fa-eraser"></i> Svuota</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const modal = document.getElementById("modal");
-        const openModalBtn = document.getElementById("openModal");
-        const closeModalBtn = document.getElementById("closeModal");
+  <!-- Modale Dettagli Candidatura -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeDetailModal">&times;</span>
+      <h2><i class="fas fa-info-circle"></i> Dettagli Candidatura</h2>
+      <div class="detail-field"><strong>Nome e Cognome:</strong> <span id="detailNome"></span></div>
+      <div class="detail-field"><strong>Mansione Tirocinio:</strong> <span id="detailMansione"></span></div>
+      <div class="detail-field"><strong>Nome Azienda:</strong> <span id="detailAzienda"></span></div>
+      <div class="detail-field"><strong>Descrizione Tirocinio:</strong> <span id="detailDescrizione"></span></div>
+      <div class="detail-field"><strong>Durata Tirocinio:</strong> <span id="detailDurata"></span></div>
+      <div class="detail-field"><strong>Orari di Lavoro:</strong> <span id="detailOrari"></span></div>
+    </div>
+  </div>
 
-        if (openModalBtn) {
-          openModalBtn.onclick = () => (modal.style.display = "flex");
-        }
-        if (closeModalBtn) {
-          closeModalBtn.onclick = () => (modal.style.display = "none");
-        }
-        window.onclick = (e) => {
-          if (e.target === modal) {
-            modal.style.display = "none";
-          }
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Modale Aggiungi Tirocinio
+        const modal = document.getElementById('modal');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        if (openModalBtn) openModalBtn.onclick = () => modal.style.display = 'flex';
+        if (closeModalBtn) closeModalBtn.onclick = () => modal.style.display = 'none';
+
+        // Modale Dettagli Candidatura
+        const detailModal = document.getElementById('detailModal');
+        const closeDetailModal = document.getElementById('closeDetailModal');
+        const detailBtns = document.querySelectorAll('.detail-btn');
+        
+        detailBtns.forEach(btn => {
+            btn.addEventListener('click', e => {
+                const tr = e.target.closest('tr');
+                document.getElementById('detailNome').textContent = tr.dataset.nome + ' ' + tr.dataset.cognome;
+                document.getElementById('detailMansione').textContent = tr.dataset.mansione;
+                document.getElementById('detailAzienda').textContent = tr.dataset.azienda;
+                document.getElementById('detailDescrizione').textContent = tr.dataset.descrizione;
+                document.getElementById('detailDurata').textContent = tr.dataset.durata + ' mesi';
+                document.getElementById('detailOrari').textContent = tr.dataset.orari;
+                detailModal.style.display = 'flex';
+            });
+        });
+
+        if (closeDetailModal) closeDetailModal.onclick = () => detailModal.style.display = 'none';
+
+        window.onclick = e => {
+            if (e.target === modal) modal.style.display = 'none';
+            if (e.target === detailModal) detailModal.style.display = 'none';
         };
-      });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>

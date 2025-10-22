@@ -4,110 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registrazione</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    <link rel="stylesheet" href="../../static/css/registrazione.css">
+    <link rel="stylesheet" href="../css/registrazione.css" />
   </head>
 
   <body>
-    <div class="container">
-      <div class="login-panel">
-        <div class="logo-placeholder">
-          <img th:src="@{/image/logo2.png}" alt="Logo" height="130px" />
-        </div>
-        <h1 class="login-title">Registrati</h1>
+    <div class="registration-container">
+      <p class="registrati">Registrati</p>
 
-        <div th:if="${errorMessage}" style="color: red">
-          <span th:text="${errorMessage}"> Errore: email già registrata</span>
-        </div>
-        <div th:if="${passwordError}" style="color: red">
-          <span th:text="${passwordError}">
-            Errore: le password non coincidono
-          </span>
-        </div>
+      <div th:if="${errorMessage}" style="color: red">
+        <span th:text="${errorMessage}"> Errore: email già registrata</span>
+      </div>
+      <div th:if="${passwordError}" style="color: red">
+        <span th:text="${passwordError}">
+          Errore: le password non coincidono
+        </span>
+      </div>
 
-        <form
-          id="registrationForm"
-          class="registration-form"
-          th:action="@{/register}"
-          th:object="${utente}"
-          method="POST"
-        >
-          <div class="input-group">
-            <i class="fa-regular fa-user"></i>
-            <input
-              type="text"
-              id="nome"
-              th:field="*{nome}"
-              placeholder="Inserisci il tuo Nome"
-              required
-            />
+      <form
+        id="registrationForm"
+        class="registration-form"
+        th:action="@{/register}"
+        th:object="${utente}"
+        method="POST"
+      >
+        <div class="flex-div">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}" required />
           </div>
 
-          <div class="input-group">
-            <i class="fa-regular fa-user"></i>
-            <input
-              type="text"
-              id="cognome"
-              th:field="*{cognome}"
-              placeholder="Inserisci il tuo Cognome"
-              required
-            />
+          <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" th:field="*{cognome}" required />
           </div>
+        </div>
 
-          <div class="input-group">
-            <i class="fa-regular fa-envelope"></i>
-            <input
-              type="email"
-              id="email"
-              th:field="*{email}"
-              placeholder="Inserisci la tua Email"
-              required
-            />
-          </div>
+        <div class="form-group" id="email-div">
+          <label for="email">Email</label>
+          <input type="email" id="email" th:field="*{email}" required />
+        </div>
 
-          <div class="input-group">
-            <i class="fa-solid fa-key"></i>
+        <div class="flex-div">
+          <div class="form-group">
+            <label for="password">Password</label>
             <input
               type="password"
               id="password"
               th:field="*{password}"
-              placeholder="Inserisci la tua Password"
               required
               minlength="8"
             />
+            <small>Minimo 8 caratteri</small>
           </div>
 
-          <div class="input-group">
-            <i class="fa-solid fa-key"></i>
+          <div class="form-group">
+            <label for="confermaPassword">Conferma password</label>
             <input
               type="password"
               id="confermaPassword"
               th:field="*{confermaPassword}"
-              placeholder="Conferma la tua Password"
               required
               minlength="8"
             />
+            <small>Minimo 8 caratteri</small>
           </div>
-
-          <button type="submit" class="log-in-btn">
-            <i class="fa-solid fa-user-plus"></i> REGISTRATI
-          </button>
-        </form>
-      </div>
-
-      <div class="signup-panel">
-        <div class="signup-content">
-          <p>
-            Hai già un account? <br /><br /><span class="registrati"
-              >Accedi ora!</span
-            >
-          </p>
-          <a th:href="@{/login}"><button class="signup-btn">Login</button></a>
         </div>
-      </div>
+
+        <button type="submit" class="submit-button">Registrati</button>
+      </form>
     </div>
     <script src="/js/registrazione.js"></script>
   </body>
