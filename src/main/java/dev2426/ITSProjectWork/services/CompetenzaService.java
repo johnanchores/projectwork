@@ -1,5 +1,6 @@
 package dev2426.ITSProjectWork.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +47,13 @@ public class CompetenzaService {
 		repo.save(c);
 
 	}	
+	
+	public List<Competenza> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return new ArrayList<>(); 
+        }
+        
+        return repo.findAllById(ids);
+    }
 
 }
