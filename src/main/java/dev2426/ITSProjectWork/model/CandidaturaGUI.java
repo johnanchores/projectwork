@@ -11,12 +11,12 @@ public class CandidaturaGUI {
 
 	public CandidaturaGUI(long id_candidatura, String nomeUtente, String cognomeUtente, String mansioneTirocinio,
 			String nomeAzienda, String stato) {
-		this.id_candidatura = id_candidatura;
+		this.id_candidatura=id_candidatura;
 		this.nomeAzienda = nomeAzienda;
 		this.nomeUtente = nomeUtente;
 		this.stato = stato;
 		this.mansioneTirocinio = mansioneTirocinio;
-		this.cognomeUtente = cognomeUtente;
+		this.cognomeUtente=cognomeUtente;
 	}
 
 	public long getId_candidatura() {
@@ -50,7 +50,6 @@ public class CandidaturaGUI {
 	public void setMansioneTirocinio(String mansioneTirocinio) {
 		this.mansioneTirocinio = mansioneTirocinio;
 	}
-
 
 	public String getNomeAzienda() {
 		return nomeAzienda;

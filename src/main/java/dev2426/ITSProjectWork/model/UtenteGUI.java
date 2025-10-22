@@ -1,7 +1,5 @@
 package dev2426.ITSProjectWork.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class UtenteGUI {
 	
 	private String nome;
@@ -10,7 +8,6 @@ public class UtenteGUI {
 	private String password;
 	private String passwordNuova;
 	private String confermaPassword;
-	private MultipartFile curriculumFile;
 
 	public String getNome() {
 		return nome;
@@ -49,17 +46,8 @@ public class UtenteGUI {
 	public String getPasswordNuova() {
 		return passwordNuova;
 	}
-
 	public void setPasswordNuova(String passwordNuova) {
 		this.passwordNuova = passwordNuova;
 	}
-	
-	public MultipartFile getCurriculumFile() {
-        return curriculumFile;
-    }
-
-    public void setCurriculumFile(MultipartFile curriculumFile) {
-        this.curriculumFile = curriculumFile;
-    }
 
 }

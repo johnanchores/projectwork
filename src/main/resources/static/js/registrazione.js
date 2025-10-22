@@ -1,34 +1,29 @@
-document
-  .getElementById("registrationForm")
-  .addEventListener("submit", function (event) {
-    const nome = document.getElementById("nome").value.trim();
-    const cognome = document.getElementById("cognome").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confermaPassword = document.getElementById("confermaPassword").value;
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+			
+            const nome = document.getElementById('nome').value.trim();
+            const cognome = document.getElementById('cognome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confermaPassword = document.getElementById('conferma_password').value;
+            const privacy = document.getElementById('privacy').checked;
 
-    if (!nome || !cognome || !email || !password || !confermaPassword) {
-      event.preventDefault();
-      alert("Compila tutti i campi obbligatori.");
-      return;
-    }
+            
+            if (!nome || !cognome || !email || !password || !confermaPassword || !privacy) {
+                alert("Compila tutti i campi obbligatori.");
+                return;
+            }
 
-    const nomeCognomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
-    if (!nomeCognomeRegex.test(nome) || !nomeCognomeRegex.test(cognome)) {
-      event.preventDefault();
-      alert("Nome e cognome possono contenere solo lettere e spazi.");
-      return;
-    }
+            if (password.length < 8) {
+                alert("La password deve contenere almeno 8 caratteri.");
+                return;
+            }
 
-    if (password.length < 8) {
-      event.preventDefault();
-      alert("La password deve contenere almeno 8 caratteri.");
-      return;
-    }
+            if (password !== confermaPassword) {
+                alert("Le password non coincidono.");
+                return;
+            }
 
-    if (password !== confermaPassword) {
-      event.preventDefault();
-      alert("Le password non coincidono.");
-      return;
-    }
-  });
+            
+            document.getElementById('successModal').style.display = 'flex';
+        });
