@@ -1,194 +1,195 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security".>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Profilo Utente</title>
-	<link rel="stylesheet" href="/css/profilo.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="../../static/css/profilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-	<header class="header">
-		<h1><img src="/image/logo2.png" alt="" height="130px" /> Profilo di <span th:text="${utente.nome}">Nome
-				Utente</span>
+    <header class="header"> 
+        <h1><img
+                src="/src/main/resources/static/image/logo2.png"
+                alt=""
+                height="130px"
+            />   Profilo di <span th:text="${utente.nome}">Nome Utente</span>
 
-		</h1>
+</h1>
+        
+        <div class="header-nav-links">
+            <a href="dashboard.html" class="nav-switch-button"><i class="fas fa-table-columns"></i> Vai alla dashboard</a>
+            
+            <a href="profiloadmin.html" class="nav-switch-button">
+                <i class="fas fa-user-circle"></i> Vai all'Area Admin
+            </a>
+            
+            <a href="/logout" class="nav-switch-button logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
 
-		<div class="header-nav-links">
-			<a th:href="@{/dashboard}" class="nav-switch-button"><i class="fas fa-table-columns"></i> Vai alla
-				dashboard</a>
-			<div sec:authorize="hasRole('ADMIN')">
-				<a th:href="@{/admin}" class="nav-switch-button">
-					<i class="fas fa-user-circle"></i> Vai all'Area Admin
-				</a>
-			</div>
+    <main class="profile-container">
+        <nav class="profile-nav">
+            <button class="nav-button active" onclick="showSection('candidature', event)">
+                <i class="fas fa-file-alt"></i> Dettagli Candidature
+            </button>
+            <button class="nav-button" onclick="showSection('modifica-profilo', event)">
+                <i class="fas fa-user-edit"></i> Modifica Profilo
+            </button>
+        </nav>
 
-			<a th:href="@{/login?logout}" class="nav-switch-button logout">
-				<i class="fas fa-sign-out-alt"></i> Logout
-			</a>
-		</div>
-	</header>
+        <section id="candidature" class="profile-section active">
+            <h2>Dettagli delle mie candidature</h2>
+            <div class="candidature-list">
 
-	<main class="profile-container">
-		<nav class="profile-nav">
-			<button class="nav-button active" onclick="showSection('candidature', event)">
-				<i class="fas fa-file-alt"></i> Dettagli Candidature
-			</button>
-			<button class="nav-button" onclick="showSection('modifica-profilo', event)">
-				<i class="fas fa-user-edit"></i> Modifica Profilo
-			</button>
-		</nav>
+                <div class="candidatura-item" th:each="candidatura : ${listaCandidature}">
+                    <h3 th:text="${candidatura.mansioneTirocinio}">Frontend Developer</h3>
+                    <p><strong>Azienda:</strong> <span th:text="${candidatura.nomeAzienda}"></span></p>
+                    <span class="status"
+                        th:classappend="${candidatura.stato == 'Accettata' ? 'accepted' : (candidatura.stato == 'Rifiutata' ? 'rejected' : 'pending')}"
+                        th:text="${candidatura.stato}">
+                        In revisione
+                    </span>
 
-		<section id="candidature" class="profile-section active">
-			<h2>Dettagli delle mie candidature</h2>
-			<div class="candidature-list">
+                    <button class="btn-anteprima">
+                        <i class="fas fa-eye"></i> Visualizza Dettagli
+                    </button>
+                </div>
+            </div>
+        </section>
 
-				<div class="candidatura-item" th:each="candidatura : ${listaCandidature}">
-					<h3 th:text="${candidatura.mansioneTirocinio}">Frontend Developer</h3>
-					<p><strong>Azienda:</strong> <span th:text="${candidatura.nomeAzienda}"></span></p>
-					<span class="status"
-						th:classappend="${candidatura.stato == 'Accettata' ? 'accepted' : (candidatura.stato == 'Rifiutata' ? 'rejected' : 'pending')}"
-						th:text="${candidatura.stato}">
-						In revisione
-					</span>
+        <section id="modifica-profilo" class="profile-section">
+            <h2>Modifica il profilo</h2>
 
-					<button class="btn-anteprima">
-						<i class="fas fa-eye"></i> Visualizza Dettagli
-					</button>
-				</div>
-			</div>
-		</section>
+            <form class="profile-form" th:action="@{/profilo}" method="post" th:object="${utenteGUI}"
+                enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" th:field="*{nome}">
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" th:field="*{cognome}">
+                </div>
 
-		<section id="modifica-profilo" class="profile-section">
-			<h2>Modifica il profilo</h2>
+                <div class="form-group file-upload-group">
+                    <label for="curriculumFile">Curriculum Vitae (PDF/DOCX):</label>
+                    <input type="file" id="curriculumFile" name="curriculumFile" accept=".pdf,.doc,.docx"
+                        style="display: none;">
 
-			<form class="profile-form" th:action="@{/profilo}" method="post" th:object="${utenteGUI}"
-				enctype="multipart/form-data">
-				<div class="form-group">
-					<label for="nome">Nome:</label>
-					<input type="text" id="nome" th:field="*{nome}">
-				</div>
-				<div class="form-group">
-					<label for="cognome">Cognome:</label>
-					<input type="text" id="cognome" th:field="*{cognome}">
-				</div>
+                    <button type="button" class="btn-save btn-upload"
+                        onclick="document.getElementById('curriculumFile').click()">
+                        <i class="fas fa-file-upload"></i> Carica Curriculum
+                    </button>
+                    <span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
+                </div>
 
-				<div class="form-group file-upload-group">
-					<label for="curriculumFile">Curriculum Vitae (PDF/DOCX):</label>
-					<input type="file" id="curriculumFile" name="curriculumFile" accept=".pdf,.doc,.docx"
-						style="display: none;">
+                <hr style="grid-column: 1 / -1; margin-top: 15px; border-color: rgba(255, 255, 255, 0.1);">
 
-					<button type="button" class="btn-save btn-upload"
-						onclick="document.getElementById('curriculumFile').click()">
-						<i class="fas fa-file-upload"></i> Carica Curriculum
-					</button>
-					<span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
-				</div>
+                <h3 class="password-section-title">Cambia Password (lascia vuoto per non modificare)</h3>
 
-				<hr style="grid-column: 1 / -1; margin-top: 15px; border-color: rgba(255, 255, 255, 0.1);">
+                <div class="form-group">
+                    <label for="password">Password Corrente:</label>
+                    <div class="password-group">
+                        <input type="password" id="password" th:field="*{password}"
+                            placeholder="Inserisci password attuale">
+                        <button type="button" class="toggle-password" onclick="toggleVisibility('password', this)"><i
+                                class="fas fa-eye"></i></button>
+                    </div>
+                </div>
 
-				<h3 class="password-section-title">Cambia Password (lascia vuoto per non modificare)</h3>
+                <div class="form-group">
+                    <label for="passwordNuova">Nuova Password:</label>
+                    <div class="password-group">
+                        <input type="password" id="passwordNuova" th:field="*{passwordNuova}"
+                            placeholder="Inserisci nuova password">
+                        <button type="button" class="toggle-password"
+                            onclick="toggleVisibility('passwordNuova', this)"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="password">Password Corrente:</label>
-					<div class="password-group">
-						<input type="password" id="password" th:field="*{password}"
-							placeholder="Inserisci password attuale">
-						<button type="button" class="toggle-password" onclick="toggleVisibility('password', this)"><i
-								class="fas fa-eye"></i></button>
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="confermaPassword">Conferma nuova Password:</label>
+                    <div class="password-group">
+                        <input type="password" id="confermaPassword" th:field="*{confermaPassword}"
+                            placeholder="Ripeti nuova password">
+                        <button type="button" class="toggle-password"
+                            onclick="toggleVisibility('confermaPassword', this)"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="passwordNuova">Nuova Password:</label>
-					<div class="password-group">
-						<input type="password" id="passwordNuova" th:field="*{passwordNuova}"
-							placeholder="Inserisci nuova password">
-						<button type="button" class="toggle-password"
-							onclick="toggleVisibility('passwordNuova', this)"><i class="fas fa-eye"></i></button>
-					</div>
-				</div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save"><i class="fas fa-check-circle"></i> Salva modifiche</button>
+                </div>
+            </form>
+        </section>
+    </main>
 
-				<div class="form-group">
-					<label for="confermaPassword">Conferma nuova Password:</label>
-					<div class="password-group">
-						<input type="password" id="confermaPassword" th:field="*{confermaPassword}"
-							placeholder="Ripeti nuova password">
-						<button type="button" class="toggle-password"
-							onclick="toggleVisibility('confermaPassword', this)"><i class="fas fa-eye"></i></button>
-					</div>
-				</div>
+    <script>
+        function showSection(sectionId, event) {
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.classList.remove('active');
+            });
 
-				<div class="form-actions">
-					<button type="submit" class="btn-save"><i class="fas fa-check-circle"></i> Salva modifiche</button>
-				</div>
-			</form>
-		</section>
-	</main>
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
 
-	<script>
-		function showSection(sectionId, event) {
-			document.querySelectorAll('.profile-section').forEach(section => {
-				section.classList.remove('active');
-			});
+            document.getElementById(sectionId).classList.add('active');
 
-			document.querySelectorAll('.nav-button').forEach(button => {
-				button.classList.remove('active');
-			});
+            const targetButton = event ? event.currentTarget : document.querySelector;
+            if (targetButton) {
+                targetButton.classList.add('active');
+            }
+        }
 
-			document.getElementById(sectionId).classList.add('active');
+        function toggleVisibility(inputId, buttonElement) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = buttonElement.querySelector('i');
 
-			const targetButton = event ? event.currentTarget : document.querySelector;
-			if (targetButton) {
-				targetButton.classList.add('active');
-			}
-		}
+            if (passwordInput.getAttribute('type') === 'password') {
+                passwordInput.setAttribute('type', 'text');
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.setAttribute('type', 'password');
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
 
-		function toggleVisibility(inputId, buttonElement) {
-			const passwordInput = document.getElementById(inputId);
-			const icon = buttonElement.querySelector('i');
+        document.addEventListener('DOMContentLoaded', () => {
 
-			if (passwordInput.getAttribute('type') === 'password') {
-				passwordInput.setAttribute('type', 'text');
-				icon.classList.remove('fa-eye');
-				icon.classList.add('fa-eye-slash');
-			} else {
-				passwordInput.setAttribute('type', 'password');
-				icon.classList.remove('fa-eye-slash');
-				icon.classList.add('fa-eye');
-			}
-		}
+            // Inizializza la sezione 'candidature' se nessuna è attiva
+            if (!document.querySelector('.profile-nav .nav-button.active')) {
+                document.getElementById('candidature').classList.add('active');
+                document.querySelector('.nav-button[onclick*="candidature"]').classList.add('active');
+            }
 
-		document.addEventListener('DOMContentLoaded', () => {
+            const fileInputMap = {
+                'curriculumFile': 'curriculumFileName'
+            };
 
-			// Inizializza la sezione 'candidature' se nessuna è attiva
-			if (!document.querySelector('.profile-nav .nav-button.active')) {
-				document.getElementById('candidature').classList.add('active');
-				document.querySelector('.nav-button[onclick*="candidature"]').classList.add('active');
-			}
+            for (const inputId in fileInputMap) {
+                const fileInput = document.getElementById(inputId);
+                const fileNameDisplay = document.getElementById(fileInputMap[inputId]);
 
-			const fileInputMap = {
-				'curriculumFile': 'curriculumFileName'
-			};
-
-			for (const inputId in fileInputMap) {
-				const fileInput = document.getElementById(inputId);
-				const fileNameDisplay = document.getElementById(fileInputMap[inputId]);
-
-				if (fileInput && fileNameDisplay) {
-					fileInput.addEventListener('change', function () {
-						if (this.files.length > 0) {
-							fileNameDisplay.textContent = this.files[0].name;
-						} else {
-							fileNameDisplay.textContent = 'Nessun file selezionato';
-						}
-					});
-				}
-			}
-		});
-	</script>
+                if (fileInput && fileNameDisplay) {
+                    fileInput.addEventListener('change', function () {
+                        if (this.files.length > 0) {
+                            fileNameDisplay.textContent = this.files[0].name;
+                        } else {
+                            fileNameDisplay.textContent = 'Nessun file selezionato';
+                        }
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
