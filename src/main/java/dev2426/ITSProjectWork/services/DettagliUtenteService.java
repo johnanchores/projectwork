@@ -35,7 +35,7 @@ public class DettagliUtenteService implements UserDetailsService {
 		
 		return new User(
                 utente.getEmail(),
-                utente.getPassword(),
+                utente.getPassword(), 
                 ruoli
                 );
 	}
