@@ -8,6 +8,7 @@
   <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <title>Ricerca Lavoro - Tirocini</title>
   <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" href="../../static/css/style.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
@@ -38,6 +39,7 @@
 
           <div class="job-info">
             <span class="salary" th:text="${job.durata}">Durata</span>
+
             <h3 th:text="${job.mansione}">Titolo Mansione</h3>
             <p class="company-name" th:text="${job.nomeAzienda}">
               Nome Azienda
@@ -45,6 +47,11 @@
             <p class="job-description" th:text="${job.descrizione}">
               Descrizione Breve
             </p>
+            <p class="hour" th:text="${job.orario_lavoro}">
+              Orario di lavoro            
+            </p>
+            
+
 
             <section class="tags-row">
               <div th:each="competenza : ${job.competenze}">
