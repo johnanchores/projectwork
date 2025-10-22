@@ -6,19 +6,16 @@ public class CandidaturaGUI {
 	private String nomeUtente;
 	private String cognomeUtente;
 	private String mansioneTirocinio;
-	private String descrizioneTirocinio;
 	private String nomeAzienda;
 	private String stato;
 
 	public CandidaturaGUI(long id_candidatura, String nomeUtente, String cognomeUtente, String mansioneTirocinio,
-			String descrizioneTirocinio,
 			String nomeAzienda, String stato) {
 		this.id_candidatura = id_candidatura;
 		this.nomeAzienda = nomeAzienda;
 		this.nomeUtente = nomeUtente;
 		this.stato = stato;
 		this.mansioneTirocinio = mansioneTirocinio;
-		this.descrizioneTirocinio = descrizioneTirocinio;
 		this.cognomeUtente = cognomeUtente;
 	}
 
@@ -54,13 +51,6 @@ public class CandidaturaGUI {
 		this.mansioneTirocinio = mansioneTirocinio;
 	}
 
-	public String getDescrizioneTirocinio() {
-		return descrizioneTirocinio;
-	}
-
-	public void setDescrizioneTirocinio(String descrizioneTirocinio) {
-		this.descrizioneTirocinio = descrizioneTirocinio;
-	}
 
 	public String getNomeAzienda() {
 		return nomeAzienda;

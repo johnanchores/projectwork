@@ -96,7 +96,7 @@ public class UtentiService {
 	if (optionalUtente.isPresent()) {
 		Utente utente = optionalUtente.get();
 		// Salva il nome del file o il percorso nel modello Utente
-		utente.setCurriculumPath(copyLocation.toString());
+		//utente.setCurriculumPath(copyLocation.toString());
 		// utente.setCurriculumFileName(file.getOriginalFilename());
 		repo.save(utente);
 	}
