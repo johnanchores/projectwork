@@ -54,10 +54,8 @@ public class ProfiloController {
 
 	@PostMapping("/profilo")
 	public String processProfileUpdate(@AuthenticationPrincipal UserDetails dettagli,
-			@ModelAttribute("utenteGUI") UtenteGUI datiForm,
-			Model modello) {
+			@ModelAttribute("utenteGUI") UtenteGUI datiForm, Model modello) {
 
-		// 1. Gestione Password (il tuo codice esistente)
 		if (datiForm.getPasswordNuova() != null && !datiForm.getPasswordNuova().isEmpty()) {
 			if (!datiForm.getPasswordNuova().equals(datiForm.getConfermaPassword())) {
 				modello.addAttribute("updateError", "La nuova password e la conferma non corrispondono.");
@@ -71,26 +69,23 @@ public class ProfiloController {
 		if (optionalUtente.isEmpty()) {
 			return "redirect:/logout";
 		}
-
 		long idUtente = optionalUtente.get().getIdUtente();
 
 		if (datiForm.getCurriculumFile() != null && !datiForm.getCurriculumFile().isEmpty()) {
 			try {
 				uServ.saveCurriculumFile(idUtente, datiForm.getCurriculumFile());
 			} catch (Exception e) {
-				// Gestione dell'errore di I/O (salvataggio su disco fallito)
 				modello.addAttribute("updateError", "Errore nel caricamento del Curriculum: " + e.getMessage());
 				return showProfile(dettagli, modello);
 			}
 		}
 
-		// 3. Salvataggio degli altri dati (nome, cognome, password)
-		boolean successo = uServ.update(idUtente, datiForm);
+		String errore = uServ.update(idUtente, datiForm);
 
-		if (successo) {
+		if (errore == null) {
 			return "redirect:/profilo?success";
 		} else {
-			modello.addAttribute("updateError", "La password corrente inserita non è corretta.");
+			modello.addAttribute("updateError", errore);
 			return showProfile(dettagli, modello);
 		}
 	}

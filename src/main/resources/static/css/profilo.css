@@ -2,24 +2,22 @@
   1. VARIABILI & SETUP GLOBALE
 ======================================= */
 :root {
-    --color-teal-primary: #008080; /* Teal scuro, dominante */
-    --color-teal-light: #00b3b3; /* Teal chiaro per hover/accento */
-    --color-background: #f0f4f8; /* Sfondo generale molto soft blue-grey */
-    --color-card: white; /* Sfondo delle schede */
-    --color-text-dark: #2c3e50; /* Testo principale */
-    --color-text-medium: #7f8c8d; /* Testo secondario/label */
-    --color-border: #e0e6ed; /* Bordo leggero */
-    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombra soft per le card */
-    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4); /* Ombra per i bottoni */
-    --radius-main: 10px; /* Raggio per le card/contenitori */
+    --color-teal-primary: #008080; 
+    --color-teal-light: #00b3b3; 
+    --color-background: #f0f4f8;
+    --color-card: white; 
+    --color-text-dark: #2c3e50;
+    --color-text-medium: #7f8c8d; 
+    --color-border: #e0e6ed; 
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-button: 0 2px 5px rgba(0, 128, 128, 0.4); 
+    --radius-main: 10px; 
 }
 
-/* Base Reset */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* Consider linking 'Inter' font or using a fallback */
     font-family: "Inter", sans-serif; 
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -118,7 +116,6 @@ header h1 span {
     gap: 35px; 
 }
 
-/* Navigazione Interna (Tabs) */
 .profile-nav {
     display: flex;
     gap: 10px;
@@ -135,7 +132,7 @@ header h1 span {
     color: var(--color-text-medium);
     flex-grow: 1;
     text-align: center;
-    font-size: 1em; /* Assicura la dimensione del testo */
+    font-size: 1em; 
 }
 
 .nav-button.active {
@@ -151,7 +148,6 @@ header h1 span {
     transform: translateY(-1px);
 }
 
-/* Sezione Contenuto */
 .profile-section {
     display: none;
     padding: 40px; 
@@ -304,11 +300,10 @@ header h1 span {
 
 
 /* =======================================
-  5. SEZIONE MODIFICA PROFILO (FORM) - AGGIORNATO
+  5. SEZIONE MODIFICA PROFILO (FORM) 
 ======================================= */
 .profile-form {
     display: grid;
-    /* Griglia a 2 colonne di base */
     grid-template-columns: repeat(2, 1fr);
     gap: 25px 30px; 
 }
@@ -334,7 +329,6 @@ header h1 span {
 }
 
 .form-group input {
-    /* ALTEZZA AUMENTATA: 15px di padding sopra e sotto */
     padding: 15px 12px;
     border: 1px solid var(--color-border);
     border-radius: 6px;
@@ -348,12 +342,10 @@ header h1 span {
     outline: none;
 }
 
-/* Allineamento Gruppi Password */
 .password-group {
     position: relative;
 }
 
-/* Icona occhio spostata a SINISTRA */
 .toggle-password {
     background: none;
     border: none;
@@ -361,7 +353,7 @@ header h1 span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 15px; /* Icona a sinistra */
+    left: 15px; 
     right: auto; 
     z-index: 10;
     cursor: pointer;
@@ -370,12 +362,10 @@ header h1 span {
 }
 
 .password-group input {
-    /* PADDING-LEFT per fare spazio all'icona a sinistra (altezza gestita dalla regola superiore) */
     padding-left: 45px; 
     padding-right: 12px; 
 }
 
-/* Stili per il titolo della sezione Password */
 .password-section-title {
     grid-column: 1 / -1; 
     font-size: 1.4em;
@@ -387,13 +377,11 @@ header h1 span {
     font-weight: 700; 
 }
 
-/* Forziamo il campo "Conferma nuova Password" ad occupare tutta la riga (3° campo password nel form) */
-/* L'ordine nel DOM è: Nome (1), Cognome (2), File Upload (3), Titolo Password (4), Pass Corrente (5), Nuova Pass (6), Conferma Pass (7) */
 .profile-form .form-group:nth-of-type(7) { 
     grid-column: 1 / -1;
 }
 
-/* File Upload Group (CV) - Resta full-width */
+
 .file-upload-group {
     grid-column: 1 / -1;
     display: flex; 
@@ -412,7 +400,6 @@ header h1 span {
     margin-bottom: 15px;
 }
 
-/* Utilizzare la classe specifica .btn-upload, che è stata aggiunta all'HTML */
 .btn-upload { 
     background: var(--color-teal-primary);
     color: white;
@@ -442,7 +429,6 @@ header h1 span {
     padding-top: 5px;
 }
 
-/* Azioni Form (Salva) */
 .form-actions {
     grid-column: 1 / -1;
     display: flex;
@@ -468,7 +454,7 @@ header h1 span {
 }
 
 /* =======================================
-  6. RESPONSIVENESS - AGGIORNATO
+  6. RESPONSIVENESS 
 ======================================= */
 @media (max-width: 850px) {
     .profile-container {
@@ -477,17 +463,15 @@ header h1 span {
     }
 
     .profile-form {
-        grid-template-columns: 1fr; /* Una colonna su schermi più stretti */
+        grid-template-columns: 1fr; 
         gap: 20px;
     }
     
-    /* Rimuove l'override specifico per il 7° campo (Conferma Password) 
-       per farlo diventare 1 colonna come gli altri su mobile */
+
     .profile-form .form-group:nth-of-type(7) {
         grid-column: auto;
     }
 
-    /* Assicura che i campi password si allineino correttamente a 1 colonna */
     .password-group input {
         padding-left: 45px; 
     }
@@ -506,7 +490,7 @@ header h1 span {
     }
 
     .header-nav {
-        flex-direction: column; /* Impila i link di navigazione */
+        flex-direction: column; 
         width: 100%;
         gap: 10px;
     }
@@ -523,7 +507,6 @@ header h1 span {
     
     .profile-section { padding: 25px; }
 
-    /* MOBILE: Rende i bottoni Salva full-width */
     .form-actions {
         justify-content: center;
     }
@@ -533,7 +516,7 @@ header h1 span {
     }
     
     .btn-upload {
-        width: 100%; /* Rende il bottone upload full-width sul mobile */
+        width: 100%; 
         justify-content: center;
     }
 }
