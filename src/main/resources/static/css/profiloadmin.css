@@ -257,9 +257,8 @@ textarea { resize: vertical; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========== MEDIA QUERIES (RESPONSIVE) ========== */
+/* ========== (RESPONSIVE) ========== */
 
-/* Tablet (max 992px) */
 @media (max-width: 992px) {
   .header {
     padding: 15px 30px;
@@ -272,7 +271,7 @@ textarea { resize: vertical; }
   }
 }
 
-/* Mobile grande (max 768px) */
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
@@ -297,7 +296,6 @@ textarea { resize: vertical; }
   }
 }
 
-/* Mobile piccolo (max 480px) */
 @media (max-width: 480px) {
   .header h1 {
     font-size: 1.3em;
