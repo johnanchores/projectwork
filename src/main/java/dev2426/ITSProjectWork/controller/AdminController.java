@@ -1,7 +1,9 @@
 package dev2426.ITSProjectWork.controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dev2426.ITSProjectWork.model.Azienda;
+import dev2426.ITSProjectWork.model.AziendaGUI;
 import dev2426.ITSProjectWork.model.CandidaturaGUI;
 import dev2426.ITSProjectWork.model.Tirocinio;
 import dev2426.ITSProjectWork.model.TirocinioGUI;
@@ -18,6 +21,7 @@ import dev2426.ITSProjectWork.services.CandidaturaService;
 import dev2426.ITSProjectWork.services.TirocinioService;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 	
 	@Autowired
@@ -31,8 +35,13 @@ public class AdminController {
 	public String showPage(Model model) {
 		List<CandidaturaGUI> listaCandidatureVisual = servizioCandidatura.getAllCandGUI();
 		List<Azienda> listaAziende = servizioAzienda.getAll();
+		List<AziendaGUI>listaFront = new ArrayList<>();
+		for (Azienda a : listaAziende) {
+			AziendaGUI aziendaFront = new AziendaGUI();
+			aziendaFront.setNome(a.getNome());
+		}
 		model.addAttribute("listaCandidature", listaCandidatureVisual);	
-		model.addAttribute("listaAziende", listaAziende);
+		model.addAttribute("listaAziende", listaFront);
 		return "/private/profiloadmin";
 	}
 	

@@ -27,6 +27,9 @@ public class CandidaturaService {
 	}
 	
 	public void insert(Candidatura nuova) {
+		if (repo.existsByUtenteAndTirocinio(nuova.getUtente(), nuova.getTirocinio())) {
+            throw new IllegalStateException("Sei già candidato per questo tirocinio.");
+        }
 		repo.save(nuova);
 	}
 	
@@ -58,6 +61,8 @@ public class CandidaturaService {
             CandidaturaGUI gui = new CandidaturaGUI();
             gui.setMansioneTirocinio(c.getTirocinio().getMansione());
             gui.setNomeAzienda(c.getTirocinio().getAzienda().getNome());
+            gui.setDescrizioneTirocinio(c.getTirocinio().getDescrizione()); 
+            gui.setDurataTirocinio(c.getTirocinio().getDurata());        
 
             switch (c.getStato()) {
                 case 0: gui.setStato("In attesa"); break;

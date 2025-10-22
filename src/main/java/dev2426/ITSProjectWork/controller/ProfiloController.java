@@ -23,9 +23,9 @@ public class ProfiloController {
 
 	@Autowired
 	private UtentiService uServ;
-	
+
 	@Autowired
-    private CandidaturaService candServ;
+	private CandidaturaService candServ;
 
 	@GetMapping("/profilo")
 	public String showProfile(@AuthenticationPrincipal UserDetails dettagli, Model modello) {
@@ -34,10 +34,10 @@ public class ProfiloController {
 
 		if (optionalUtente.isPresent()) {
 			Utente utente = optionalUtente.get();
-			
+
 			List<CandidaturaGUI> listaCandidature = candServ.getUserCandidatureGui(utente);
 			modello.addAttribute("listaCandidature", listaCandidature);
-			
+
 			modello.addAttribute("utente", utente);
 
 			UtenteGUI utenteGui = new UtenteGUI();
@@ -54,8 +54,7 @@ public class ProfiloController {
 
 	@PostMapping("/profilo")
 	public String processProfileUpdate(@AuthenticationPrincipal UserDetails dettagli,
-			@ModelAttribute("utenteGUI") UtenteGUI datiForm,
-			Model modello) {
+			@ModelAttribute("utenteGUI") UtenteGUI datiForm, Model modello) {
 
 		if (datiForm.getPasswordNuova() != null && !datiForm.getPasswordNuova().isEmpty()) {
 			if (!datiForm.getPasswordNuova().equals(datiForm.getConfermaPassword())) {
@@ -70,15 +69,23 @@ public class ProfiloController {
 		if (optionalUtente.isEmpty()) {
 			return "redirect:/logout";
 		}
-
 		long idUtente = optionalUtente.get().getIdUtente();
 
-		boolean successo = uServ.update(idUtente, datiForm);
+		if (datiForm.getCurriculumFile() != null && !datiForm.getCurriculumFile().isEmpty()) {
+			try {
+				uServ.saveCurriculumFile(idUtente, datiForm.getCurriculumFile());
+			} catch (Exception e) {
+				modello.addAttribute("updateError", "Errore nel caricamento del Curriculum: " + e.getMessage());
+				return showProfile(dettagli, modello);
+			}
+		}
 
-		if (successo) {
+		String errore = uServ.update(idUtente, datiForm);
+
+		if (errore == null) {
 			return "redirect:/profilo?success";
 		} else {
-			modello.addAttribute("updateError", "La password corrente inserita non è corretta.");
+			modello.addAttribute("updateError", errore);
 			return showProfile(dettagli, modello);
 		}
 	}

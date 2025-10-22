@@ -1,15 +1,21 @@
 package dev2426.ITSProjectWork.services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import dev2426.ITSProjectWork.model.Utente;
 import dev2426.ITSProjectWork.model.UtenteGUI;
 import dev2426.ITSProjectWork.repository.UtentiRepository;
+import java.nio.file.Path;
 
 @Service
 public class UtentiService {
@@ -29,18 +35,27 @@ public class UtentiService {
 		return repo.findById(idCerca);
 	}
 	
-	public Optional<Utente> insert(UtenteGUI nuova) throws Exception {
+	public String insert(UtenteGUI nuova) throws Exception {
 		if(repo.existsByEmail(nuova.getEmail())) {
-			return Optional.empty();
-		}
+	        return "Errore: Email già esistente"; 
+	    }
+	    Utente u = new Utente();
+
+	    if(nuova.getNome().contains(",") || nuova.getNome().contains(".")) {
+	        return "Il nome non può contenere punti o virgole."; 
+	    }
+
+
+	    if(nuova.getCognome().contains(",") || nuova.getCognome().contains(".")) {
+	        return "Il cognome non può contenere punti o virgole."; 
+	    }
 		
-		Utente u = new Utente();
 		u.setNome(nuova.getNome());
 		u.setCognome(nuova.getCognome());
 		u.setEmail(nuova.getEmail());
         u.setPassword(passwordEncoder.encode(nuova.getPassword()));
         repo.save(u);
-        return Optional.of(u);
+        return null;
     }
 
 	
@@ -52,24 +67,61 @@ public class UtentiService {
 		return repo.findByEmail(email);
 	}
 	
-	public boolean update(long idUpdate, UtenteGUI datiNuovi) {
-		Optional<Utente> optionalUtente = repo.findById(idUpdate);
-        
-        Utente utente = optionalUtente.get();
-        utente.setNome(datiNuovi.getNome());
-        utente.setCognome(datiNuovi.getCognome());
-        
-        if (datiNuovi.getPasswordNuova() != null && !datiNuovi.getPasswordNuova().isEmpty()) {
-            if (passwordEncoder.matches(datiNuovi.getPassword(), utente.getPassword())) {
-                utente.setPassword(passwordEncoder.encode(datiNuovi.getPasswordNuova()));
-            }
-            else {
-                return false; 
-            }
-        }
-        
-        repo.save(utente);
-        return true; 
-    }
+
+	public String update(long idUpdate, UtenteGUI datiNuovi) {
+	    Optional<Utente> optionalUtente = repo.findById(idUpdate);
+
+	    if (optionalUtente.isEmpty()) {
+	        return "Utente non trovato.";
+	    }
+	    
+	    Utente utente = optionalUtente.get();
+
+	    if (datiNuovi.getNome().contains(",") || datiNuovi.getNome().contains(".")) {
+	        return "Il nome non può contenere punti o virgole.";
+	    }
+
+	    if (datiNuovi.getCognome().contains(",") || datiNuovi.getCognome().contains(".")) {
+	        return "Il cognome non può contenere punti o virgole.";
+	    }
+
+	    utente.setNome(datiNuovi.getNome());
+	    utente.setCognome(datiNuovi.getCognome());
+	    
+	    if (datiNuovi.getPasswordNuova() != null && !datiNuovi.getPasswordNuova().isEmpty()) {
+	        if (passwordEncoder.matches(datiNuovi.getPassword(), utente.getPassword())) {
+	            utente.setPassword(passwordEncoder.encode(datiNuovi.getPasswordNuova()));
+	        }
+	        else {
+	            return "La password corrente inserita non è corretta."; 
+	        }
+	    }
+	    
+	    repo.save(utente);
+	    return null; 
+	}
+
+    public void saveCurriculumFile(long idUtente, MultipartFile file) throws IOException {
+    
+   
+    String uploadDir = "./uploads/cvs/"; 
+    Path copyLocation = Paths.get(uploadDir + idUtente + "_" + file.getOriginalFilename());
+
+
+    Files.createDirectories(copyLocation.getParent());
+    
+
+    Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+
+
+    Optional<Utente> optionalUtente = repo.findById(idUtente);
+	if (optionalUtente.isPresent()) {
+		Utente utente = optionalUtente.get();
+
+		utente.setCurriculumPath(copyLocation.toString());
+		repo.save(utente);
+	}
+
+}
 }
 

@@ -1,9 +1,14 @@
 package dev2426.ITSProjectWork.model;
 	
+import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,8 +23,14 @@ public class Utente {
 	private String email;
 	private String password;
 	private byte[] CV;
-	private String stato;
-
+	private String ruolo;
+	
+	@Column(name = "curriculum_path")
+    private String curriculumPath;
+	
+	@OneToMany
+	@JoinColumn(name = "id_candidatura")
+	private List<Candidatura> candidature;
 	public long getIdUtente() {
 		return id_utente;
 	}
@@ -31,7 +42,6 @@ public class Utente {
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -59,7 +69,6 @@ public class Utente {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public byte[] getCV() {
 		return CV;
 	}
@@ -68,26 +77,33 @@ public class Utente {
 		CV = cV;
 	}
 
-	public Utente(long idUtente, String nome, String cognome, String email, String password, byte[] cV) {
-		super();
-		this.id_utente = idUtente;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.email = email;
-		this.password = password;
-		CV = cV;
-	}
-
 	public Utente() {
 		
 	}
 
-	public String getStato() {
-		return stato;
+	public String getRuolo() {
+		return ruolo;
+		
 	}
-
-	public void setStato(String stato) {
-		this.stato = stato;
+	
+	public void setRuolo(String ruolo) {
+		this.ruolo = ruolo;
 	}
+	
+    public List<Candidatura> getCandidature() {
+        return candidature;
+    }
+	
+    public void setCandidatura(List<Candidatura> candidature) {
+        this.candidature = candidature;
+    }
+    
+    public String getCurriculumPath() {
+        return curriculumPath;
+    }
 
+    public void setCurriculumPath(String curriculumPath) {
+        this.curriculumPath = curriculumPath;
+    }
+    
 }
