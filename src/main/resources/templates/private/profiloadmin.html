@@ -55,26 +55,26 @@
                 th:data-mansione="${candidatura.mansioneTirocinio}" 
                 th:data-azienda="${candidatura.aziendaNome}" 
                 th:data-descrizione="${candidatura.descrizione}" 
-                th:data-durata="${candidatura.durata}">
-              
+                th:data-durata="${candidatura.durata}"
+                th:data-orari="${candidatura.orari}">
+
               <td th:text="${candidatura.nomeUtente + ' ' + candidatura.cognomeUtente}">Mario Rossi</td>
               <td th:text="${candidatura.mansioneTirocinio}">Frontend Developer</td>
               <td>
                 <span class="status"
-                      th:classappend="${candidatura.stato == 'Accettata' ? 'status-accepted' : (candidatura.stato == 'Rifiutata' ? 'status-rejected' : 'status-pending')}"
-                      th:text="${candidatura.stato}">
-                  In Attesa
+                      th:classappend="${candidatura.stato == 'Accettata' ? 'status-accepted' : (candidatura.stato == 'Rifiutata' ? 'status-rejected' : 'status-pending')}">
+                  <span th:text="${candidatura.stato}">In Attesa</span>
                 </span>
               </td>
               <td class="action-buttons">
                 <button class="btn-action view detail-btn" title="Visualizza Dettagli">
                   <i class="fas fa-eye"></i>
                 </button>
-                
+
                 <form th:action="@{/admin/candidature/{id}/accetta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
                     <button type="submit" class="btn-action accept" title="Accetta"><i class="fas fa-check"></i></button>
                 </form>
-                
+
                 <form th:action="@{/admin/candidature/{id}/rifiuta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
                     <button type="submit" class="btn-action reject" title="Rifiuta"><i class="fas fa-times"></i></button>
                 </form>
@@ -142,6 +142,7 @@
       <div class="detail-field"><strong>Nome Azienda:</strong> <span id="detailAzienda"></span></div>
       <div class="detail-field"><strong>Descrizione Tirocinio:</strong> <span id="detailDescrizione"></span></div>
       <div class="detail-field"><strong>Durata Tirocinio:</strong> <span id="detailDurata"></span></div>
+      <div class="detail-field"><strong>Orari di Lavoro:</strong> <span id="detailOrari"></span></div>
     </div>
   </div>
 
@@ -167,6 +168,7 @@
                 document.getElementById('detailAzienda').textContent = tr.dataset.azienda;
                 document.getElementById('detailDescrizione').textContent = tr.dataset.descrizione;
                 document.getElementById('detailDurata').textContent = tr.dataset.durata + ' mesi';
+                document.getElementById('detailOrari').textContent = tr.dataset.orari;
                 detailModal.style.display = 'flex';
             });
         });
