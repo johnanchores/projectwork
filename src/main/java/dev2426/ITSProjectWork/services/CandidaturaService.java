@@ -63,7 +63,7 @@ public class CandidaturaService {
             gui.setMansioneTirocinio(c.getTirocinio().getMansione());
             gui.setNomeAzienda(c.getTirocinio().getAzienda().getNome());
             gui.setDescrizioneTirocinio(c.getTirocinio().getDescrizione()); 
-            gui.setDurataTirocinio(c.getTirocinio().getDurata());        
+            gui.setDurataTirocinio(c.getTirocinio().getDurata());  
 
             switch (c.getStato()) {
                 case 0: gui.setStato("In attesa"); break;
