@@ -37,17 +37,17 @@ public class UtentiService {
 	
 	public String insert(UtenteGUI nuova) throws Exception {
 		if(repo.existsByEmail(nuova.getEmail())) {
-	        return "Errore: Email già esistente"; // Restituisci il messaggio
+	        return "Errore: Email già esistente"; 
 	    }
 	    Utente u = new Utente();
-	    // 2. Controllo Nome (con la logica corretta)
+
 	    if(nuova.getNome().contains(",") || nuova.getNome().contains(".")) {
-	        return "Il nome non può contenere punti o virgole."; // Restituisci il messaggio
+	        return "Il nome non può contenere punti o virgole."; 
 	    }
 
-	    // 3. Controllo Cognome (con la logica corretta)
+
 	    if(nuova.getCognome().contains(",") || nuova.getCognome().contains(".")) {
-	        return "Il cognome non può contenere punti o virgole."; // Restituisci il messaggio
+	        return "Il cognome non può contenere punti o virgole."; 
 	    }
 		
 		u.setNome(nuova.getNome());
@@ -67,25 +67,39 @@ public class UtentiService {
 		return repo.findByEmail(email);
 	}
 	
-	public boolean update(long idUpdate, UtenteGUI datiNuovi) {
-		Optional<Utente> optionalUtente = repo.findById(idUpdate);
-        
-        Utente utente = optionalUtente.get();
-        utente.setNome(datiNuovi.getNome());
-        utente.setCognome(datiNuovi.getCognome());
-        
-        if (datiNuovi.getPasswordNuova() != null && !datiNuovi.getPasswordNuova().isEmpty()) {
-            if (passwordEncoder.matches(datiNuovi.getPassword(), utente.getPassword())) {
-                utente.setPassword(passwordEncoder.encode(datiNuovi.getPasswordNuova()));
-            }
-            else {
-                return false; 
-            }
-        }
-        
-        repo.save(utente);
-        return true; 
-    }
+
+	public String update(long idUpdate, UtenteGUI datiNuovi) {
+	    Optional<Utente> optionalUtente = repo.findById(idUpdate);
+
+	    if (optionalUtente.isEmpty()) {
+	        return "Utente non trovato.";
+	    }
+	    
+	    Utente utente = optionalUtente.get();
+
+	    if (datiNuovi.getNome().contains(",") || datiNuovi.getNome().contains(".")) {
+	        return "Il nome non può contenere punti o virgole.";
+	    }
+
+	    if (datiNuovi.getCognome().contains(",") || datiNuovi.getCognome().contains(".")) {
+	        return "Il cognome non può contenere punti o virgole.";
+	    }
+
+	    utente.setNome(datiNuovi.getNome());
+	    utente.setCognome(datiNuovi.getCognome());
+	    
+	    if (datiNuovi.getPasswordNuova() != null && !datiNuovi.getPasswordNuova().isEmpty()) {
+	        if (passwordEncoder.matches(datiNuovi.getPassword(), utente.getPassword())) {
+	            utente.setPassword(passwordEncoder.encode(datiNuovi.getPasswordNuova()));
+	        }
+	        else {
+	            return "La password corrente inserita non è corretta."; 
+	        }
+	    }
+	    
+	    repo.save(utente);
+	    return null; 
+	}
 
     public void saveCurriculumFile(long idUtente, MultipartFile file) throws IOException {
     

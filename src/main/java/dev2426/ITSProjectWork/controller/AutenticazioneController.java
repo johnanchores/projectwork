@@ -41,13 +41,13 @@ public class AutenticazioneController {
 
 		String errore = serv.insert(utente);
 
-	    if (errore == null) {
-	        model.addAttribute("success", "La registrazione è stata effettuata con successo");
-	        return "redirect:/login?success";
-	    } else {
-	        model.addAttribute("errorMessage", errore);
-	        return "/public/registrazione";
-	    }
+		if (errore == null) {
+			model.addAttribute("success", "La registrazione è stata effettuata con successo");
+			return "redirect:/login?success";
+		} else {
+			model.addAttribute("errorMessage", errore);
+			return "/public/registrazione";
+		}
 	}
 
 	@GetMapping("/loading")
