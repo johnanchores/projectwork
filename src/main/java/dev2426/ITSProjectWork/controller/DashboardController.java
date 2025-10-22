@@ -61,7 +61,7 @@ public class DashboardController {
 	}
 
 	@PostMapping("/candidature")
-	public String Candidatura(Principal p, @RequestParam long id_tirocinio) {
+	public String Candidatura(Principal p, @RequestParam("id_tirocinio") long id_tirocinio) {
 
 		if (p == null) {
 			return "redirect:/login";

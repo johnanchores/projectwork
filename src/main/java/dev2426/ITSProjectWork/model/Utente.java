@@ -22,7 +22,7 @@ public class Utente {
     @Column(name = "curriculum_path")
     private String curriculumPath;
     
-    private String stato;
+    private String ruolo;
 
     public long getIdUtente() {
         return id_utente;
@@ -73,14 +73,12 @@ public class Utente {
     }
     
     public String getStato() {
-        return stato;
+        return ruolo;
     }
 
     public void setStato(String stato) {
-        this.stato = stato;
+        this.ruolo = stato;
     }
-
-    // --- Costruttori ---
 
     public Utente(long idUtente, String nome, String cognome, String email, String password, String curriculumPath) {
         super();
@@ -89,8 +87,8 @@ public class Utente {
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-        this.curriculumPath = curriculumPath; // CV Path
-        this.stato = "ATTIVO"; // Esempio: imposta uno stato di default
+        this.curriculumPath = curriculumPath;
+        this.ruolo = "ATTIVO"; 
     }
 
     public Utente() {
