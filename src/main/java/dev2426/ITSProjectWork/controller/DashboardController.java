@@ -33,8 +33,15 @@ public class DashboardController {
 	private TirocinioService tiroServ;
 
 	@GetMapping("/dashboard")
-	public String showHome(Model model) {
-		List<Tirocinio> listaTir = tiroServ.getAll();
+	public String showHome(Model model, Principal p) {
+		
+		if (p != null) {
+            Optional<Utente> userOptional = utentiServ.findByEmail(p.getName());
+            if (userOptional.isPresent()) {
+                model.addAttribute("utente", userOptional.get());
+            }
+        }
+		List<Tirocinio> listaTir = tiroServ.getAll();	
 		
 		List<TirocinioGUI> listaCompleta = new ArrayList<>();
 		
@@ -68,7 +75,7 @@ public class DashboardController {
 	    }
 
 	    Optional<Utente> userOptional = utentiServ.findByEmail(p.getName());
-	    Optional<Tirocinio> tirocinioOptional = tiroServ.find(id_tirocinio); // Assumo che il metodo si chiami findById
+	    Optional<Tirocinio> tirocinioOptional = tiroServ.find(id_tirocinio); 
 
 	    if (userOptional.isPresent() && tirocinioOptional.isPresent()) {
 	        Utente user = userOptional.get();
@@ -87,11 +94,11 @@ public class DashboardController {
 	            
 	        } catch (IllegalStateException e) {
 	            model.addAttribute("candidaturaError", e.getMessage());
-	            return showHome(model); 
+	            return showHome(model, p);
 	        }
 	    } else {
 	        model.addAttribute("candidaturaError", "Utente o tirocinio non validi.");
-	        return showHome(model);
+	        return showHome(model, p);
 	    }
 	}
 

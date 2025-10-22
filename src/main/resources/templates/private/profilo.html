@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,9 +23,11 @@
         <a th:href="@{/dashboard}" class="nav-switch-button"
           ><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a
         >
-        <a th:href="@{/admin}" class="nav-switch-button"
-          ><i class="fas fa-lock-open"></i> Vai all'Area Admin</a
-        >
+		<div sec:authorize="hasRole('ADMIN')">
+		    <a th:href="@{/admin}" class="nav-switch-button">
+		        <i class="fas fa-lock-open"></i> Vai all'Area Admin
+		    </a>
+		</div>
         <a th:href="@{/login?logout}" class="nav-switch-button"
           ><i class="fas fa-sign-out-alt"></i> Logout</a
         >
@@ -62,6 +64,7 @@
               <strong>Azienda:</strong>
               <span th:text="${candidatura.nomeAzienda}">Nome Azienda</span>
             </p>
+			<p><strong>Stato:</strong>
             <span
               class="status"
               th:classappend="${candidatura.stato == 'Accettata' ? 'accepted' : (candidatura.stato == 'Rifiutata' ? 'rejected' : 'pending')}"
@@ -69,6 +72,7 @@
             >
               In revisione
             </span>
+			</p>
 
             <a
               href="#"
@@ -231,9 +235,7 @@
     </div>
 
     <script>
-      /* ===================================== */
-      /* FUNZIONI MODAL (AGGIUNTE) */
-      /* ===================================== */
+
       function openModal(event, el) {
         event.preventDefault();
         document.getElementById("modal-mansione").textContent =
@@ -259,7 +261,6 @@
         document.getElementById("detailsModal").style.display = "none";
       }
 
-      // Chiudi il modale cliccando fuori
       window.onclick = function (event) {
         const modal = document.getElementById("detailsModal");
         if (event.target === modal) {
@@ -267,9 +268,7 @@
         }
       };
 
-      /* ===================================== */
-      /* FUNZIONI PAGINA (PREESISTENTI) */
-      /* ===================================== */
+
       function showSection(sectionId, event) {
         document.querySelectorAll(".profile-section").forEach((section) => {
           section.classList.remove("active");
