@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +9,36 @@
 </head>
 
 <body>
-  <header class="admin-header">
+  <!-- HEADER UNIFICATO -->
+  <header class="header">
     <h1>
-      <img src="/src/main/resources/static/image/logo2.png" alt="logo" height="100">
-      Pannello di Amministrazione
+      <img src="../../static/image/logo2.png" alt="Logo" height="130">
+      Area Amministratore
     </h1>
-    <nav class="header-nav-links">
-      <a href="dashboard.html" class="nav-btn"><i class="fas fa-table-columns"></i> Dashboard</a>
-      <a href="profilo.html" class="nav-btn"><i class="fas fa-user-circle"></i> Area Utente</a>
-      <a href="/logout" class="nav-btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
+
+    <div class="header-nav-links">
+      <a href="dashboard.html" class="nav-switch-button">
+        <i class="fas fa-table-columns"></i> Vai alla Dashboard
+      </a>
+
+      <a href="profilo.html" class="nav-switch-button">
+        <i class="fas fa-user-circle"></i> Vai all’Area Utente
+      </a>
+
+      <a href="/logout" class="nav-switch-button logout">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
   </header>
 
+  <!-- CONTENUTO PRINCIPALE -->
   <main class="admin-container">
-    <!-- SEZIONE CANDIDATURE -->
     <section class="section-table">
       <div class="section-header">
         <h2><i class="fas fa-file-alt"></i> Candidature Ricevute</h2>
-        <button id="openModal" class="btn-add"><i class="fas fa-plus"></i> Aggiungi Tirocinio</button>
+        <button id="openModal" class="btn-add">
+          <i class="fas fa-plus"></i> Aggiungi Tirocinio
+        </button>
       </div>
 
       <p class="section-subtitle">Lista completa delle persone candidate ai tirocini pubblicati.</p>
@@ -42,10 +54,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Mario Rossi</td>
-              <td>Frontend Developer</td>
-              <td><span class="status status-pending">In Attesa</span></td>
+            <tr th:each="candidatura : ${listaCandidature}">
+              <td th:text="${candidatura.nomeCandidato}">Mario Rossi</td>
+              <td th:text="${candidatura.titoloAnnuncio}">Frontend Developer</td>
+              <td>
+                <span class="status"
+                      th:classappend="${candidatura.stato == 'Accettata' ? 'status-accepted' : (candidatura.stato == 'Rifiutata' ? 'status-rejected' : 'status-pending')}"
+                      th:text="${candidatura.stato}">
+                  In Attesa
+                </span>
+              </td>
               <td>
                 <button class="btn-action view"><i class="fas fa-eye"></i></button>
                 <button class="btn-action accept"><i class="fas fa-check"></i></button>
@@ -93,13 +111,11 @@
           <input type="text" id="orari" placeholder="Full-time / Part-time / Flessibile">
         </div>
 
-        <!-- COMPETENZE RICHIESTE -->
         <div class="form-group full-width">
           <label>Competenze Richieste:</label>
           <div class="tag-select" id="richieste"></div>
         </div>
 
-        <!-- COMPETENZE ACQUISIBILI -->
         <div class="form-group full-width">
           <label>Competenze Acquisibili:</label>
           <div class="tag-select" id="acquisibili"></div>
@@ -118,14 +134,13 @@
     </div>
   </div>
 
+  <!-- SCRIPT -->
   <script>
-    // Apertura e chiusura modale
     const modal = document.getElementById('modal');
     document.getElementById('openModal').onclick = () => modal.style.display = 'flex';
     document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
     window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
 
-    // Tag selector con lista fissa
     const skillLists = {
       richieste: ["Python", "JavaScript", "HTML", "CSS", "Java", "SQL", "Machine Learning", "React", "C++", "UI/UX Design"],
       acquisibili: ["Teamwork", "Project Management", "Problem Solving", "Analisi Dati", "Comunicazione", "Leadership"]
