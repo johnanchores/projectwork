@@ -21,10 +21,11 @@
         
         <div class="header-nav-links">
             <a th:href="@{/dashboard}" class="nav-switch-button"><i class="fas fa-table-columns"></i> Vai alla dashboard</a>
-            
+           <div sec:authorize="hasRole('ADMIN')">
             <a th:href="@{/admin}" class="nav-switch-button">
                 <i class="fas fa-user-circle"></i> Vai all'Area Admin
             </a>
+			</div> 
             
             <a href="@{/login?logout}" class="nav-switch-button logout">
                 <i class="fas fa-sign-out-alt"></i> Logout
