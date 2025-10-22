@@ -1,78 +1,61 @@
 <!DOCTYPE html>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione</title>
-    <link rel="stylesheet" href="/css/registrazione.css" />
-  </head>
+      <link rel="stylesheet" href="/css/registrazione.css" />
+</head>
 
-  <body>
+<body>
     <div class="registration-container">
-      <p class="registrati">Registrati</p>
+        <p class="registrati">
+            Registrati
+        </p>
+	
+		<div th:if="${errorMessage}" style="color:red"> <span th:text="${errorMessage}"> Errore: email già registrata</span> </div>
+		<div th:if="${passwordError}" style="color:red"> <span th:text="${passwordError}"> Errore: le password non coincidono </span> </div>
+		
+        <form class="registration-form" th:action="@{/register}" th:object="${utente}" method="POST">
 
-      <div th:if="${errorMessage}" style="color: red">
-        <span th:text="${errorMessage}"> Errore: email già registrata</span>
-      </div>
-      <div th:if="${passwordError}" style="color: red">
-        <span th:text="${passwordError}">
-          Errore: le password non coincidono
-        </span>
-      </div>
+            <div class="flex-div">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
 
-      <form
-        id="registrationForm"
-        class="registration-form"
-        th:action="@{/register}"
-        th:object="${utente}"
-        method="POST"
-      >
-        <div class="flex-div">
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" th:field="*{nome}" required />
-          </div>
+            <div class="form-group">
+                <label for="cognome">Cognome</label>
+                <input type="text" id="cognome" th:field="*{cognome}" required>
+            </div>
 
-          <div class="form-group">
-            <label for="cognome">Cognome</label>
-            <input type="text" id="cognome" th:field="*{cognome}" required />
-          </div>
-        </div>
+            </div>
 
-        <div class="form-group" id="email-div">
-          <label for="email">Email</label>
-          <input type="email" id="email" th:field="*{email}" required />
-        </div>
+            <div class="form-group" id="email-div">
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}" required>
+            </div>
 
-        <div class="flex-div">
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              th:field="*{password}"
-              required
-              minlength="8"
-            />
-            <small>Minimo 8 caratteri</small>
-          </div>
+            <div class="flex-div">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" required minlength="8">
+                <small>Minimo 8 caratteri</small>
+            </div>
 
-          <div class="form-group">
-            <label for="confermaPassword">Conferma password</label>
-            <input
-              type="password"
-              id="confermaPassword"
-              th:field="*{confermaPassword}"
-              required
-              minlength="8"
-            />
-            <small>Minimo 8 caratteri</small>
-          </div>
-        </div>
 
-        <button type="submit" class="submit-button">Registrati</button>
-      </form>
+            <div class="form-group">
+                <label for="confermaPassword">Conferma password</label>
+                <input type="password" id="confermaPassword" th:field="*{confermaPassword}" required minlength="8">
+                <small>Minimo 8 caratteri</small>
+            </div>
+            </div>
+
+            <button type="submit" class="submit-button">Registrati</button>
+        </form>
     </div>
-    <script src="/js/registrazione.js"></script>
-  </body>
+    <script src="../static/registrazione.js"></script>
+</body>
+
 </html>
