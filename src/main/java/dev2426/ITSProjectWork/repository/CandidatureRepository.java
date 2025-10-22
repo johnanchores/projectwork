@@ -15,21 +15,10 @@ import dev2426.ITSProjectWork.model.Utente;
 public interface CandidatureRepository extends JpaRepository<Candidatura, Long> {
 
 	@Query("SELECT new dev2426.ITSProjectWork.model.CandidaturaGUI(" +
-			"   c.id_candidatura, " +
-			"   u.nome, " +
-			"   u.cognome, " +
-			"   t.mansione, " +
-			"   a.nome, " +
-			"   CASE c.stato " +
-			"       WHEN 0 THEN 'In attesa' " +
-			"       WHEN 1 THEN 'Approvata' " +
-			"       WHEN 2 THEN 'Rifiutata' " +
-			"       ELSE 'Sconosciuto' " +
-			"   END) " +
-			"FROM Candidatura c " +
-			"JOIN c.utente u " +
-			"JOIN c.tirocinio t " +
-			"JOIN t.azienda a")
+			"   c.id_candidatura, c.utente.nome, c.utente.cognome, " +
+			"   c.tirocinio.mansione, c.tirocinio.descrizione, " +
+			"   c.tirocinio.azienda.nome, c.stato) " +
+			"FROM Candidatura c")
 	List<CandidaturaGUI> findAllAsGUI();
 
 	List<Candidatura> findByUtente(Utente utente);
