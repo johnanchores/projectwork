@@ -39,14 +39,15 @@ public class AutenticazioneController {
 			return "/public/registrazione";
 		}
 
-		Optional<Utente> utenteRegistratoOptional = serv.insert(utente);
-		if (utenteRegistratoOptional.isPresent()) {
-			model.addAttribute("success", "La registrazione e stata effettuata con successo");
-			return "redirect:/login?success";
-		} else {
-			model.addAttribute("errorMessage", "Errore: Email già esistente");
-			return "/public/registrazione";
-		}
+		String errore = serv.insert(utente);
+
+	    if (errore == null) {
+	        model.addAttribute("success", "La registrazione è stata effettuata con successo");
+	        return "redirect:/login?success";
+	    } else {
+	        model.addAttribute("errorMessage", errore);
+	        return "/public/registrazione";
+	    }
 	}
 
 	@GetMapping("/loading")

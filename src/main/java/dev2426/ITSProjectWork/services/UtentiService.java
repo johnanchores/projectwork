@@ -35,18 +35,27 @@ public class UtentiService {
 		return repo.findById(idCerca);
 	}
 	
-	public Optional<Utente> insert(UtenteGUI nuova) throws Exception {
+	public String insert(UtenteGUI nuova) throws Exception {
 		if(repo.existsByEmail(nuova.getEmail())) {
-			return Optional.empty();
-		}
+	        return "Errore: Email già esistente"; // Restituisci il messaggio
+	    }
+	    Utente u = new Utente();
+	    // 2. Controllo Nome (con la logica corretta)
+	    if(nuova.getNome().contains(",") || nuova.getNome().contains(".")) {
+	        return "Il nome non può contenere punti o virgole."; // Restituisci il messaggio
+	    }
+
+	    // 3. Controllo Cognome (con la logica corretta)
+	    if(nuova.getCognome().contains(",") || nuova.getCognome().contains(".")) {
+	        return "Il cognome non può contenere punti o virgole."; // Restituisci il messaggio
+	    }
 		
-		Utente u = new Utente();
 		u.setNome(nuova.getNome());
 		u.setCognome(nuova.getCognome());
 		u.setEmail(nuova.getEmail());
         u.setPassword(passwordEncoder.encode(nuova.getPassword()));
         repo.save(u);
-        return Optional.of(u);
+        return null;
     }
 
 	
