@@ -1,48 +1,62 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pannello Admin</title>
-    <link rel="stylesheet" th:href="@{/css/profiloadmin.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pannello Admin - Gestione Candidature</title>
+  <link rel="stylesheet" href="../../static/css/profiloadmin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
-  <header class="header">
+  <header class="admin-header">
     <h1>
-        <img th:src="@{/image/logo2.png}" alt="Logo" height="130">
-      Area Amministratore
+        <img th:src="@{/image/logo2.png}" alt="logo" height="100">
+        Pannello di Amministrazione
     </h1>
-    <div class="header-nav-links">
-      <a th:href="@{/dashboard}" class="nav-switch-button">
-        <i class="fas fa-table-columns"></i> Vai alla Dashboard
-      </a>
-      <a th:href="@{/profilo}" class="nav-switch-button">
-        <i class="fas fa-user-circle"></i> Vai all’Area Utente
-      </a>
-      <form th:action="@{/logout}" method="post" style="display: inline;">
-        <button type="submit" class="nav-switch-button logout" style="border:none; background:none; cursor:pointer; padding:0; font-family:inherit; font-size:inherit; color:inherit;">
+    <div class="header-nav">
+        <a th:href="@{/dashboard}" class="nav-switch-button">
+            <i class="fas fa-table-columns"></i> Vai alla Dashboard
+        </a>
+        <a th:href="@{/profilo}" class="nav-switch-button">
+            <i class="fas fa-user-circle"></i> Area Utente
+        </a>
+        <a th:href="@{/login?logout}" class="nav-switch-button">
             <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </form>
+        </a>
     </div>
   </header>
 
   <main class="admin-container">
+    <div th:if="${successMessage}" class="feedback-message success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="feedback-message error" th:text="${errorMessage}"></div>
+
     <section class="section-table">
-        <div class="table-wrapper">
+      <div class="section-header">
+        <h2><i class="fas fa-file-alt"></i> Candidature Ricevute</h2>
+        <button id="openModal" class="btn-add"><i class="fas fa-plus"></i> Aggiungi Tirocinio</button>
+      </div>
+      <p class="section-subtitle">Lista completa delle persone candidate ai tirocini pubblicati.</p>
+
+      <div class="table-wrapper">
         <table class="candidature-table">
           <thead>
             <tr>
               <th>Candidato</th>
-              <th>Annuncio</th>
+              <th>Titolo Tirocinio</th>
               <th>Stato</th>
               <th>Azioni</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="candidatura : ${listaCandidature}">
+            <tr th:each="candidatura : ${listaCandidature}" 
+                th:data-nome="${candidatura.nomeUtente}" 
+                th:data-cognome="${candidatura.cognomeUtente}" 
+                th:data-mansione="${candidatura.mansioneTirocinio}" 
+                th:data-azienda="${candidatura.aziendaNome}" 
+                th:data-descrizione="${candidatura.descrizione}" 
+                th:data-durata="${candidatura.durata}">
+              
               <td th:text="${candidatura.nomeUtente + ' ' + candidatura.cognomeUtente}">Mario Rossi</td>
               <td th:text="${candidatura.mansioneTirocinio}">Frontend Developer</td>
               <td>
@@ -53,18 +67,16 @@
                 </span>
               </td>
               <td class="action-buttons">
-                <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                <button class="btn-action view detail-btn" title="Visualizza Dettagli">
+                  <i class="fas fa-eye"></i>
+                </button>
                 
                 <form th:action="@{/admin/candidature/{id}/accetta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn-action accept"><i class="fas fa-check"></i></button>
+                    <button type="submit" class="btn-action accept" title="Accetta"><i class="fas fa-check"></i></button>
                 </form>
                 
                 <form th:action="@{/admin/candidature/{id}/rifiuta(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn-action reject"><i class="fas fa-times"></i></button>
-                </form>
-                
-                <form th:action="@{/admin/candidature/{id}/elimina(id=${candidatura.id_candidatura})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn-action remove"><i class="fas fa-trash"></i></button>
+                    <button type="submit" class="btn-action reject" title="Rifiuta"><i class="fas fa-times"></i></button>
                 </form>
               </td>
             </tr>
@@ -74,54 +86,44 @@
     </section>
   </main>
 
+  <!-- Modale Aggiungi Tirocinio -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" id="closeModal">&times;</span>
-      <h2><i class="fas fa-plus-square"></i> Aggiungi / Modifica Annuncio</h2>
-
-      <form class="tirocinio-form">
+      <h2><i class="fas fa-plus-square"></i> Aggiungi Tirocinio</h2>
+      <form class="tirocinio-form" th:action="@{/registraTirocinio}" th:object="${nuovoTirocinio}" method="post">
         <div class="form-group">
-          <label for="titolo">Titolo Annuncio:</label>
-          <input type="text" id="titolo" placeholder="Esempio: Data Scientist Intern" required>
+          <label for="titolo">Titolo Tirocinio:</label>
+          <input type="text" id="titolo" th:field="*{mansione}" placeholder="Esempio: Sviluppatore Java" required>
         </div>
-
         <div class="form-group">
           <label for="azienda">Azienda:</label>
-          <select id="azienda" required>
-            <option disabled selected>Seleziona un'azienda</option>
-            <option>TechCorp</option>
-            <option>DesignStudio</option>
-            <option>DataSolutions</option>
-            <option>Innovatek</option>
-            <option>Softwave</option>
+          <select id="azienda" th:field="*{aziendaId}" required>
+            <option value="" disabled selected>Seleziona un'azienda</option>
+            <option th:each="az : ${listaAziende}" th:value="${az.idAzienda}" th:text="${az.nome}"></option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="durata">Durata (Mesi):</label>
-          <input type="number" id="durata" min="1" max="12" placeholder="1-12" required>
+          <input type="number" id="durata" th:field="*{durata}" min="1" max="12" placeholder="1-12" required>
         </div>
-
         <div class="form-group">
           <label for="orari">Orari di Lavoro:</label>
-          <input type="text" id="orari" placeholder="Full-time / Part-time / Flessibile">
+          <input type="text" id="orari" th:field="*{orari}" placeholder="Full-time / Part-time / Flessibile">
         </div>
-
         <div class="form-group full-width">
-          <label>Competenze Richieste:</label>
-          <div class="tag-select" id="richieste"></div>
+          <label>Competenze:</label>
+          <div class="tag-select">
+            <div th:each="comp : ${listaCompetenze}" class="skill-tag-checkbox">
+              <input type="checkbox" th:id="${'comp-' + comp.idCompetenza}" th:field="*{competenzeId}" th:value="${comp.idCompetenza}">
+              <label th:for="${'comp-' + comp.idCompetenza}" th:text="${comp.nome}"></label>
+            </div>
+          </div>
         </div>
-
-        <div class="form-group full-width">
-          <label>Competenze Acquisibili:</label>
-          <div class="tag-select" id="acquisibili"></div>
-        </div>
-
         <div class="form-group full-width">
           <label for="descrizione">Descrizione:</label>
-          <textarea id="descrizione" rows="3" placeholder="Descrizione del tirocinio"></textarea>
+          <textarea id="descrizione" th:field="*{descrizione}" rows="3" placeholder="Descrizione del tirocinio"></textarea>
         </div>
-
         <div class="form-actions full-width">
           <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Salva</button>
           <button type="reset" class="btn-secondary"><i class="fas fa-eraser"></i> Svuota</button>
@@ -130,47 +132,52 @@
     </div>
   </div>
 
+  <!-- Modale Dettagli Candidatura -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeDetailModal">&times;</span>
+      <h2><i class="fas fa-info-circle"></i> Dettagli Candidatura</h2>
+      <div class="detail-field"><strong>Nome e Cognome:</strong> <span id="detailNome"></span></div>
+      <div class="detail-field"><strong>Mansione Tirocinio:</strong> <span id="detailMansione"></span></div>
+      <div class="detail-field"><strong>Nome Azienda:</strong> <span id="detailAzienda"></span></div>
+      <div class="detail-field"><strong>Descrizione Tirocinio:</strong> <span id="detailDescrizione"></span></div>
+      <div class="detail-field"><strong>Durata Tirocinio:</strong> <span id="detailDurata"></span></div>
+    </div>
+  </div>
+
   <script>
-      
-      document.addEventListener('DOMContentLoaded', () => {
-          
-         
-          const modal = document.getElementById('modal');
-          const openModalBtn = document.getElementById('openModal');
-          const closeModalBtn = document.getElementById('closeModal');
+    document.addEventListener('DOMContentLoaded', () => {
+        // Modale Aggiungi Tirocinio
+        const modal = document.getElementById('modal');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        if (openModalBtn) openModalBtn.onclick = () => modal.style.display = 'flex';
+        if (closeModalBtn) closeModalBtn.onclick = () => modal.style.display = 'none';
 
-          if (openModalBtn) {
-              openModalBtn.onclick = () => modal.style.display = 'flex';
-          }
-          if (closeModalBtn) {
-              closeModalBtn.onclick = () => modal.style.display = 'none';
-          }
-          window.onclick = e => { 
-              if (e.target === modal) {
-                  modal.style.display = 'none';
-              }
-          };
-
-          const skillLists = {
-            richieste: ["Python", "JavaScript", "HTML", "CSS", "Java", "SQL", "Machine Learning", "React", "C++", "UI/UX Design"],
-            acquisibili: ["Teamwork", "Project Management", "Problem Solving", "Analisi Dati", "Comunicazione", "Leadership"]
-          };
-
-          function createTagSelector(containerId, skills) {
-            const container = document.getElementById(containerId);
-            if (!container) return; // Sicurezza extra
-            skills.forEach(skill => {
-              const tag = document.createElement("div");
-              tag.classList.add("skill-tag");
-              tag.textContent = skill;
-              tag.onclick = () => tag.classList.toggle("selected");
-              container.appendChild(tag);
+        // Modale Dettagli Candidatura
+        const detailModal = document.getElementById('detailModal');
+        const closeDetailModal = document.getElementById('closeDetailModal');
+        const detailBtns = document.querySelectorAll('.detail-btn');
+        
+        detailBtns.forEach(btn => {
+            btn.addEventListener('click', e => {
+                const tr = e.target.closest('tr');
+                document.getElementById('detailNome').textContent = tr.dataset.nome + ' ' + tr.dataset.cognome;
+                document.getElementById('detailMansione').textContent = tr.dataset.mansione;
+                document.getElementById('detailAzienda').textContent = tr.dataset.azienda;
+                document.getElementById('detailDescrizione').textContent = tr.dataset.descrizione;
+                document.getElementById('detailDurata').textContent = tr.dataset.durata + ' mesi';
+                detailModal.style.display = 'flex';
             });
-          }
+        });
 
-          createTagSelector("richieste", skillLists.richieste);
-          createTagSelector("acquisibili", skillLists.acquisibili);
-      });
+        if (closeDetailModal) closeDetailModal.onclick = () => detailModal.style.display = 'none';
+
+        window.onclick = e => {
+            if (e.target === modal) modal.style.display = 'none';
+            if (e.target === detailModal) detailModal.style.display = 'none';
+        };
+    });
   </script>
 </body>
 </html>
