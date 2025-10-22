@@ -1,12 +1,8 @@
 package dev2426.ITSProjectWork.services;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,14 +25,10 @@ public class DettagliUtenteService implements UserDetailsService {
 		Utente utente = repo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
 		
-		List<GrantedAuthority> ruoli = new ArrayList<>();
-		
-		ruoli.add(new SimpleGrantedAuthority("ROLE_"+ utente.getRuolo()));
-		
 		return new User(
                 utente.getEmail(),
                 utente.getPassword(), 
-                ruoli
+                Collections.emptyList() //nessun ruolo
                 );
 	}
 

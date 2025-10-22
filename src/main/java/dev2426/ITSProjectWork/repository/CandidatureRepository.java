@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import dev2426.ITSProjectWork.model.Candidatura;
 import dev2426.ITSProjectWork.model.CandidaturaGUI;
-import dev2426.ITSProjectWork.model.Tirocinio;
 import dev2426.ITSProjectWork.model.Utente;
 
 @Repository
@@ -33,7 +32,5 @@ public interface CandidatureRepository extends JpaRepository<Candidatura, Long> 
 	    List<CandidaturaGUI> findAllAsGUI();
 	
 	List<Candidatura> findByUtente(Utente utente);
-	
-	boolean existsByUtenteAndTirocinio(Utente utente, Tirocinio tirocinio);
 
 }
