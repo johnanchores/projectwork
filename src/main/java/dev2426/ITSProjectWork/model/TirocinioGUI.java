@@ -10,6 +10,7 @@ public class TirocinioGUI {
 	private String nomeAzienda;
 	private String descrizione;
 	private long id_tirocinio;
+	private String orario_lavoro;
 	private List<Competenza> competenze = new ArrayList<>();
 
 	public long getId_tirocinio() {
@@ -58,6 +59,14 @@ public class TirocinioGUI {
 	
 	public void addCompetenza(Competenza competenza) {
 		this.competenze.add(competenza);
+	}
+
+	public String getOrario_lavoro() {
+		return orario_lavoro;
+	}
+
+	public void setOrario_lavoro(String orario_lavoro) {
+		this.orario_lavoro = orario_lavoro;
 	}
 
 }

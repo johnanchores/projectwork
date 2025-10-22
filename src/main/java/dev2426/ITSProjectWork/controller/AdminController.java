@@ -65,6 +65,7 @@ public class AdminController {
             t.setDescrizione(tirocinioDto.getDescrizione());
             t.setAzienda(azienda);
             t.setCompetenze(competenzeSelezionate);
+            t.setOrario_lavoro(tirocinioDto.getOrario_lavoro());
             
             tirocinioService.insert(t);
 

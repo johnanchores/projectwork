@@ -10,9 +10,11 @@ public class CandidaturaGUI {
 	private String stato;
 	private String descrizioneTirocinio; 
 	private String durataTirocinio;    
+	private String orario_lavoro;
 
 	public CandidaturaGUI(long id_candidatura, String nomeUtente, String cognomeUtente, String mansioneTirocinio,
-			String nomeAzienda, String stato, String descrizioneTirocinio, String durataTirocinio) {
+			String nomeAzienda, String stato, String descrizioneTirocinio, String durataTirocinio,
+			String orario_lavoro) {
 		this.id_candidatura=id_candidatura;
 		this.nomeAzienda = nomeAzienda;
 		this.nomeUtente = nomeUtente;
@@ -21,6 +23,7 @@ public class CandidaturaGUI {
 		this.cognomeUtente=cognomeUtente;
 		this.descrizioneTirocinio=descrizioneTirocinio;
 		this.durataTirocinio=durataTirocinio;
+		this.setOrario_lavoro(orario_lavoro);
 	}
 
 	public long getId_candidatura() {
@@ -89,6 +92,14 @@ public class CandidaturaGUI {
 
 	public void setStato(String stato) {
 		this.stato = stato;
+	}
+
+	public String getOrario_lavoro() {
+		return orario_lavoro;
+	}
+
+	public void setOrario_lavoro(String orario_lavoro) {
+		this.orario_lavoro = orario_lavoro;
 	}
 
 }

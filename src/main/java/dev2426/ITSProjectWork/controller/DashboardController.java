@@ -52,6 +52,7 @@ public class DashboardController {
 			tg.setMansione(t.getMansione());
 			tg.setDurata(t.getDurata());
 			tg.setDescrizione(t.getDescrizione());
+			tg.setOrario_lavoro(t.getOrario_lavoro());
 
 			if (t.getAzienda() != null) {
                 tg.setNomeAzienda(t.getAzienda().getNome());

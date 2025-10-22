@@ -23,6 +23,7 @@ public class Tirocinio {
 	private String mansione;
 	private String durata;
 	private String descrizione;
+	private String orario_lavoro;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_azienda") 
@@ -79,6 +80,12 @@ public class Tirocinio {
 	}
 	public void setIdTirocinio(long idTirocinio) {
 		this.id_tirocinio = idTirocinio;
+	}
+	public String getOrario_lavoro() {
+		return orario_lavoro;
+	}
+	public void setOrario_lavoro(String orario_lavoro) {
+		this.orario_lavoro = orario_lavoro;
 	}
 }
 

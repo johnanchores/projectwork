@@ -10,6 +10,7 @@ public class TirocinioAdminGUI {
     private String descrizione;
     private Long aziendaId;
     private List<Long> competenzeId;
+    private String orario_lavoro;
 	public String getMansione() {
 		return mansione;
 	}
@@ -48,6 +49,12 @@ public class TirocinioAdminGUI {
 	}
 	public TirocinioAdminGUI() {
 		
+	}
+	public String getOrario_lavoro() {
+		return orario_lavoro;
+	}
+	public void setOrario_lavoro(String orario_lavoro) {
+		this.orario_lavoro = orario_lavoro;
 	}
 
 }
