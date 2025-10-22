@@ -12,6 +12,7 @@ import dev2426.ITSProjectWork.model.CandidaturaGUI;
 import dev2426.ITSProjectWork.model.Utente;
 import dev2426.ITSProjectWork.repository.CandidatureRepository;
 
+
 @Service
 public class CandidaturaService {
 	
