@@ -57,7 +57,6 @@ public class ProfiloController {
 			@ModelAttribute("utenteGUI") UtenteGUI datiForm,
 			Model modello) {
 
-		// 1. Gestione Password (il tuo codice esistente)
 		if (datiForm.getPasswordNuova() != null && !datiForm.getPasswordNuova().isEmpty()) {
 			if (!datiForm.getPasswordNuova().equals(datiForm.getConfermaPassword())) {
 				modello.addAttribute("updateError", "La nuova password e la conferma non corrispondono.");
@@ -78,13 +77,12 @@ public class ProfiloController {
 			try {
 				uServ.saveCurriculumFile(idUtente, datiForm.getCurriculumFile());
 			} catch (Exception e) {
-				// Gestione dell'errore di I/O (salvataggio su disco fallito)
+
 				modello.addAttribute("updateError", "Errore nel caricamento del Curriculum: " + e.getMessage());
 				return showProfile(dettagli, modello);
 			}
 		}
 
-		// 3. Salvataggio degli altri dati (nome, cognome, password)
 		boolean successo = uServ.update(idUtente, datiForm);
 
 		if (successo) {

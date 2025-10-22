@@ -37,17 +37,16 @@ public class UtentiService {
 	
 	public String insert(UtenteGUI nuova) throws Exception {
 		if(repo.existsByEmail(nuova.getEmail())) {
-	        return "Errore: Email già esistente"; // Restituisci il messaggio
+	        return "Errore: Email già esistente"; 
 	    }
 	    Utente u = new Utente();
-	    // 2. Controllo Nome (con la logica corretta)
+
 	    if(nuova.getNome().contains(",") || nuova.getNome().contains(".")) {
-	        return "Il nome non può contenere punti o virgole."; // Restituisci il messaggio
+	        return "Il nome non può contenere punti o virgole."; 
 	    }
 
-	    // 3. Controllo Cognome (con la logica corretta)
 	    if(nuova.getCognome().contains(",") || nuova.getCognome().contains(".")) {
-	        return "Il cognome non può contenere punti o virgole."; // Restituisci il messaggio
+	        return "Il cognome non può contenere punti o virgole."; 
 	    }
 		
 		u.setNome(nuova.getNome());
