@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +21,7 @@ public class Utente {
 	private String password;
 	private byte[] CV;
 	private String ruolo;
-
+	
 	public long getIdUtente() {
 		return id_utente;
 	}
@@ -79,5 +81,5 @@ public class Utente {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
-
+	
 }

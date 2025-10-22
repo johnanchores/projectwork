@@ -34,6 +34,6 @@ public interface CandidatureRepository extends JpaRepository<Candidatura, Long> 
 	
 	List<Candidatura> findByUtente(Utente utente);
 	
-	boolean utenteCandidato(Utente utente, Tirocinio tirocinio);
+	boolean existsByUtenteAndTirocinio(Utente utente, Tirocinio tirocinio);
 
 }
