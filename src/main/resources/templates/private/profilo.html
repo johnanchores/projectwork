@@ -2,246 +2,210 @@
 <html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Profilo Utente</title>
-	<link rel="stylesheet" href="/css/profilo.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-	<style>
-		.user-info {
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-			font-size: 1.1em;
-		}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="../../static/css/profilo.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-		.user-info p {
-			padding: 12px 15px;
-			background-color: var(--color-card);
-			border-radius: var(--radius-main);
-			border: 1px solid var(--color-border);
-		}
-		
-		.drop-zone {
-			padding: 15px;
-			border: 2px dashed var(--color-teal-light);
-			border-radius: var(--radius-main);
-			text-align: center;
-			cursor: pointer;
-			background-color: #f7fcfc;
-			margin-bottom: 5px;
-			color: var(--color-text-medium);
-		}
-
-		.drop-zone.dragover {
-			background-color: #e0f7f7;
-			border-color: var(--color-teal-primary);
-		}
-	</style>
 </head>
 
 <body>
-	<header>
-		<h1>
-			<img th:src="@{/image/logo2.png}" alt="Logo" height="130px" />
-			Profilo di&nbsp<span th:text="${utente.nome}">Nome Utente</span>
-		</h1>
+    <header>
+        <h1>
+            <img th:src="@{/image/logo2.png}" alt="Logo" height="130px" />
+            Profilo di&nbsp<span th:text="${utente.nome}">Nome Utente</span>
+        </h1>
 
-		<div class="header-nav">
-			<a th:href="@{/dashboard}" class="nav-switch-button"><i class="fa-solid fa-table-columns"></i> Vai alla
-				dashboard</a>
-			<div sec:authorize="hasRole('ADMIN')">
-				<a th:href="@{/admin}" class="nav-switch-button"><i class="fas fa-lock-open"></i> Vai all'Area Admin</a>
-			</div>
-			<a th:href="@{/login?logout}" class="nav-switch-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
-		</div>
-	</header>
+        <div class="header-nav">
+            <a th:href="@{/dashboard}" class="nav-switch-button"><i class="fa-solid fa-table-columns"></i> Vai alla dashboard</a>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}" class="nav-switch-button"><i class="fas fa-lock-open"></i> Vai all'Area Admin</a>
+            </div>
+            <a th:href="@{/login?logout}" class="nav-switch-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </header>
 
-	<main class="profile-container">
-		<nav class="profile-nav">
-			<button class="nav-button active" onclick="showSection('info-utente', event)">
-				<i class="fas fa-info-circle"></i> Informazioni Utente
-			</button>
-			<button class="nav-button" onclick="showSection('modifica-profilo', event)">
-				<i class="fas fa-user-edit"></i> Modifica Profilo
-			</button>
-			<button class="nav-button" onclick="showSection('candidature', event)">
-				<i class="fas fa-file-alt"></i> Dettagli Candidature
-			</button>
-		</nav>
+    <main class="profile-container">
+        <nav class="profile-nav">
+            <button class="nav-button active" onclick="showSection('info-utente', event)">
+                <i class="fas fa-info-circle"></i> Informazioni Utente
+            </button>
+            <button class="nav-button" onclick="showSection('modifica-profilo', event)">
+                <i class="fas fa-user-edit"></i> Modifica Profilo
+            </button>
+            <button class="nav-button" onclick="showSection('candidature', event)">
+                <i class="fas fa-file-alt"></i> Dettagli Candidature
+            </button>
+        </nav>
 
-		<section id="info-utente" class="profile-section active">
-			<h2>Informazioni Utente</h2>
-			<div class="user-info">
-				<p><strong>Nome:</strong> <span th:text="${utente.nome}">Nome Utente</span></p>
-				<p><strong>Cognome:</strong> <span th:text="${utente.cognome}">Cognome Utente</span></p>
-				<p><strong>Email:</strong> <span th:text="${utente.email}">email@example.com</span></p>
-			</div>
-		</section>
+        <!-- SEZIONE INFORMAZIONI UTENTE -->
+        <section id="info-utente" class="profile-section active">
+            <h2>Informazioni Utente</h2>
+            <div class="user-info">
+                <p><strong>Nome:</strong> <span th:text="${utente.nome}">Nome Utente</span></p>
+                <p><strong>Cognome:</strong> <span th:text="${utente.cognome}">Cognome Utente</span></p>
+                <p><strong>Email:</strong> <span th:text="${utente.email}">email@example.com</span></p>
+            </div>
+        </section>
 
-		<section id="modifica-profilo" class="profile-section">
-			<h2>Modifica il profilo</h2>
-			<br>
-			<form class="profile-form" th:action="@{/profilo}" method="post" th:object="${utenteGUI}"
-				enctype="multipart/form-data">
-				<div class="form-group">
-					<label for="nome">Nome:</label>
-					<input type="text" id="nome" th:field="*{nome}" />
-				</div>
-				<div class="form-group">
-					<label for="cognome">Cognome:</label>
-					<input type="text" id="cognome" th:field="*{cognome}" />
-				</div>
+        <!-- SEZIONE MODIFICA PROFILO -->
+        <section id="modifica-profilo" class="profile-section">
+            <h2>Modifica il profilo</h2>
+            <div th:if="${updateError}" style="color: red;">
+                <span th:text="${updateError}"></span>
+            </div>
+            <br>
+            <form class="profile-form" th:action="@{/profilo}" method="post" th:object="${utenteGUI}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" th:field="*{nome}" />
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" th:field="*{cognome}" />
+                </div>
 
-				<div class="form-group file-upload-group">
-					<label for="curriculumFile">Curriculum Vitae (.docx)</label>
-					<input type="file" id="curriculumFile" name="curriculumFile" accept=".docx" style="display: none" />
-					<div id="dropZone" class="drop-zone">Trascina qui il file .docx oppure clicca per selezionarlo</div>
-					<span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
-				</div>
+                <!-- Drag & Drop Curriculum -->
+                <div class="form-group file-upload-group">
+                    <label for="curriculumFile">Curriculum Vitae (.docx)</label>
+                    <input type="file" id="curriculumFile" name="curriculumFile" accept=".docx" style="display: none" />
+                    <div id="dropZone" class="drop-zone">Trascina qui il file .docx oppure clicca per selezionarlo</div>
+                    <span id="curriculumFileName" class="file-name-display">Nessun file selezionato</span>
+                </div>
 
-				<hr style="grid-column: 1 / -1; margin-top: 15px; border-color: rgba(0, 0, 0, 0.1);" />
+                <hr style="grid-column: 1 / -1; margin-top: 15px; border-color: rgba(0, 0, 0, 0.1);" />
 
-				<h3 style="color: var(--primary-teal)">Cambia Password (lascia vuoto per non modificare)</h3>
+                <h3 style="color: var(--primary-teal)">Cambia Password (lascia vuoto per non modificare)</h3>
 
-				<div class="form-group">
-					<label for="password">Password Corrente:</label>
-					<div class="password-group">
-						<input type="password" id="password" th:field="*{password}"
-							placeholder="Inserisci password attuale" />
-						<button type="button" class="toggle-password" onclick="toggleVisibility('password', this)">
-							<i class="fas fa-eye"></i>
-						</button>
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="password">Password Corrente:</label>
+                    <div class="password-group">
+                        <input type="password" id="password" th:field="*{password}" placeholder="Inserisci password attuale" />
+                        <button type="button" class="toggle-password" onclick="toggleVisibility('password', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="passwordNuova">Nuova Password:</label>
-					<div class="password-group">
-						<input type="password" id="passwordNuova" th:field="*{passwordNuova}"
-							placeholder="Inserisci nuova password" />
-						<button type="button" class="toggle-password" onclick="toggleVisibility('passwordNuova', this)">
-							<i class="fas fa-eye"></i>
-						</button>
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="passwordNuova">Nuova Password:</label>
+                    <div class="password-group">
+                        <input type="password" id="passwordNuova" th:field="*{passwordNuova}" placeholder="Inserisci nuova password" />
+                        <button type="button" class="toggle-password" onclick="toggleVisibility('passwordNuova', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="confermaPassword">Conferma nuova Password:</label>
-					<div class="password-group">
-						<input type="password" id="confermaPassword" th:field="*{confermaPassword}"
-							placeholder="Ripeti nuova password" />
-						<button type="button" class="toggle-password"
-							onclick="toggleVisibility('confermaPassword', this)">
-							<i class="fas fa-eye"></i>
-						</button>
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="confermaPassword">Conferma nuova Password:</label>
+                    <div class="password-group">
+                        <input type="password" id="confermaPassword" th:field="*{confermaPassword}" placeholder="Ripeti nuova password" />
+                        <button type="button" class="toggle-password" onclick="toggleVisibility('confermaPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
 
-				<div class="form-actions">
-					<button type="submit" class="btn-save">
-						<i class="fas fa-check-circle"></i> Salva modifiche
-					</button>
-				</div>
-			</form>
-		</section>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-check-circle"></i> Salva modifiche
+                    </button>
+                </div>
+            </form>
+        </section>
 
-		<section id="candidature" class="profile-section">
-			<h2>Dettagli delle mie candidature</h2>
-			<div class="candidature-list">
-				<div class="candidatura-item" th:each="candidatura : ${listaCandidature}">
-					<h3 th:text="${candidatura.mansioneTirocinio}">Frontend Developer</h3>
-					<p><strong>Azienda:</strong> <span th:text="${candidatura.nomeAzienda}">Nome Azienda</span></p>
-					<p><strong>Stato:</strong>
-						<span class="status"
-							th:classappend="${candidatura.stato == 'Accettata' ? 'accepted' : (candidatura.stato == 'Rifiutata' ? 'rejected' : 'pending')}"
-							th:text="${candidatura.stato}">In revisione</span>
-					</p>
-					<a href="#" class="btn-anteprima"
-						th:attr="data-mansione=${candidatura.mansioneTirocinio}, data-azienda=${candidatura.nomeAzienda}, data-descrizione=${candidatura.descrizioneTirocinio}, data-durata=${candidatura.durataTirocinio}, data-nome=${utente.nome}, data-cognome=${utente.cognome}, data-email=${utente.email}, data-stato=${candidatura.stato}"
-						onclick="openModal(event, this)">
-						<i class="fas fa-eye"></i> Visualizza dettagli
-					</a>
-				</div>
-			</div>
-		</section>
-	</main>
+        <!-- SEZIONE DETTAGLI CANDIDATURE -->
+        <section id="candidature" class="profile-section">
+            <h2>Dettagli delle mie candidature</h2>
+            <div class="candidature-list">
+                <div class="candidatura-item" th:each="candidatura : ${listaCandidature}">
+                    <h3 th:text="${candidatura.mansioneTirocinio}">Frontend Developer</h3>
+                    <p><strong>Azienda:</strong> <span th:text="${candidatura.nomeAzienda}">Nome Azienda</span></p>
+                    <p><strong>Stato:</strong>
+                        <span class="status" th:classappend="${candidatura.stato == 'Accettata' ? 'accepted' : (candidatura.stato == 'Rifiutata' ? 'rejected' : 'pending')}" th:text="${candidatura.stato}">In revisione</span>
+                    </p>
+                    <a href="#" class="btn-anteprima" th:attr="data-mansione=${candidatura.mansioneTirocinio}, data-azienda=${candidatura.nomeAzienda}, data-descrizione=${candidatura.descrizioneTirocinio}, data-durata=${candidatura.durataTirocinio}, data-nome=${utente.nome}, data-cognome=${utente.cognome}, data-email=${utente.email}, data-stato=${candidatura.stato}" onclick="openModal(event, this)">
+                        <i class="fas fa-eye"></i> Visualizza dettagli
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-	<div id="detailsModal" class="modal">
-		<div class="modal-content">
-			<span class="close-button" onclick="closeModal()">&times;</span>
-			<h3>Dettagli Candidatura</h3>
-			<div class="modal-body">
-				<p><strong>Mansione:</strong> <span id="modal-mansione"></span></p>
-				<p><strong>Azienda:</strong> <span id="modal-azienda"></span></p>
-				<p><strong>Descrizione:</strong> <span id="modal-descrizione"></span></p>
-				<p><strong>Durata:</strong> <span id="modal-durata"></span></p>
-				<hr />
-				<p><strong>Candidato:</strong> <span id="modal-nome"></span> <span id="modal-cognome"></span> (<span
-						id="modal-email"></span>)</p>
-				<p><strong>Stato:</strong> <span id="modal-stato"></span></p>
-			</div>
-		</div>
-	</div>
+    <!-- MODALE DETTAGLI CANDIDATURA -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3>Dettagli Candidatura</h3>
+            <div class="modal-body">
+                <p><strong>Mansione:</strong> <span id="modal-mansione"></span></p>
+                <p><strong>Azienda:</strong> <span id="modal-azienda"></span></p>
+                <p><strong>Descrizione:</strong> <span id="modal-descrizione"></span></p>
+                <p><strong>Durata:</strong> <span id="modal-durata"></span></p>
+                <p><strong>Orario di lavoro:</strong> <span id="modal-orario"></span></p>
 
-	<script th:if="${updateError}">
-		var messaggio = "Il nome o il cognome contiene caratteri non ammessi";
-		alert(messaggio);
-	</script>
+                <hr />
+                <p><strong>Candidato:</strong> <span id="modal-nome"></span> <span id="modal-cognome"></span> (<span id="modal-email"></span>)</p>
+                <p><strong>Stato:</strong> <span id="modal-stato"></span></p>
+            </div>
+        </div>
+    </div>
 
-	<script>
+    <script>
+        // MODALE
+        function openModal(event, el) {
+            event.preventDefault();
+            document.getElementById("modal-mansione").textContent = el.getAttribute("data-mansione");
+            document.getElementById("modal-azienda").textContent = el.getAttribute("data-azienda");
+            document.getElementById("modal-descrizione").textContent = el.getAttribute("data-descrizione");
+            document.getElementById("modal-durata").textContent = el.getAttribute("data-durata");
+            document.getElementById("modal-nome").textContent = el.getAttribute("data-nome");
+            document.getElementById("modal-cognome").textContent = el.getAttribute("data-cognome");
+            document.getElementById("modal-email").textContent = el.getAttribute("data-email");
+            document.getElementById("modal-stato").textContent = el.getAttribute("data-stato");
+            document.getElementById("detailsModal").style.display = "flex";
+        }
+        function closeModal() { document.getElementById("detailsModal").style.display = "none"; }
+        window.onclick = function (event) { if (event.target === document.getElementById("detailsModal")) closeModal(); }
 
-		function openModal(event, el) {
-			event.preventDefault();
-			document.getElementById("modal-mansione").textContent = el.getAttribute("data-mansione");
-			document.getElementById("modal-azienda").textContent = el.getAttribute("data-azienda");
-			document.getElementById("modal-descrizione").textContent = el.getAttribute("data-descrizione");
-			document.getElementById("modal-durata").textContent = el.getAttribute("data-durata");
-			document.getElementById("modal-nome").textContent = el.getAttribute("data-nome");
-			document.getElementById("modal-cognome").textContent = el.getAttribute("data-cognome");
-			document.getElementById("modal-email").textContent = el.getAttribute("data-email");
-			document.getElementById("modal-stato").textContent = el.getAttribute("data-stato");
-			document.getElementById("detailsModal").style.display = "flex";
-		}
-		function closeModal() {document.getElementById("detailsModal").style.display = "none";}
-		window.onclick = function (event) {if (event.target === document.getElementById("detailsModal")) closeModal();}
+        // NAVIGAZIONE SEZIONI
+        function showSection(sectionId, event) {
+            document.querySelectorAll(".profile-section").forEach(s => s.classList.remove("active"));
+            document.querySelectorAll(".nav-button").forEach(b => b.classList.remove("active"));
+            document.getElementById(sectionId).classList.add("active");
+            const targetButton = event ? event.currentTarget : document.querySelector(`.nav-button[onclick*="${sectionId}"]`);
+            if (targetButton) targetButton.classList.add("active");
+        }
 
+        // VISIBILITÀ PASSWORD
+        function toggleVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector("i");
+            if (input.type === "password") { input.type = "text"; icon.classList.replace("fa-eye", "fa-eye-slash"); }
+            else { input.type = "password"; icon.classList.replace("fa-eye-slash", "fa-eye"); }
+        }
 
-		function showSection(sectionId, event) {
-			document.querySelectorAll(".profile-section").forEach(s => s.classList.remove("active"));
-			document.querySelectorAll(".nav-button").forEach(b => b.classList.remove("active"));
-			document.getElementById(sectionId).classList.add("active");
-			const targetButton = event ? event.currentTarget : document.querySelector(`.nav-button[onclick*="${sectionId}"]`);
-			if (targetButton) targetButton.classList.add("active");
-		}
+        // FILE UPLOAD
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('curriculumFile');
+        const fileNameDisplay = document.getElementById('curriculumFileName');
 
-
-		function toggleVisibility(inputId, btn) {
-			const input = document.getElementById(inputId);
-			const icon = btn.querySelector("i");
-			if (input.type === "password") {input.type = "text"; icon.classList.replace("fa-eye", "fa-eye-slash");}
-			else {input.type = "password"; icon.classList.replace("fa-eye-slash", "fa-eye");}
-		}
-
-
-		const dropZone = document.getElementById('dropZone');
-		const fileInput = document.getElementById('curriculumFile');
-		const fileNameDisplay = document.getElementById('curriculumFileName');
-
-		dropZone.addEventListener('click', () => fileInput.click());
-		dropZone.addEventListener('dragover', e => {e.preventDefault(); dropZone.classList.add('dragover');});
-		dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-		dropZone.addEventListener('drop', e => {
-			e.preventDefault(); dropZone.classList.remove('dragover');
-			const file = e.dataTransfer.files[0];
-			if (!file) return;
-			if (file.name.endsWith('.docx')) {fileInput.files = e.dataTransfer.files; fileNameDisplay.textContent = file.name;}
-			else alert("Accettato solo file .docx!");
-		});
-		fileInput.addEventListener('change', () => {
-			fileNameDisplay.textContent = fileInput.files.length ? fileInput.files[0].name : "Nessun file selezionato";
-		});
-	</script>
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault(); dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (!file) return;
+            if (file.name.endsWith('.docx')) { fileInput.files = e.dataTransfer.files; fileNameDisplay.textContent = file.name; }
+            else alert("Accettato solo file .docx!");
+        });
+        fileInput.addEventListener('change', () => {
+            fileNameDisplay.textContent = fileInput.files.length ? fileInput.files[0].name : "Nessun file selezionato";
+        });
+    </script>
 </body>
 
 </html>
